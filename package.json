@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup-all": "cd server && npm setup"
+    "setup-all": "cd server && npm run setup"
   },
   "repository": {
     "type": "git",
