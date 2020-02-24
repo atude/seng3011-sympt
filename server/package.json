@@ -1,0 +1,27 @@
+{
+  "name": "sympt-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && ts-node-dev src/app.ts ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "firebase-admin": "^8.9.2"
+  }
+}
