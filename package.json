@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup-all": "rm -rf ./node_modules && npm i && npm run setup-server",
+    "setup-all": "npm run setup-server",
     "setup-server": "cd server && npm run setup"
   },
   "repository": {
