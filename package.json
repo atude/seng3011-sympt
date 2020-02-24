@@ -1,0 +1,20 @@
+{
+  "name": "sympt-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup-all": "cd server && npm setup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atude/seng3011-sympt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atude/seng3011-sympt/issues"
+  },
+  "homepage": "https://github.com/atude/seng3011-sympt#readme"
+}

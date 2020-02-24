@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
+    "setup": "rm -rf ./dist ./node_modules && npm i && npm run build",
     "build": "tsc",
     "start": "tsc && ts-node-dev src/app.ts ",
     "test": "echo \"Error: no test specified\" && exit 1"
