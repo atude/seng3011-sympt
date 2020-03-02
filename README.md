@@ -1,14 +1,14 @@
-### For developers 
+### For Developers 
 ---
 #### Requirements
 
-- node 12
+- Node 12
 
 #### Setting up on your local machine
 
 1. Copy the private service accounts file into the 'server' folder.
 2. Run `npm run setup-all` from root directory.
-3. Run `npm start` to start the server.
+3. Run `npm start` to start the server and app.
 
 ### Scripts
 ---
