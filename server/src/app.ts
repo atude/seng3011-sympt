@@ -14,10 +14,9 @@ const port = 4000;
 
 // Example request from firestore
 const getUsername = async (userId: string) => {
-
   // --> Usually you would also text for authentication
-  // here before calling the function, i.e. the function 
-  // should receive some sort of authentication token here which 
+  // here before calling the function, i.e. the function
+  // should receive some sort of authentication token here which
   // your firebase admin account can verify that the client
   // is authenticated
   // <--
@@ -32,15 +31,15 @@ const getUsername = async (userId: string) => {
       .doc(`users/${userId}`)
       .get();
 
-      // Convert the document into usable data
-      const testUserUsername = getTestUserDocument.data();
-      return testUserUsername?.username;
-  } catch(error) {
+    // Convert the document into usable data
+    const testUserUsername = getTestUserDocument.data();
+    return testUserUsername?.username;
+  } catch (error) {
     throw new Error(error);
   }
-}
+};
 
-/* 
+/*
 
 --> Heres an example of filtering through a firestore collection
     and getting top 10 usernames in ascending order
@@ -57,9 +56,8 @@ const usersDocs = usersCollection.docs.map((doc) => doc.data());
 
 */
 
-
 app.get('/', async (req, res) => {
-  const getData = await getUsername("test");
+  const getData = await getUsername('test');
   res.send(getData);
 });
 
