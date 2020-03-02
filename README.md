@@ -1,5 +1,5 @@
 ### For developers 
-
+---
 #### Requirements
 
 - node 12
@@ -11,17 +11,22 @@
 3. Run `npm start` to start the server.
 
 ### Scripts
+---
+#### Root
+| Script                      | Description                                                                 |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `npm run setup-all`         | Reset and rebuild both server and web directories.                          |
+| `npm start`                 | Start both server and app.                                                  |
+| `npm run lint-check-all`    | Check linting for both server and app.                                      |
+| `npm run lint-fix-all`      | Fix linting that can be automatically changed for both server and app.      |
 
-- `npm run setup-all`: Reset and rebuild both server and web directories.
-- `npm start`: Start both server and app.
-- `npm run lint-check-all`: Check linting for both server and app.
-- `npm run lint-fix-all`: Fix linting that can be automatically changed for both server and app.
+#### Server
+| Script                      | Description                                                                 |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `npm run setup`             | Reset and build server.                                                     |
+| `npm run build`             | Compile TS into JS.                                                         |
+| `npm run lint-check`        | Check linting for server.                                                   |
+| `npm run lint-fix`          | Fix auto-fixable linting for server.                                        |
 
-- **Server**:
-  - `npm run setup`: Reset and build server.
-  - `npm run build`: Compile TS into JS.
-  - `npm run lint-check`: Check linting for server.
-  - `npm run lint-fix`: Fix auto-fixable linting for server.
-
-- **Web**:
-  - [WIP]
+#### Web
+[WIP]
