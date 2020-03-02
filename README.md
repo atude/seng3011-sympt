@@ -25,6 +25,7 @@
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run setup`             | Reset and build server.                                                     |
 | `npm run build`             | Compile TS into JS.                                                         |
+| `npm start`                 | Compile and start server.                                                   |
 | `npm run lint-check`        | Check linting for server.                                                   |
 | `npm run lint-fix`          | Fix auto-fixable linting for server.                                        |
 
