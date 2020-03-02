@@ -20,7 +20,7 @@
 | `npm run lint-check-all`    | Check linting for both server and app.                                      |
 | `npm run lint-fix-all`      | Fix linting that can be automatically changed for both server and app.      |
 
-#### Server
+#### Server *(cd server)*
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run setup`             | Reset and build server.                                                     |
@@ -29,5 +29,5 @@
 | `npm run lint-check`        | Check linting for server.                                                   |
 | `npm run lint-fix`          | Fix auto-fixable linting for server.                                        |
 
-#### Web
+#### Web *(cd web)*
 [WIP]
