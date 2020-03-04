@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
-import * as express from "express";
-import * as admin from "firebase-admin";
-import promedURLResults from "./puppeteer";
+import * as express from 'express';
+import * as admin from 'firebase-admin';
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import promedURLResults from './puppeteer';
 
-const serviceAccount = require("../service-account.json");
+const serviceAccount = require('../service-account.json');
 
 // Init firebase service account
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 const app = express();
@@ -80,7 +81,7 @@ const startPuppeteer = async () => {
 };
 */
 
-/* 
+/*
 
 --> Heres an example of filtering through a firestore collection
     and getting top 10 usernames in ascending order
@@ -97,19 +98,17 @@ const usersDocs = usersCollection.docs.map((doc) => doc.data());
 
 */
 
-app.get("/", async (req, res) => {
+app.get('/', async (req, res) => {
   // I commented out the below call as it was
   // causing the server to crash? - matthew
-  //const getData = await getUsername("test");
+  // const getData = await getUsername("test");
 
-  //await startPuppeteer();
-  //add await to the function call below
+  // await startPuppeteer();
+  // add await to the function call below
   await promedURLResults(
-    "?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china"
+    '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china',
   );
-  res.send("Hi!");
+  res.send('Hi!');
 });
 
-app.listen(process.env.PORT || port, () =>
-  console.log(`Server is listening on ${port}`)
-);
+app.listen(process.env.PORT || port, () => console.log(`Server is listening on ${port}`));

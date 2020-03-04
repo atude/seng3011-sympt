@@ -6,7 +6,9 @@
   "scripts": {
     "setup-all": "npm run setup-server",
     "setup-server": "cd server && npm run setup",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "lint-check-all": "cd server && npm run lint-check -s",
+    "lint-fix-all": "cd server && npm run lint-fix -s"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/atude/seng3011-sympt/issues"
   },
-  "homepage": "https://github.com/atude/seng3011-sympt#readme"
+  "homepage": "https://github.com/atude/seng3011-sympt#readme",
+  "dependencies": {}
 }
