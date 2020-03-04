@@ -1,7 +1,8 @@
 import React from 'react';
 
 function App() {
-  const c = "yes";
+  let c = "yes";
+  c = 4;
   return (
     <div>
       Hi!
