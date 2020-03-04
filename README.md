@@ -9,7 +9,7 @@
 
 1. Copy the private service accounts file into the 'server' folder.
 2. Run `npm run setup:all` from root directory.
-3. Run `npm start` to start the server and app concurrently.
+3. Run `npm start` to start the webapp *`(localhost:3000)`* and server *`(localhost:4000)`* concurrently.
 
 
 
