@@ -1,20 +1,20 @@
-### For Developers 
----
-#### Requirements
+# Sympt [WIP]
+
+## Local Setup
+### Requirements
 
 - Node 12
 
-#### Setting up on your local machine
+### Setting up
 
 1. Copy the private service accounts file into the 'server' folder.
-2. Run `npm run setup-all` from root directory.
-3. Run `npm start` to start the server and app.
+2. Run `npm run setup:all` from root directory.
+3. Run `npm start` to start the server and app concurrently.
 
 
 
-### Scripts
----
-#### Root
+## Scripts
+### Root
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run setup:all`         | Reset and rebuild both server and web directories.                          |
@@ -24,7 +24,7 @@
 | `npm run lint:fix`          | Fix linting that can be automatically changed for both server and app.      |
 | `npm start`                 | Start both server and app concurrently.                                     |
 
-#### Server *(cd server)*
+### Server *(cd server)*
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run setup`             | Reset and build server.                                                     |
@@ -33,7 +33,7 @@
 | `npm run lint:fix`          | Fix auto-fixable linting for server.                                        |
 | `npm start`                 | Compile and start server.                                                   |
 
-#### Web *(cd web)*
+### Web *(cd web)*
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run setup`             | Reset and build webapp.                                                     |

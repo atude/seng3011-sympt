@@ -11,7 +11,7 @@ jobs:
           steps:
             - run: rm -rf ./node_modules 
             - run: npm i
-            - run: npm run setup-all
+            - run: npm run setup:all
 workflows:
     build:
       jobs:
