@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "target": "es2020",
+    "target": "es2018",
     "outDir": "dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,

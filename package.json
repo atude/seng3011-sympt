@@ -2,14 +2,15 @@
   "name": "sympt-core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "setup-all": "npm run setup-server && npm run setup-web",
-    "setup-server": "cd server && npm run setup",
-    "setup-web": "cd web && npm run setup",
-    "start": "cd server && npm start",
-    "lint-check-all": "cd server && npm run lint-check -s && cd ../web && npm run lint-check -s",
-    "lint-fix-all": "cd server && npm run lint-fix -s"
+    "setup:all": "npm run setup:server && npm run setup:web",
+    "setup:server": "cd server && npm run setup",
+    "setup:web": "cd web && npm run setup",
+    "start:server": "cd server && npm start",
+    "start:web": "cd web && npm start",
+    "start": "concurrently npm:start:*",
+    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
+    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,15 @@
     "url": "https://github.com/atude/seng3011-sympt/issues"
   },
   "homepage": "https://github.com/atude/seng3011-sympt#readme",
-  "dependencies": {}
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:check -s"
+    }
+  }
 }
