@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup-all": "npm run setup-server",
+    "setup-all": "npm run setup-server && npm run setup-web",
     "setup-server": "cd server && npm run setup",
+    "setup-web": "cd web && npm run setup",
     "start": "cd server && npm start",
-    "lint-check-all": "cd server && npm run lint-check -s",
+    "lint-check-all": "cd server && npm run lint-check -s && cd ../web && npm run lint-check -s",
     "lint-fix-all": "cd server && npm run lint-fix -s"
   },
   "repository": {
