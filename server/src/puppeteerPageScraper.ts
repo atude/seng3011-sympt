@@ -1,46 +1,51 @@
-interface PageObject {
-  url: string,
-  // eslint-disable-next-line camelcase
-  date_of_publication: string,
-  headline: string,
-  // eslint-disable-next-line camelcase
-  main_text: string,
-  reports: [],
-}
+import * as puppeteer from 'puppeteer';
+import { PageObject } from './types';
 
-const puppeteer = require('puppeteer');
-
-const getJSONResults = async (id: string) => {
-  // object to contain all results
+const getJSONResults = async (id: string): Promise<PageObject[]> => {
   const JSONResults: PageObject[] = [];
-
-  // format data
   const browser = await puppeteer.launch();
-
-  // populate the json array for each link
   const pageObject: PageObject = {
-    url: '', date_of_publication: '', headline: '', main_text: '', reports: [],
+    url: '', 
+    date_of_publication: '',
+    headline: '',
+    main_text: '',
+    reports: [],
   };
+
   const page = await browser.newPage();
   await page.goto(`https://promedmail.org/promed-post/?id=${id}`, {
     waitUntil: 'networkidle2',
   });
-  pageObject.url = `https://promedmail.org/promed-post/?id=${id}`;
-  // wait for page to load the publish information
-  await page.waitForSelector('.publish_data_html');
 
-  // assign below to a const later
-  const publishDate = await page.evaluate(() => {
-    // const dateRegex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
-    const publishSection = document.getElementsByClassName('publish_date_html')[0].children[0].innerHTML;
-    return publishSection;
+  pageObject.url = `https://promedmail.org/promed-post/?id=${id}`;
+
+  // Process header data
+  await page.waitForFunction('document.getElementsByClassName("publish_date_html").length > 0');
+  const headerData: string[] = await page.evaluate(() => {
+    const headerValues: string[] = ["Published Date: ", "Subject: ", "Archive Number: "];
+
+    return document.getElementsByClassName('publish_date_html')[0].innerHTML
+      // filter out html tags and parse content manually
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim()
+      .split(/(Published Date: )|(Subject: )|(Archive Number: )/)
+      // filter out null values
+      .filter((element) => !!element && !headerValues.includes(element));
   });
 
-  pageObject.date_of_publication = publishDate;
+  // Process main content/reports
+  await page.waitForFunction('document.getElementsByClassName("text1").length > 0');
+  const mainContentData: string = await page.evaluate(() => document.getElementsByClassName('text1')[0].innerHTML);
+  // TODO: Filter out content properly into sections for mainText
+
+  // Format and cut out due to weird Promed formatting
+  pageObject.date_of_publication = headerData[0].trim();
+  pageObject.headline = headerData[1].split(" ").slice(1).join(" ").trim();
+  pageObject.main_text = mainContentData;
 
   JSONResults.push(pageObject);
 
-  // close the browser
   await browser.close();
   return JSONResults;
 };

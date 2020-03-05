@@ -5,6 +5,7 @@ import * as express from 'express';
 import * as admin from 'firebase-admin';
 import promedURLResultIDs from './puppeteerResultIDScraper';
 import getJSONResults from './puppeteerPageScraper';
+import { ScrapeResults, PageObject } from './types';
 
 const serviceAccount = require('../service-account.json');
 
@@ -106,19 +107,22 @@ app.get('/', async (req, res) => {
   // const getData = await getUsername("test");
 
   // await startPuppeteer();
-  const idResults = await promedURLResultIDs(
+  const idResults: ScrapeResults = await promedURLResultIDs(
     '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china',
   );
-  if (typeof idResults[0] === 'object') {
-    console.log(idResults[0]);
-  } else {
-    const results: any = [];
-    idResults.forEach((id: string) => {
-      results.push(getJSONResults(id));
-    });
-    console.log(await Promise.all(results));
+
+  if (idResults.error) {
+    console.log(idResults.error);
+  } else if (idResults.results) {
+    const results: Promise<PageObject[]>[] | undefined = 
+      idResults.results.map((pageId: string) => getJSONResults(pageId));
+
+    const processedResults = await Promise.all(results);
+    res.send(processedResults);
+    console.log(processedResults);
   }
-  res.send('Hi!');
+
+  // TODO: case goes here if scrape dies for some reason
 });
 
 app.listen(process.env.PORT || port, () => console.log(`Server is listening on ${port}`));

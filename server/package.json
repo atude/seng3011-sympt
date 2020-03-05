@@ -24,6 +24,7 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
+    "@types/puppeteer": "^2.0.1",
     "express": "^4.16.4",
     "firebase-admin": "^8.9.2",
     "puppeteer": "^2.1.1"
