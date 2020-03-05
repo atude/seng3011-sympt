@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "setup:all": "npm run setup:server && npm run setup:web",
+    "setup:all": "rm -rf ./node_modules && npm install && npm run setup:server && npm run setup:web",
     "setup:server": "cd server && npm run setup",
     "setup:web": "cd web && npm run setup",
     "start:server": "cd server && npm start",
