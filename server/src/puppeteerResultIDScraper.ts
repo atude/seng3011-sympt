@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 // check that the submit buttons have loaded into the page
 function checkSubmitButton() {
-  return document.getElementsByName('submit') != null;
+  return document.getElementsByName('submit') !== null;
 }
 
 // check that the child elemnts of the search results div is not empty (1 if no results)
@@ -13,22 +13,34 @@ function checkSearchResults() {
 // takes a url query string of the form
 // ?keyterms=something[,somethingelse,hi]&startdate=yyyy:mm:ddTHH:MM:
 // SS&enddate=yyyy:mm:ddTHH:MM:SS&location=somewhere
-// return nothing but saves the results in test.png screenshot
-const promedURLResults = async (urlSearchQueries: string) => {
+//
+// if no keyterms, startdate, enddate, location specified
+// return array with a single object with error info
+//
+// if invalid dates specified for start or end date
+// return array with single object with error info
+//
+// otherwise return an array of ids for pages to scrape from
+
+// TODO:
+// - add tighter error checking for times supplied (none currently)
+// - make use of the times supplied when parsing pages
+
+const promedURLResultIDs = async (urlSearchQueries: string) => {
   const urlParams = new URLSearchParams(urlSearchQueries);
   const keyTerms = urlParams.get('keyterms');
   const startDate = urlParams.get('startdate');
   const endDate = urlParams.get('enddate');
   const location = urlParams.get('location');
 
-  if (
-    startDate == null
-    || endDate == null
-    || location == null
-    || keyTerms == null
-  ) {
-    // lol fix this later
-    return 'Incorrect api request';
+  if (startDate === null) {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'No specified startdate' }];
+  } if (endDate === null) {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'No specified enddate' }];
+  } if (location === null) {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'No specified location' }];
+  } if (keyTerms === null) {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'No specified keyterm(s)' }];
   }
 
   // join the listed keywords together separated by ' AND '
@@ -39,33 +51,34 @@ const promedURLResults = async (urlSearchQueries: string) => {
   const dateRegex = /^([0-9]{4})-([0-9]{2})-([0-9]{2}).*/;
 
   // compare the startdate submitted with the regex
-  // --> no error checking at this time
   const startDateGroups = startDate.match(dateRegex);
   let startYear: string = '';
   let startMonth: string = '';
   let startDay: string = '';
-  if (startDateGroups != null) {
+  if (startDateGroups !== null) {
     [, startYear, startMonth, startDay] = startDateGroups;
+  } else {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'Invalid startdate specified' }];
   }
   // format date ready for input into promed
   const formattedStartDate = `${startMonth}/${startDay}/${startYear}`;
 
   // compare the enddate submitted with the regex
-  // --> no error checking at this time
+  //
   const endDateGroups = endDate.match(dateRegex);
   let endYear: string = '';
   let endMonth: string = '';
   let endDay: string = '';
-  if (endDateGroups != null) {
+  if (endDateGroups !== null) {
     [, endYear, endMonth, endDay] = endDateGroups;
+  } else {
+    return [{ errorNo: 403, errorName: 'Bad request', errorMessage: 'Invalid enddate specified' }];
   }
   // format date ready for input into promed
   const formattedEndDate = `${endMonth}/${endDay}/${endYear}`;
 
   // format data
-  const browser = await puppeteer.launch({
-    defaultViewport: { width: 1920, height: 1080 },
-  });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://promedmail.org/promed-posts/', {
     waitUntil: 'networkidle2',
@@ -89,6 +102,10 @@ const promedURLResults = async (urlSearchQueries: string) => {
   await page.waitForSelector('#show_us');
   await page.click('#show_us');
 
+  // include search terms in the subject body
+  await page.waitForSelector('#kwby2');
+  await page.click('#kwby2');
+
   // click on the search button
   await page.waitFor(checkSubmitButton);
   const submitButton = await page.$(
@@ -98,12 +115,30 @@ const promedURLResults = async (urlSearchQueries: string) => {
 
   // screenshot results page for now
   await page.waitFor(checkSearchResults);
-  await page.screenshot({ path: 'test.png' });
 
+  // page with results has been loaded
+  // grab the results from the table (this includes any inner html objects)
+  // extract the id of the result with a regex expression and append the
+  // id to the list on match
+  const searchResultIDs = await page.evaluate(() => {
+    const linkIDRegex = /([0-9]+)<\/a>$/g;
+    const searchResultsList = document.getElementById('search_results')?.children;
+    const results: string[] = [];
+    if (searchResultsList !== undefined) {
+      for (let i = 0; i < searchResultsList?.length; i += 1) {
+        const title = searchResultsList[i].children[0].innerHTML;
+        const id = title.match(linkIDRegex);
+        if (id !== null) {
+          results.push(id[0].replace(/<\/a>/, ''));
+        }
+      }
+    }
+    return results;
+  });
   // close the browser
   await browser.close();
-
-  return 'completed';
+  // return the list of pages to scrape from
+  return searchResultIDs;
 };
 
-export default promedURLResults;
+export default promedURLResultIDs;
