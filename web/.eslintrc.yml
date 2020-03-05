@@ -25,5 +25,10 @@ rules:
       - ".tsx"
   import/extensions: 0
   import/no-unresolved: 0
+  no-unused-vars: 0
+  no-trailing-spaces: 0
+  operator-linebreak: 0
+  prefer-destructuring: 0
+  quotes: 0
 
 
