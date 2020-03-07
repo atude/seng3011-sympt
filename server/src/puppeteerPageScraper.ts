@@ -42,7 +42,14 @@ const getJSONResults = async (id: string): Promise<PageObject[]> => {
   // Format and cut out due to weird Promed formatting
   pageObject.date_of_publication = headerData[0].trim();
   pageObject.headline = headerData[1].split(" ").slice(1).join(" ").trim();
-  pageObject.main_text = mainContentData;
+  pageObject.main_text = mainContentData
+    .replace(/<a.*?>/g, ' ')
+    .replace(/<\/a>/g, ' ')
+    .replace(/(<br>){1,3}/g, ' ')
+    .replace(/<.*?>/g, ' ')
+    // .replace(/"/g, '') quotes in the text are escaped. unsure at this point whether we need to 
+    // remove this or if it will be handled automatically.
+    .replace(/&.*?;/g, '');
 
   JSONResults.push(pageObject);
 
