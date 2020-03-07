@@ -21,3 +21,4 @@ rules:
   operator-linebreak: 0
   prefer-destructuring: 0
   quotes: 0
+  no-console: 0
