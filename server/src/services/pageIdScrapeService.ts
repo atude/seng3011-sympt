@@ -1,15 +1,8 @@
-import { ScrapeResults } from './types';
+import { ScrapeResults } from '../types';
+import generateError from '../utils/generateError';
 
 const checkSubmitButton = "document.getElementsByName('submit') !== null";
 const checkSearchResults = "document.getElementById('search_results')?.childElementCount !== 0";
-
-const generateError = (errorNo: number, errorName: string, errorMessage: string) => ({
-  error: {
-    errorNo,
-    errorName,
-    errorMessage,
-  },
-});
 
 // takes a url query string of the form
 // ?keyterms=something[,somethingelse,hi]

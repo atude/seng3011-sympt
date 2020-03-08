@@ -1,4 +1,4 @@
-import { PageObject } from './types';
+import { PageObject } from '../types';
 
 const headerValues: string[] = [
   "Published Date: ", 
