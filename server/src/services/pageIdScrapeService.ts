@@ -16,7 +16,7 @@ const checkSearchResults = "document.getElementById('search_results')?.childElem
 // - add tighter error checking for times supplied (none currently)
 // - make use of the times supplied when parsing pages
 
-const promedURLResultIDs = async (
+const urlPageResultIds = async (
   urlSearchQueries: string, 
   browserInstance: any,
 ): Promise<ScrapeResults> => {
@@ -129,4 +129,4 @@ const promedURLResultIDs = async (
   return { results: searchResultIDs };
 };
 
-export default promedURLResultIDs;
+export default urlPageResultIds;

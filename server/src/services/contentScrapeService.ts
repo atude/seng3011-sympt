@@ -6,7 +6,7 @@ const headerValues: string[] = [
   "Archive Number: ",
 ];
 
-const getJSONResults = async (
+const contentScraper = async (
   id: string, 
   browserInstance: any,
 ): Promise<PageObject[] | undefined> => {
@@ -60,4 +60,4 @@ const getJSONResults = async (
   return JSONResults;
 };
 
-export default getJSONResults;
+export default contentScraper;

@@ -1,13 +1,13 @@
 import * as puppeteer from 'puppeteer';
-import promedURLResultIDs from './services/pageIdScrapeService';
-import getJSONResults from './services/contentScrapeService';
+import urlPageResultIds from './services/pageIdScrapeService';
+import contentScraper from './services/contentScrapeService';
 import { ScrapeResults, PageObject } from './types';
 
 export const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch();
 
   try {
-    const idResults: ScrapeResults = await promedURLResultIDs(
+    const idResults: ScrapeResults = await urlPageResultIds(
       queryUrl,
       browser,
     );
@@ -19,7 +19,7 @@ export const queryScrapePosts = async (queryUrl: string) => {
     
     if (idResults.results) {
       const results: Promise<PageObject[] | undefined>[] = 
-        idResults.results.map((pageId: string) => getJSONResults(pageId, browser));
+        idResults.results.map((pageId: string) => contentScraper(pageId, browser));
  
       const processedResults = await Promise.all(results);
       return processedResults;
