@@ -44,7 +44,7 @@ const contentScraper = async (
 
     
     const reportsData: Report = {
-      diseases: mainTextData.split(' ****** '),
+      diseases: mainTextData.split(' ****** ').slice(1),
     };
 
     const parsedPageData: PageObject = {
