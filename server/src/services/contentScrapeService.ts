@@ -57,7 +57,7 @@ const contentScraper = async (
       headline: headlineData,
       main_text: mainTextData,
       reports: {
-        diseases: foundDiseases,
+        diseases: foundDiseases ?? ["unknown"],
       },
     };
  
