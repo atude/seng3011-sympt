@@ -14,5 +14,12 @@ export type PageObject = {
   date_of_publication: string,
   headline: string,
   main_text: string,
-  reports: [],
+  reports: Report,
+}
+
+export type Report = {
+  diseases?: string[],
+  syndromes?: string[],
+  event_date?: string,
+  locations?: string[]
 }

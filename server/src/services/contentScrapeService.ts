@@ -1,4 +1,4 @@
-import { PageObject } from '../types';
+import { PageObject, Report } from '../types';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -9,18 +9,10 @@ const headerValues: string[] = [
 const contentScraper = async (
   id: string, 
   browserInstance: any,
-): Promise<PageObject[] | undefined> => {
-  const JSONResults: PageObject[] = [];
-  const pageObject: PageObject = {
-    url: `https://promedmail.org/promed-post/?id=${id}`, 
-    date_of_publication: '',
-    headline: '',
-    main_text: '',
-    reports: [],
-  };
-
+): Promise<PageObject | undefined> => {
+  const urlData: string = `https://promedmail.org/promed-post/?id=${id}`;
   const page = await browserInstance.newPage();
-  await page.goto(pageObject.url, { waitUntil: 'networkidle2' });
+  await page.goto(urlData, { waitUntil: 'networkidle2' });
 
   // Process header data and main content data
   try {
@@ -38,11 +30,10 @@ const contentScraper = async (
       .split(/(Published Date: )|(Subject: )|(Archive Number: )/)
       .filter((element) => !!element && !headerValues.includes(element));
 
-    pageObject.date_of_publication = headerDataFiltered[0].trim();
-    pageObject.headline = headerDataFiltered[1].split(" ").slice(1).join(" ").trim();
+    const dateData = headerDataFiltered[0].trim();
+    const headlineData = headerDataFiltered[1].split(" ").slice(1).join(" ").trim();
 
-    // TODO: Filter out content properly into sections for mainText
-    pageObject.main_text = mainContentData
+    const mainTextData = mainContentData
       .replace(/<a.*?>/g, ' ')
       .replace(/<\/a>/g, ' ')
       .replace(/(<br>){1,3}/g, ' ')
@@ -51,13 +42,25 @@ const contentScraper = async (
       // remove this or if it will be handled automatically.
       .replace(/&.*?;/g, '');
 
-    JSONResults.push(pageObject);
-  } catch (error) {
-    console.error(`Failed to get data for page ${pageObject.url}`);
-  }
+    
+    const reportsData: Report = {
+      diseases: mainTextData.split(' ****** '),
+    };
+
+    const parsedPageData: PageObject = {
+      url: urlData, 
+      date_of_publication: dateData,
+      headline: headlineData,
+      main_text: mainTextData,
+      reports: reportsData,
+    };
  
-  await page.close();
-  return JSONResults;
+    await page.close();
+    return parsedPageData;
+  } catch (error) {
+    console.error(`Failed to get data for page ${urlData}`);
+    return undefined;
+  }
 };
 
 export default contentScraper;

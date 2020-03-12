@@ -18,7 +18,7 @@ export const queryScrapePosts = async (queryUrl: string) => {
     } 
     
     if (idResults.results) {
-      const results: Promise<PageObject[] | undefined>[] = 
+      const results: Promise<PageObject | undefined>[] = 
         idResults.results.map((pageId: string) => contentScraper(pageId, browser));
  
       const processedResults = await Promise.all(results);
