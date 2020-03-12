@@ -1,6 +1,4 @@
 [
-  { "name": "unknown" },
-  { "name": "other" },
   { "name": "anthrax cutaneous" },
   { "name": "anthrax gastrointestinous" },
   { "name": "anthrax inhalation" },
@@ -8,6 +6,7 @@
   { "name": "brucellosis" },
   { "name": "chikungunya" },
   { "name": "cholera" },
+  { "name": "coronavirus" },
   { "name": "cryptococcosis" },
   { "name": "cryptosporidiosis" },
   { "name": "crimean-congo haemorrhagic fever" },
