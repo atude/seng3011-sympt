@@ -16,6 +16,7 @@ const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddat
 
 app.get('/', async (req, res) => {
   res.send(await queryScrapePosts(exampleQuery));
+  res.redirect('/4000');
 });
 
 app.listen(process.env.PORT || port, () => console.log(`--> Server is listening on ${port}`));
