@@ -20,9 +20,13 @@ const queryScrapePosts = async (queryUrl: string) => {
     
     if (idResults.results) {
       const results: Promise<PageObject | undefined>[] = 
-        idResults.results.map((pageId: string) => contentScraper(pageId, browser));
+        idResults.results
+          .map((pageId: string) => contentScraper(pageId, browser))
  
-      const processedResults = await Promise.all(results);
+      const processedResults = (await Promise.all(results))
+        // Remove null or empty pages
+        .filter((pageContent) => pageContent);
+        
       await browser.close();
       return processedResults;
       // console.log(processedResults);
