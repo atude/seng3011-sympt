@@ -1,6 +1,6 @@
-import * as express from 'express';
+import express from 'express';
 import * as admin from 'firebase-admin';
-import { queryScrapePosts } from './queryController';
+import queryScrapePosts from './queryController';
 
 const serviceAccount = require('../service-account.json');
 

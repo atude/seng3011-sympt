@@ -1,9 +1,10 @@
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 import urlPageResultIds from './services/pageIdScrapeService';
 import contentScraper from './services/contentScrapeService';
 import { ScrapeResults, PageObject } from './types';
+import generateError from './utils/generateError';
 
-export const queryScrapePosts = async (queryUrl: string) => {
+const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch();
 
   try {
@@ -22,16 +23,18 @@ export const queryScrapePosts = async (queryUrl: string) => {
         idResults.results.map((pageId: string) => contentScraper(pageId, browser));
  
       const processedResults = await Promise.all(results);
+      await browser.close();
       return processedResults;
       // console.log(processedResults);
-    }
+    } 
+
+    return generateError(400, "---", "Error while querying");
   } catch (error) {
     console.error("Something went wrong while scraping. Try restarting the server.");
     console.error(error);
+    await browser.close();
     return error;
   }
- 
-  await browser.close();
 };
 
-export const yes = 3;
+export default queryScrapePosts;

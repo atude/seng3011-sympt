@@ -1,4 +1,5 @@
-import { PageObject, Report } from '../types';
+import { PageObject } from '../types';
+import diseaseList from '../constants/diseaseList.json';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -42,23 +43,29 @@ const contentScraper = async (
       // remove this or if it will be handled automatically.
       .replace(/&.*?;/g, '');
 
-    
-    const reportsData: Report = {
-      diseases: mainTextData.split(' ****** ').slice(1),
-    };
+    const foundDiseases: string[] = [];
+    diseaseList.forEach((disease: { name: string }) => {
+      if (mainTextData.includes(disease.name)) {
+        console.log(disease.name);
+        foundDiseases.push(disease.name);
+      }
+    });
 
     const parsedPageData: PageObject = {
       url: urlData, 
       date_of_publication: dateData,
       headline: headlineData,
       main_text: mainTextData,
-      reports: reportsData,
+      reports: {
+        diseases: foundDiseases ?? ["unknown"],
+      },
     };
  
     await page.close();
     return parsedPageData;
   } catch (error) {
     console.error(`Failed to get data for page ${urlData}`);
+    console.error(error);
     return undefined;
   }
 };
