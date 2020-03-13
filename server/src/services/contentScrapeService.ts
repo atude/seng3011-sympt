@@ -95,7 +95,7 @@ const contentScraper = async (
     return parsedPageData;
   } catch (error) {
     await page.close();
-    console.error(`Failed to get data for page ${urlData}`);
+    console.error(`Failed to get data for page ${urlData}. Skipping this page...`);
     console.error(error);
     return { id: null };
   }
