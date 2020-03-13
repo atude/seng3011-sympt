@@ -10,11 +10,12 @@ export type ScrapeResults = {
 }
 
 export type PageObject = {
-  url: string,
-  date_of_publication: string,
-  headline: string,
-  main_text: string,
-  reports: Report,
+  id: string | null
+  url?: string,
+  date_of_publication?: string,
+  headline?: string,
+  main_text?: string,
+  reports?: Report,
 }
 
 export type Report = {

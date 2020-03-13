@@ -3,6 +3,7 @@ import urlPageResultIds from './services/pageIdScrapeService';
 import contentScraper from './services/contentScrapeService';
 import { ScrapeResults, PageObject } from './types';
 import generateError from './utils/generateError';
+import { articlesPromedRef } from './firebase/collectionReferences';
 
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch();
@@ -19,20 +20,25 @@ const queryScrapePosts = async (queryUrl: string) => {
     } 
     
     if (idResults.results) {
-      const results: Promise<PageObject | undefined>[] = 
+      const results: Promise<PageObject>[] = 
         idResults.results
-          .map((pageId: string) => contentScraper(pageId, browser))
+          .map((pageId: string) => contentScraper(pageId, browser));
  
-      const processedResults = (await Promise.all(results))
-        // Remove null or empty pages
-        .filter((pageContent) => pageContent);
+      const processedResults: PageObject[] = (await Promise.all(results))
+        .filter((pageContent) => pageContent && pageContent.id);
         
       await browser.close();
+
+      // Save to firestore
+      processedResults.forEach(async (pageData) => {
+        if (pageData.id) {
+          await articlesPromedRef.doc(pageData.id).set(pageData);
+        }
+      });
       return processedResults;
-      // console.log(processedResults);
     } 
 
-    return generateError(400, "---", "Error while querying");
+    return generateError(500, "Error while querying", "Query failed unexpectedly.");
   } catch (error) {
     console.error("Something went wrong while scraping. Try restarting the server.");
     console.error(error);

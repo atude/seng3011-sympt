@@ -7,15 +7,17 @@ const headerValues: string[] = [
   "Archive Number: ",
 ];
 
+const minSentenceLength: number = 70;
+const maxParagraphCount: number = 5;
+
 const contentScraper = async (
   id: string, 
   browserInstance: any,
-): Promise<PageObject | undefined> => {
+): Promise<PageObject> => {
   const urlData: string = `https://promedmail.org/promed-post/?id=${id}`;
   const page = await browserInstance.newPage();
   await page.goto(urlData, { waitUntil: 'networkidle2' });
 
-  // Process header data and main content data
   try {
     await page.waitForFunction('document.getElementsByClassName("publish_date_html").length > 0');
     const headerDataRaw: string = await page.evaluate(() => document.getElementsByClassName('publish_date_html')[0].innerHTML);
@@ -37,34 +39,23 @@ const contentScraper = async (
     const mainTextDataChunks: string[] = mainContentData
       .replace(/<a.*?>/g, ' ')
       .replace(/<\/a>/g, ' ')
-      // .replace(/(<br>){1,3}/g, ' ')
-      // .replace(/<.*?>/g, ' ')
-      // .replace(/"/g, '')
       .replace(/&.*?;/g, '')
       .split("<br><br>");
 
     /* Filter for main text */
-    const minSentenceLength: number = 70;
-    let paragraphCount: number = 5;
-    let isStartedContent: boolean = false;
 
+    let isStartedContent: boolean = false;
     const filteredMainText: string = mainTextDataChunks.map((chunk) => {
       if (isStartedContent) {
-        if (paragraphCount !== 0) {
-          paragraphCount--;
-          return chunk;
-        } 
-      } else { 
-        if (chunk.substr(0, 4) !== "<br>") {
-          return "";
-        } 
+        return chunk;
+      }  
+      if (chunk.substr(0, 4) !== "<br>") {
+        return "";
+      } 
 
-        // Important info starts at first <br> after filtering
-        isStartedContent = true;
-        return chunk.substr(4);
-      }
-
-      return "";
+      // Important info starts at first <br> after filtering
+      isStartedContent = true;
+      return chunk.substr(4);
     })
       // Filter empty sentences
       .filter((chunk) => chunk !== "")
@@ -74,6 +65,7 @@ const contentScraper = async (
       })
       // Avoid random fragments
       .filter((chunk) => chunk.length > minSentenceLength)
+      .slice(0, maxParagraphCount)
       .join(" ");
 
     if (!filteredMainText) {
@@ -89,6 +81,7 @@ const contentScraper = async (
     });
 
     const parsedPageData: PageObject = {
+      id,
       url: urlData, 
       date_of_publication: dateData,
       headline: headlineData,
@@ -101,9 +94,10 @@ const contentScraper = async (
     await page.close();
     return parsedPageData;
   } catch (error) {
+    await page.close();
     console.error(`Failed to get data for page ${urlData}`);
     console.error(error);
-    return undefined;
+    return { id: null };
   }
 };
 

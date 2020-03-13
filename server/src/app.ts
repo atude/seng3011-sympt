@@ -1,13 +1,13 @@
+/* eslint-disable import/order */
+/* eslint-disable import/first */
 import express from 'express';
 import * as admin from 'firebase-admin';
-import queryScrapePosts from './queryController';
 
 const serviceAccount = require('../service-account.json');
 
-// Init firebase service account
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
+
+import queryScrapePosts from './queryController';
 
 const app = express();
 const port = 4000;
@@ -16,7 +16,6 @@ const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddat
 
 app.get('/', async (req, res) => {
   res.send(await queryScrapePosts(exampleQuery));
-  res.redirect('/4000');
 });
 
 app.listen(process.env.PORT || port, () => console.log(`--> Server is listening on ${port}`));
