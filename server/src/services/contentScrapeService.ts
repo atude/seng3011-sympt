@@ -1,5 +1,6 @@
 import { PageObject } from '../types';
 import diseaseList from '../constants/diseaseList.json';
+import { dateRegex, formatDateToExact } from '../utils/formatters';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -72,13 +73,29 @@ const contentScraper = async (
       throw new Error("Failed to find sufficient data in body text.");
     }
 
-    /* Filter for report */
+    /* Filter for report diseases */
     const foundDiseases: string[] = [];
     diseaseList.forEach((disease: { name: string }) => {
       if (filteredMainText.includes(disease.name)) {
         foundDiseases.push(disease.name);
       }
     });
+
+    /* Filter for report dates */
+    // TODO: error checking and fill missing date sections if possible
+    const foundDates = 
+      filteredMainText
+        .match(dateRegex)
+        ?.map((dateStr: string) => formatDateToExact(dateStr))
+        .sort();
+
+    const uniqueDates = [...new Set(foundDates)];
+    const filteredDates: string = 
+      uniqueDates[0] ? 
+        (uniqueDates.length <= 1 ? 
+          `${uniqueDates[0]} xx:xx:xx` : 
+          `${uniqueDates[0]} xx:xx:xx to ${uniqueDates[uniqueDates.length - 1]} xx:xx:xx` 
+        ) : "xx:xx:xx xx:xx:xx";
 
     const parsedPageData: PageObject = {
       id,
@@ -88,6 +105,7 @@ const contentScraper = async (
       main_text: filteredMainText,
       reports: {
         diseases: foundDiseases.length ? foundDiseases : ["unknown"],
+        event_date: filteredDates,
       },
     };
  
