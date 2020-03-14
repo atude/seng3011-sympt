@@ -10,10 +10,12 @@ const queryCap = 6;
 
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch({
+    headless: false,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
+      '--headless',
     ],
   });
 
