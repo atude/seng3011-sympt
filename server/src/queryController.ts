@@ -5,6 +5,8 @@ import { ScrapeResults, PageObject } from './types';
 import generateError from './utils/generateError';
 import { articlesPromedRef } from './firebase/collectionReferences';
 
+import * as admin from 'firebase-admin';
+
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -54,4 +56,32 @@ const queryScrapePosts = async (queryUrl: string) => {
   }
 };
 
-export default queryScrapePosts;
+const querySpecificPosts = async (queryUrl: string) => {
+  
+  queryUrl = queryUrl.split("?")[1]
+  const tokens: string[] = queryUrl.split("&");
+  const keyterms : string[] = tokens[0].split("=")[1].split(",");
+  const startDate = tokens[1].split("=")[1];
+  const endDate = tokens[2].split("=")[1];
+  const location = tokens[3].split("=")[1];
+
+  console.log("keyterms " + keyterms + " location " + location);
+
+  try {
+    const promedDocs = await admin
+      .firestore()
+      .collection("articles-promed")
+      .where("date_of_publication", ">=", startDate)
+      .where("date_of_publication", "<=", endDate)
+      .get();
+  const diseaseReports = promedDocs.docs.map((doc) => doc.data());
+    return diseaseReports;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export {
+  queryScrapePosts,
+  querySpecificPosts
+}

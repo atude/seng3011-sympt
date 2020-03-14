@@ -13,15 +13,16 @@ admin.initializeApp({
   }),
 });
 
-import queryScrapePosts from './queryController';
+import {/*queryScrapePosts,*/ querySpecificPosts }from './queryController';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4001;
 
-const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
+const exampleQuery = '?keyterms=coronavirus,disease&startdate=2020-01-31T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
 app.get(`/${exampleQuery}`, async (req, res) => {
-  res.send(await queryScrapePosts(exampleQuery));
+  // res.send(await queryScrapePosts(exampleQuery));
+  res.send(await querySpecificPosts(exampleQuery));
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
