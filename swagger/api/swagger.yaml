@@ -8,7 +8,7 @@ info:
     email: "sympt.3011@gmail.com"
   license:
     name: "Apache 2.0"
-    url: "http://www.sympt-3011.herokuapp.com"
+    url: "http://localhost:4001"
 host: "virtserver.swaggerhub.com"
 basePath: "/sympt-30117/symptAPI/1.0.0"
 tags:
