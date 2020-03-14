@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rm -rf ./node_modules ./build && npm i && react-scripts build",
+    "build": "rm -rf ./build && npm i && react-scripts build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "lint:check": "./node_modules/.bin/eslint ./src/**/*.ts*",
