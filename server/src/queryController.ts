@@ -6,7 +6,7 @@ import generateError from './utils/generateError';
 import { articlesPromedRef } from './firebase/collectionReferences';
 
 // In future cases, use pagination instead of hardcap
-const queryCap = 15;
+const queryCap = 6;
 
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch({
