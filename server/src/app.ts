@@ -3,9 +3,15 @@
 import express from 'express';
 import * as admin from 'firebase-admin';
 
+require('dotenv').config();
 const serviceAccount = require('../service-account.json');
 
-admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
+admin.initializeApp({ 
+  credential: admin.credential.cert({
+    ...serviceAccount,
+    private_key: process.env.FIREBASE_KEY,
+  }),
+});
 
 import queryScrapePosts from './queryController';
 
