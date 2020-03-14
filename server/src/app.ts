@@ -16,7 +16,7 @@ admin.initializeApp({
 import queryScrapePosts from './queryController';
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port: number = Number(process.env.PORT) || 4000;
 
 const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
@@ -24,4 +24,4 @@ app.get('/', async (req, res) => {
   res.send(await queryScrapePosts(exampleQuery));
 });
 
-app.listen(port, () => console.log(`--> Server is listening on ${port}`));
+app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
