@@ -3,7 +3,6 @@ import diseaseList from '../constants/diseaseList.json';
 import { dateRegex, formatDateToExact } from '../utils/formatters';
 import worldCitiesList from '../constants/worldCitiesList.json';
 import syndromeList from '../constants/syndromeList.json';
-import { dateRegex, formatDateToExact } from '../utils/formatters';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -100,6 +99,7 @@ const contentScraper = async (
       }
     });
 
+    /* Filter for locations */
     const locations: Location[] = [];
     filteredMainText.split('. ').forEach((sentence) => {
       for (let i = 0; i < worldCitiesList.length; i++) {
