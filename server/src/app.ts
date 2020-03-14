@@ -20,7 +20,7 @@ const port: number = Number(process.env.PORT) || 4000;
 
 const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   res.send(await queryScrapePosts(exampleQuery));
 });
 
