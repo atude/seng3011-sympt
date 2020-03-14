@@ -7,9 +7,11 @@ import { articlesPromedRef } from './firebase/collectionReferences';
 
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch({
+    headless: false,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
+      '--headless',
     ],
   });
 
