@@ -12,10 +12,6 @@ const checkSearchResults = "document.getElementById('search_results')?.childElem
 //
 // Return an array of ids for pages to scrape from
 
-// TODO:
-// - add tighter error checking for times supplied (none currently)
-// - make use of the times supplied when parsing pages
-
 const urlPageResultIds = async (
   urlSearchQueries: string, 
   browserInstance: any,
