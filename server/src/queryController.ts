@@ -55,11 +55,22 @@ const queryScrapePosts = async (queryUrl: string) => {
 };
 
 const querySpecificPosts = async (queryUrl: string) => {
+  
+  queryUrl = queryUrl.split("?")[1]
+  const tokens: string[] = queryUrl.split("&");
+  const keyterms : string[] = tokens[0].split(",");
+  const startDate = tokens[1].split("=")[1];
+  const endDate = tokens[2].split("=")[1];
+  const location = tokens[3].split("=")[1];
+
+  console.log("keyterms " + keyterms + " startDate " + startDate + " endDate " + endDate + " location " + location);
+
   try {
     const promedDocs = await admin
       .firestore()
       .collection("articles-promed")
-      .limit(2)
+      .where("date_of_publication", ">=", startDate)
+      .where("date_of_publication", "<=", endDate)
       .get();
   const diseaseReports = promedDocs.docs.map((doc) => doc.data());
     return diseaseReports;
