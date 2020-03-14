@@ -18,11 +18,20 @@ import {/*queryScrapePosts,*/ querySpecificPosts }from './queryController';
 const app = express();
 const port: number = Number(process.env.PORT) || 4001;
 
-const exampleQuery = '?keyterms=coronavirus,disease&startdate=2020-01-31T00:00:00&enddate=2020-02-01T00:00:00&location=china';
+var exampleQuery = '?keyterms=coronavirus,disease&startdate=2020-01-31T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
-app.get('/', async (req, res) => {
+exampleQuery = exampleQuery.split("?")[1]
+const tokens: string[] = exampleQuery.split("&");
+const keyterms : string[] = tokens[0].split("=")[1].split(",");
+const startDate = tokens[1].split("=")[1];
+const endDate = tokens[2].split("=")[1];
+const location = tokens[3].split("=")[1];
+
+console.log("keyterms " + keyterms + " location " + location);
+
+app.get('/proMed', async (req, res) => {
   // res.send(await queryScrapePosts(exampleQuery));
-  res.send(await querySpecificPosts(exampleQuery));
+  res.send(await querySpecificPosts(startDate, endDate, location, keyterms));
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));

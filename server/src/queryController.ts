@@ -56,17 +56,8 @@ const queryScrapePosts = async (queryUrl: string) => {
   }
 };
 
-const querySpecificPosts = async (queryUrl: string) => {
+const querySpecificPosts = async (startDate: string, endDate: string, location: string, leyterms: string[]) => {
   
-  queryUrl = queryUrl.split("?")[1]
-  const tokens: string[] = queryUrl.split("&");
-  const keyterms : string[] = tokens[0].split("=")[1].split(",");
-  const startDate = tokens[1].split("=")[1];
-  const endDate = tokens[2].split("=")[1];
-  const location = tokens[3].split("=")[1];
-
-  console.log("keyterms " + keyterms + " location " + location);
-
   try {
     const promedDocs = await admin
       .firestore()
