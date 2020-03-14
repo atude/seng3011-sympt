@@ -7,7 +7,7 @@
 
 ### Setting up
 
-1. Copy the private service accounts file into the 'server' folder.
+1. Rename `.env.example` in `./server` to `.env` and add necessary keys.
 2. Run `npm run build` from root directory.
 3. Run `npm start` to start the webapp *`(localhost:3000)`* and server *`(localhost:4000)`* concurrently.
 

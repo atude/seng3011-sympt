@@ -1,1 +1,1 @@
-server: node ./server/dist/app.js
+server: cd server && node ./dist/app.js
