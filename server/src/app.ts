@@ -6,12 +6,10 @@ import * as admin from 'firebase-admin';
 require('dotenv').config();
 const serviceAccount = require('../service-account.json');
 
-console.log(process.env.FIREBASE_KEY);
-
 admin.initializeApp({ 
   credential: admin.credential.cert({
     ...serviceAccount,
-    private_key: process.env.FIREBASE_KEY,
+    private_key: process.env.FIREBASE_KEY?.replace(/\\n/g, '\n') ?? "",
   }),
 });
 
