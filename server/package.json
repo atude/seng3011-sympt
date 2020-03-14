@@ -4,8 +4,7 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "setup": "rm -rf ./dist ./node_modules && npm i && npm run build",
-    "build": "tsc",
+    "build": "rm -rf ./dist ./node_modules && npm i && npm run build",
     "start": "tsc && ts-node-dev --poll ./src/app.ts ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "./node_modules/.bin/eslint ./src/**/*.ts",
