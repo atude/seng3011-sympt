@@ -13,7 +13,7 @@ admin.initializeApp({
   }),
 });
 
-import queryScrapePosts from './queryController';
+import {queryScrapePosts, querySpecificPosts }from './queryController';
 
 const app = express();
 const port = 4000;
@@ -21,7 +21,8 @@ const port = 4000;
 const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
 app.get('/', async (req, res) => {
-  res.send(await queryScrapePosts(exampleQuery));
+  // res.send(await queryScrapePosts(exampleQuery));
+  res.send(await querySpecificPosts(exampleQuery));
 });
 
 app.listen(process.env.PORT || port, () => console.log(`--> Server is listening on ${port}`));

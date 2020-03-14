@@ -47,4 +47,11 @@ const queryScrapePosts = async (queryUrl: string) => {
   }
 };
 
-export default queryScrapePosts;
+const querySpecificPosts = async (queryUrl: string) => {
+
+};
+
+export {
+  queryScrapePosts,
+  querySpecificPosts
+}
