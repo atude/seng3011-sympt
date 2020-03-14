@@ -17,7 +17,7 @@ const contentScraper = async (
 ): Promise<PageObject> => {
   const urlData: string = `https://promedmail.org/promed-post/?id=${id}`;
   const page = await browserInstance.newPage();
-  await page.goto(urlData, { waitUntil: 'networkidle2', timeout: 0 });
+  await page.goto(urlData, { waitUntil: 'networkidle2', timeout: 150000 });
 
   try {
     await page.waitForFunction('document.getElementsByClassName("publish_date_html").length > 0');

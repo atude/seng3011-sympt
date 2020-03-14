@@ -5,6 +5,8 @@ import { ScrapeResults, PageObject } from './types';
 import generateError from './utils/generateError';
 import { articlesPromedRef } from './firebase/collectionReferences';
 
+const queryCap = 5;
+
 const queryScrapePosts = async (queryUrl: string) => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -29,6 +31,8 @@ const queryScrapePosts = async (queryUrl: string) => {
     if (idResults.results) {
       const results: Promise<PageObject>[] = 
         idResults.results
+        // !! temporarily add cap
+          .splice(0, queryCap)
           .map((pageId: string) => contentScraper(pageId, browser));
  
       const processedResults: PageObject[] = (await Promise.all(results))
