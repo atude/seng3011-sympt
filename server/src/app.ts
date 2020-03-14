@@ -2,7 +2,7 @@
 /* eslint-disable import/first */
 import express from 'express';
 import * as admin from 'firebase-admin';
-// import queryScrapePosts from './queryController';
+import queryScrapePosts from './queryController';
 import diseaseList from './constants/diseaseList.json';
 import firestoreScrapedPosts from './firestoreQueryController';
 
@@ -35,8 +35,7 @@ function scrapePromed(i: number) {
   }, 120 * 1000 * i);
 }
 
-// const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&
-// enddate=2020-02-01T00:00:00&location=china';
+const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
 app.get('/', async (req, res) => {
   setInterval(() => {
@@ -45,8 +44,8 @@ app.get('/', async (req, res) => {
     }
   }, 60 * 60 * 12 * 1000); // run every 12 hours
 
-  // res.send(await queryScrapePosts(exampleQuery));
-  // res.redirect('/4000');
+  res.send(await queryScrapePosts(exampleQuery));
+  res.redirect('/4000');
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
