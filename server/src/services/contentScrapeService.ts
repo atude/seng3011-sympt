@@ -1,6 +1,7 @@
-import { PageObject } from '../types';
+import { PageObject, Location } from '../types';
 import diseaseList from '../constants/diseaseList.json';
 import { dateRegex, formatDateToExact } from '../utils/formatters';
+import worldCitiesList from '../constants/worldCitiesList.json';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -97,6 +98,18 @@ const contentScraper = async (
           `${uniqueDates[0]} xx:xx:xx to ${uniqueDates[uniqueDates.length - 1]} xx:xx:xx` 
         ) : "xx:xx:xx xx:xx:xx";
 
+    const locations: Location[] = [];
+    filteredMainText.split('. ').forEach((sentence) => {
+      for (let i = 0; i < worldCitiesList.length; i++) {
+        const country: string = worldCitiesList[i].country;
+        const location: string = worldCitiesList[i].name;
+        if (sentence.includes(country) && sentence.includes(location) && country !== location) {
+          const locationObj: Location = { country, location };
+          locations.push(locationObj);
+        }
+      }
+    });
+
     const parsedPageData: PageObject = {
       id,
       url: urlData, 
@@ -106,6 +119,7 @@ const contentScraper = async (
       reports: {
         diseases: foundDiseases.length ? foundDiseases : ["unknown"],
         event_date: filteredDates,
+        locations: locations.length ? locations : [],
       },
     };
  
