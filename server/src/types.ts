@@ -22,5 +22,10 @@ export type Report = {
   diseases?: string[],
   syndromes?: string[],
   event_date?: string,
-  locations?: string[]
+  locations?: Location[]
+}
+
+export type Location = {
+  country: string,
+  location: string
 }
