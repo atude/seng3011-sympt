@@ -15,17 +15,19 @@ export type PageObject = {
   date_of_publication?: string,
   headline?: string,
   main_text?: string,
-  reports?: Report,
+  reports?: Report[],
 }
 
 export type Report = {
   diseases?: string[],
   syndromes?: string[],
   event_date?: string,
-  locations?: Location[]
+  locations?: Location[],
 }
 
 export type Location = {
-  country: string,
-  location: string
+  country?: string,
+  location?: string,
+  geonameID: number,
+  subArea?: string | null,
 }
