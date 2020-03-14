@@ -4,7 +4,6 @@ import express from 'express';
 import * as admin from 'firebase-admin';
 import queryScrapePosts from './queryController';
 import diseaseList from './constants/diseaseList.json';
-import firestoreScrapedPosts from './firestoreQueryController';
 
 require('dotenv').config();
 const serviceAccount = require('../service-account.json');
@@ -17,6 +16,8 @@ admin.initializeApp({
 });
 
 import queryScrapePosts from './queryController';
+import firestoreScrapedPosts from './firestoreQueryController';
+
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
