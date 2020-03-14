@@ -11,6 +11,9 @@
     "lint:check": "./node_modules/.bin/eslint ./src/**/*.ts",
     "lint:fix": "./node_modules/.bin/eslint ./src/**/*.ts --fix"
   },
+  "engines": {
+    "node": "12.6.1"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {

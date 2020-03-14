@@ -8,7 +8,12 @@ import { articlesPromedRef } from './firebase/collectionReferences';
 import * as admin from 'firebase-admin';
 
 const queryScrapePosts = async (queryUrl: string) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ],
+  });
 
   try {
     const idResults: ScrapeResults = await urlPageResultIds(
