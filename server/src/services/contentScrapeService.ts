@@ -11,7 +11,6 @@ const headerValues: string[] = [
 ];
 
 const minSentenceLength: number = 70;
-const maxParagraphCount: number = 5;
 
 const contentScraper = async (
   id: string, 
@@ -68,7 +67,6 @@ const contentScraper = async (
       })
       // Avoid random fragments
       .filter((chunk) => chunk.length > minSentenceLength)
-      .slice(0, maxParagraphCount)
       .join(" ");
 
     if (!filteredMainText) {
@@ -102,17 +100,17 @@ const contentScraper = async (
     /* Filter for locations */
     const locations: Location[] = [];
     filteredMainText.split('. ').forEach((sentence) => {
-      for (let i = 0; i < worldCitiesList.length; i++) {
-        const country: string = worldCitiesList[i].country;
-        const location: string = worldCitiesList[i].name;
-        const geonameID: number = worldCitiesList[i].geonameid;
-        const subArea = worldCitiesList[i].subcountry;
-        if (sentence.includes(country) && sentence.includes(location) && country !== location) {
-          locations.push({
-            country, location, geonameID, subArea, 
-          });
+      worldCitiesList.forEach((city: Location) => {
+        if (
+          sentence.includes(city.country) && 
+          sentence.includes(city.location) && 
+          city.country !== city.location
+        ) {
+          if (locations.indexOf(city) === -1) {
+            locations.push(city);
+          }
         }
-      }
+      });
     });
 
     /* Filter for report dates */

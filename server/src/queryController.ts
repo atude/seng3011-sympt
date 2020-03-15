@@ -9,8 +9,11 @@ import { formatQueryUrl } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
 
-// In future cases, use pagination instead of hardcap
-const queryCap = 10;
+// How many pages to scrape per call max
+const scrapeCap = 10;
+
+// How many results to return per query
+const queryLimit = 5;
 
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
@@ -30,11 +33,12 @@ export const getArticlesForceScrape = async (queryUrl: string): (
 
     const results: Promise<PageObject>[] = 
       idResults.results
-        .splice(0, queryCap)
+        .splice(0, scrapeCap)
         .map((pageId: string) => contentScraper(pageId, browser));
 
     const processedResults: PageObject[] = (await Promise.all(results))
-      .filter((pageContent) => pageContent && pageContent.id);
+      .filter((pageContent) => pageContent && pageContent.id)
+      .splice(0, queryLimit);
       
     await browser.close();
 
@@ -99,10 +103,10 @@ export const getArticles = async (queryUrl: string): (
       },
     ));
       
-  if (!filteredArticles.length) {
+  if (filteredArticles.length < 5) {
     console.log("Failed to find articles in DB. Scraping instead...");
     return getArticlesForceScrape(queryUrl);
   }
   
-  return filteredArticles as PageObject[];
+  return filteredArticles.splice(0, queryLimit) as PageObject[];
 };

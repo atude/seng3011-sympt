@@ -34,8 +34,8 @@ export type Report = {
 }
 
 export type Location = {
-  country?: string;
-  location?: string;
-  geonameID: number;
-  subArea?: string | null;
+  country: string;
+  location: string;
+  geonameId: number;
+  subArea: string | null;
 }
