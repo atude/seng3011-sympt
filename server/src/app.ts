@@ -1,7 +1,7 @@
 import express from 'express';
 import admin from './firebase/firebaseInit';
 // import diseaseList from './constants/diseaseList.json';
-import queryScrapePosts from './queryController';
+import { getArticlesForceScrape } from './queryController';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
@@ -21,16 +21,10 @@ console.log(`Admin init: ${!!admin}`);
 //   }, 120 * 1000 * i);
 // }
 
-const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
+// const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
-app.get('/', async (req, res) => {
-  // setInterval(() => {
-  //   for (let i: number = 0; i < diseaseList.length; i++) {
-  //     scrapePromed(i);
-  //   }
-  // }, 60 * 60 * 12 * 1000); // run every 12 hours
-
-  res.send(await queryScrapePosts(exampleQuery));
+app.get('/articles/', async (req, res) => {
+  res.send(await getArticlesForceScrape(req.query));
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));

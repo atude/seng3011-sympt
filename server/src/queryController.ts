@@ -1,62 +1,63 @@
 import puppeteer from 'puppeteer';
 import urlPageResultIds from './services/pageIdScrapeService';
 import contentScraper from './services/contentScrapeService';
-import { ScrapeResults, PageObject } from './types';
-import generateError from './utils/generateError';
-import { articlesPromedRef } from './firebase/collectionReferences';
+import {
+  ScrapeResults, PageObject, GenError, URLFormattedTerms, 
+} from './types';
+import { articlesRef } from './firebase/collectionReferences';
+import { formatQueryUrl } from './utils/formatters';
+import puppeteerConfig from './constants/puppeteerConfig';
+import { isError } from './utils/checkFunctions';
 
 // In future cases, use pagination instead of hardcap
 const queryCap = 6;
 
-const queryScrapePosts = async (queryUrl: string) => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--headless',
-    ],
-  });
+export const getArticlesForceScrape = async (queryUrl: string): (
+  Promise<PageObject[] | GenError> 
+) => {
+  const formattedQuery = formatQueryUrl(queryUrl);
+  if (isError(formattedQuery)) return formattedQuery;
+
+  const browser = await puppeteer.launch(puppeteerConfig);
 
   try {
-    const idResults: ScrapeResults = await urlPageResultIds(
-      queryUrl,
+    const idResults: ScrapeResults | GenError = await urlPageResultIds(
+      formattedQuery as URLFormattedTerms,
       browser,
     );
  
-    if (idResults.error) {
-      console.error(idResults.error);
-      return idResults.error;
-    } 
-    
-    if (idResults.results) {
-      const results: Promise<PageObject>[] = 
-        idResults.results
-          .splice(0, queryCap)
-          .map((pageId: string) => contentScraper(pageId, browser));
- 
-      const processedResults: PageObject[] = (await Promise.all(results))
-        .filter((pageContent) => pageContent && pageContent.id);
-        
-      await browser.close();
+    if (isError(idResults)) return idResults;
 
-      // Save to firestore
-      processedResults.forEach(async (pageData) => {
-        if (pageData.id) {
-          await articlesPromedRef.doc(pageData.id).set(pageData);
-        }
-      });
-      return processedResults;
-    } 
+    const results: Promise<PageObject>[] = 
+      idResults.results
+        .splice(0, queryCap)
+        .map((pageId: string) => contentScraper(pageId, browser));
 
-    return generateError(500, "Error while querying", "Query failed unexpectedly.");
-  } catch (error) {
-    console.error("Something went wrong while scraping. Try restarting the server.");
-    console.error(error);
+    const processedResults: PageObject[] = (await Promise.all(results))
+      .filter((pageContent) => pageContent && pageContent.id);
+      
     await browser.close();
+
+    // Save to firestore
+    processedResults.forEach(async (pageData) => {
+      if (pageData.id) {
+        await articlesRef.doc(pageData.id).set(pageData);
+      }
+    });
+
+    return processedResults;
+  } catch (error) {
+    await browser.close();
+    console.log("Something went wrong while scraping. Try restarting the server.");
+    console.log(error);
+    // TODO: Should return our own error here
     return error;
   }
 };
 
-export default queryScrapePosts;
+export const getArticles = async (queryUrl: string): (
+  Promise<PageObject[] | GenError> 
+) => {
+  console.log("x");
+  return getArticlesForceScrape(queryUrl);
+};

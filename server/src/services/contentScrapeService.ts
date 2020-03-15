@@ -1,6 +1,6 @@
 import { PageObject, Location, Report } from '../types';
 import diseaseList from '../constants/diseaseList.json';
-import { dateRegex, formatDateToExact } from '../utils/formatters';
+import { formatDateToExact, dateRegexWords } from '../utils/formatters';
 import worldCitiesList from '../constants/worldCitiesList.json';
 import syndromeList from '../constants/syndromeList.json';
 
@@ -108,10 +108,9 @@ const contentScraper = async (
         const geonameID: number = worldCitiesList[i].geonameid;
         const subArea = worldCitiesList[i].subcountry;
         if (sentence.includes(country) && sentence.includes(location) && country !== location) {
-          const locationObj: Location = {
-            country, location, geonameID, subArea,
-          };
-          locations.push(locationObj);
+          locations.push({
+            country, location, geonameID, subArea, 
+          });
         }
       }
     });
@@ -120,7 +119,7 @@ const contentScraper = async (
     // TODO: error checking and fill missing date sections if possible
     const foundDates = 
       filteredMainText
-        .match(dateRegex)
+        .match(dateRegexWords)
         ?.map((dateStr: string) => formatDateToExact(dateStr))
         .sort();
 
@@ -152,8 +151,8 @@ const contentScraper = async (
     return parsedPageData;
   } catch (error) {
     await page.close();
-    console.error(`Failed to get data for page ${urlData}. Skipping this page...`);
-    console.error(error);
+    console.log(`! Failed to get page data on ${urlData}. Skipping...`);
+    console.log(`Reason: ${error.message}`);
     return { id: null };
   }
 };
