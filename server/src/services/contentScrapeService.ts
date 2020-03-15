@@ -85,8 +85,9 @@ const contentScraper = async (
     const syndromes: string[] = syndromeList.map((syndrome) => {
       const doesIncludeSyndrome: boolean[] = syndrome.name.toLowerCase().split(" ").map(
         (syndromeWord) => {
-          if (filteredMainText.toLowerCase().split(". ").filter(
-            (sentence) => sentence.includes(syndromeWord)).length
+          if (filteredMainText.toLowerCase()
+            .split(". ")
+            .filter((sentence) => sentence.includes(syndromeWord)).length
           ) {
             return true;
           } 
