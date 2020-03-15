@@ -17,11 +17,11 @@ tags:
 schemes:
 - "https"
 paths:
-  /proMed:
+  /articles:
     get:
       tags:
       - "developers"
-      summary: "searches database"
+      summary: "searches database for articles"
       description: "By passing in the appropriate options, you can search for\navailable\
         \ ProMed disease reports in the system\n"
       operationId: "searchProMedDiseaseReports"
@@ -63,42 +63,19 @@ definitions:
     type: "object"
     required:
     - "date_of_publication"
-    - "diseases"
     - "headline"
     - "main_text"
     - "reports"
-    - "syndromes"
     - "url"
     properties:
       url:
         type: "string"
-        example: "https://promedmail.org/promed-post/?id=6943858"
       date_of_publication:
         type: "string"
-        example: "2020-02-01 23:02:03"
       headline:
         type: "string"
-        example: "Novel coronavirus (28): China (HU) animal reservoir"
       main_text:
         type: "string"
-        example: "NOVEL CORONAVIRUS (28): CHINA (HUBEI) ANIMAL RESERVOIR ******************************************************\
-          \ A ProMED-mail post  http://www.promedmail.org  ProMED-mail is a program\
-          \ of the International Society for Infectious Diseases  http://www.isid.org\
-          \  In this posting: [1] Measures to regulate the trade and maintenance of\
-          \ wild animals in China [2] Virus detection in environmental samples from\
-          \ the seafood market [3] Initial epidemiology, public announcement, 31 Dec\
-          \ 2019 ****** [1] Measures to regulate the trade and maintenance of wild\
-          \ animals in China Date: Fri 31 Jan 2020 Source: Xinhuanet News [in Chinese,\
-          \ machine trans., abridged, edited]  http://www.xinhuanet.com/politics/2020-01/31/c_1125515239.htm\
-          \  On 26 Jan 2020, the China Centers for Disease Control and Prevention\
-          \ announced that the new coronavirus was detected in environmental samples\
-          \ from the South China Seafood Market in Wuhan [see item 2]. The virus originated\
-          \ from wild animals sold in the seafood market. For this reason, the State\
-          \ General Administration of Market Supervision, the Ministry of Agriculture\
-          \ and Rural Affairs, and the National Forestry and Grassland Bureau jointly\
-          \ issued a public announcement on the 26th that from now on until the end\
-          \ of the national epidemic, wild animal trading activities are prohibited\
-          \ to cut off the source and transmission of the virus."
       reports:
         $ref: "#/definitions/Report"
       
@@ -176,5 +153,5 @@ definitions:
       country: "China"
       location: "Wuhan"
 # Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /sympt-30117/symptAPI/1.0.0
+host: "sympt-server.herokuapp.com"
+basePath: "/"
