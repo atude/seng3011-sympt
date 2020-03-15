@@ -1,7 +1,7 @@
 {
-  "name": "sympt-promed-api",
+  "name": "sympt-api",
   "version": "1.0.0",
-  "description": "Sympt SENG3011 Promed API",
+  "description": "Sympt SENG3011 API",
   "main": "index.js",
   "scripts": {
     "prestart": "npm install",

@@ -1,15 +1,15 @@
 ---
 swagger: "2.0"
 info:
-  description: "Sympt SENG3011 Promed API\n \
+  description: "Sympt API - SENG3011\n \
   \ API returns disease reports according to search criteria found from promedmail.org/"
   version: "1.0.0"
-  title: "Sympt Promed API"
+  title: "Sympt API"
   contact:
     email: "sympt.3011@gmail.com"
 tags:
 - name: "developers"
-  description: "Operations available to regular developers"
+  description: "Operations available to developers"
 schemes:
 - "https"
 paths:
@@ -17,10 +17,10 @@ paths:
     get:
       tags:
       - "developers"
-      summary: "Searches database for articles according to search criterias"
+      summary: "Searches database for articles according to search criterias."
       description: "By passing in the appropriate options, you can search for available \
-        \ ProMed disease reports in the database\n A scrape of ProMed will be triggered only if there are no results in database"
-      operationId: "searchProMedDiseaseReports"
+        \ disease reports in the database.\n A scrape of disease websites will be triggered if there are no results in database."
+      operationId: "searchDiseaseReports"
       produces:
       - "application/json"
       parameters:
@@ -31,31 +31,36 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "Pass a start date to search for articles published after this date"
+        description: "The start date to search for articles published after this date (ISO time string format)."
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "Pass an end date to search for articles published before this date"
+        description: "The end date to search for articles published before this date (ISO time string format)."
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports relavent to a location"
+        description: "Search disease reports relavent to a location."
         required: true
         type: "string"
       - name: "keyterms"
         in: "query"
-        description: "Pass a comma seperated list of key search terms"
-        required: true
+        description: "A comma separated list of key terms related to diseases or events."
+        required: false
         type: "string"
+      - name: "count"
+        in: "query"
+        description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper."
+        required: false
+        type: "number"
       responses:
         "200":
           description: "Disease reports matching criteria"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/proMedItem"
+              $ref: "#/definitions/Article"
         "400":
           description: "Bad input parameter"
         "500":
@@ -66,9 +71,9 @@ paths:
     get:
       tags:
       - "developers"
-      summary: "Force scrape of Promed for articles according to search criterias"
-      description: "Will force a rescrape of the Promed website and will search on search criteria"
-      operationId: "forceScrapeProMedDiseaseReports"
+      summary: "Force scrape of web sources for articles according to search criterias, and returns results."
+      description: "Will force a rescrape of web sources and will search on provided criteria."
+      operationId: "forceScrapeDiseaseReports"
       produces:
       - "application/json"
       parameters:
@@ -79,39 +84,39 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "Pass a start date to search for articles published after this date"
+        description: "The start date to search for articles published after this date (ISO time string format)."
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "Pass an end date to search for articles published before this date"
+        description: "The end date to search for articles published before this date (ISO time string format)."
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "search disease reports by a location name"
+        description: "Search disease reports by a location name."
         required: true
         type: "string"
       - name: "keyterms"
         in: "query"
-        description: "a comma separated list of all the key terms"
-        required: true
+        description: "A comma separated list of key terms related to diseases or events."
+        required: false
         type: "string"
       responses:
         "200":
-          description: "disease reports matching criteria"
+          description: "Disease reports matching criteria"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/proMedItem"
+              $ref: "#/definitions/Article"
         "400":
-          description: "bad input parameter"
+          description: "Bad input parameter"
         "500":
-          description: "insufficient articles"
+          description: "Insufficient articles"
       x-swagger-router-controller: "Developers"
   
 definitions:
-  proMedItem:
+  Article:
     type: "object"
     required:
     - "date_of_publication"
