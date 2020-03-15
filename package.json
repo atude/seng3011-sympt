@@ -4,13 +4,13 @@
   "description": "",
   "scripts": {
     "build": "npm install && npm run build:server && npm run build:web",
-    "build:server": "cd server && npm run build",
-    "build:web": "cd web && npm run build",
-    "start:server": "cd server && npm start",
-    "start:web": "cd web && npm start",
+    "build:server": "cd PHASE_1/API_SourceCode/server && npm run build",
+    "build:web": "cd PHASE_2/Application_SourceCode/web && npm run build",
+    "start:server": "cd PHASE_1/API_SourceCode/server && npm start",
+    "start:web": "cd PHASE_2/Application_SourceCode/web && npm start",
     "start": "concurrently npm:start:*",
-    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
-    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
+    "lint:check": "cd PHASE_1/API_SourceCode/server && npm run lint:check -s && cd ../../../PHASE_2/Application_SourceCode/web && npm run lint:check -s",
+    "lint:fix": "cd PHASE_1/API_SourceCode/server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
   },
   "repository": {
     "type": "git",
