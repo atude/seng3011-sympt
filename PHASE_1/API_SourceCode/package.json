@@ -1,0 +1,37 @@
+{
+  "name": "sympt-core",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npm install && npm run build:server && npm run build:web",
+    "build:server": "cd server && npm run build",
+    "build:web": "cd web && npm run build",
+    "start:server": "cd server && npm start",
+    "start:web": "cd web && npm start",
+    "start": "concurrently npm:start:*",
+    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
+    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atude/seng3011-sympt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atude/seng3011-sympt/issues"
+  },
+  "homepage": "https://github.com/atude/seng3011-sympt#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:check"
+    }
+  }
+}

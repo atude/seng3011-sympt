@@ -1,0 +1,36 @@
+{
+  "name": "sympt-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "rm -rf ./dist && npm i && ./node_modules/.bin/tsc",
+    "start": "./node_modules/.bin/tsc && node ./dist/app.js",
+    "start:dev": "./node_modules/.bin/tsc && ts-node-dev --poll ./src/app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:check": "./node_modules/.bin/eslint ./src/**/*.ts",
+    "lint:fix": "./node_modules/.bin/eslint ./src/**/*.ts --fix"
+  },
+  "engines": {
+    "node": "12.6.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "ts-node-dev": "^1.0.0-pre.44"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "@types/puppeteer": "^2.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.4",
+    "firebase-admin": "^8.9.2",
+    "puppeteer": "^2.1.1",
+    "typescript": "^3.8.3"
+  }
+}
