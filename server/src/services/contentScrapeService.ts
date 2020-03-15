@@ -45,7 +45,6 @@ const contentScraper = async (
       .split("<br><br>");
 
     /* Filter for main text */
-
     let isStartedContent: boolean = false;
     const filteredMainText: string = mainTextDataChunks.map((chunk) => {
       if (isStartedContent) {
@@ -68,7 +67,9 @@ const contentScraper = async (
       // Avoid random fragments
       .filter((chunk) => chunk.length > minSentenceLength)
       .join(" ");
+    // TODO: Remove links and emails and other junk from main text
 
+    
     if (!filteredMainText) {
       throw new Error("Failed to find sufficient data in body text.");
     }
@@ -81,36 +82,54 @@ const contentScraper = async (
       }
     });
 
-    const syndromes: string[] = [];
-    filteredMainText.split('. ').forEach((sentence) => {
-      for (let i = 0; i < syndromeList.length; i++) {
-        let syndromeCount = 0;
-        const syndromeLength = syndromeList[i].name.split(' ').length;
-        syndromeList[i].name.split(' ').forEach((syndrome) => {
-          if (sentence.toLowerCase().includes(syndrome.toLowerCase())) {
-            syndromeCount++;
-          }
-        });
-        if (syndromeCount >= syndromeLength / 2 && !syndromes.includes(syndromeList[i].name)) {
-          syndromes.push(syndromeList[i].name);
-        }
+    const syndromes: string[] = syndromeList.map((syndrome) => {
+      const doesIncludeSyndrome: boolean[] = syndrome.name.toLowerCase().split(" ").map(
+        (syndromeWord) => {
+          if (filteredMainText.toLowerCase().split(". ").filter(
+            (sentence) => sentence.includes(syndromeWord)).length
+          ) {
+            return true;
+          } 
+          return false;
+        },
+      );
+
+      if (doesIncludeSyndrome.includes(false)) {
+        return "";
       }
-    });
+
+      return syndrome.name;
+    }).filter((syndrome) => syndrome !== "");
+      
+    //   console.log(doesIncludeSyndrome);
+
+    //   for (let i = 0; i < syndromeList.length; i++) {
+
+    //     let syndromeCount = 0;
+    //     const syndromeLength = syndromeList[i].name.split(' ').length;
+    //     syndromeList[i].name.split(' ').forEach((syndrome) => {
+    //       if (sentence.toLowerCase().includes(syndrome.toLowerCase())) {
+    //         syndromeCount++;
+    //       }
+    //     });
+    //     if (syndromeCount >= syndromeLength / 2 && !syndromes.includes(syndromeList[i].name)) {
+    //       syndromes.push(syndromeList[i].name);
+    //     }
+    //   }
+    // });
 
     /* Filter for locations */
     const locations: Location[] = [];
-    filteredMainText.split('. ').forEach((sentence) => {
-      worldCitiesList.forEach((city: Location) => {
-        if (
-          sentence.includes(city.country) && 
-          sentence.includes(city.location) && 
-          city.country !== city.location
-        ) {
-          if (locations.indexOf(city) === -1) {
-            locations.push(city);
-          }
+    worldCitiesList.forEach((city: Location) => {
+      if (
+        ((filteredMainText.includes(city.country) || headlineData.includes(city.country)) && 
+        (filteredMainText.match(`\\b${city.location}\\b`)) && 
+        city.country !== city.location)
+      ) {
+        if (locations.indexOf(city) === -1) {
+          locations.push(city);
         }
-      });
+      }
     });
 
     /* Filter for report dates */

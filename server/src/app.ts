@@ -23,13 +23,13 @@ console.log(`Admin init: ${!!admin}`);
 
 // eslint-disable-next-line max-len
 // const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
-
 app.get('/articles/', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.send(await getArticles(req.query));
 });
 
-app.get('/articles-force/', async (req, res) => {
+app.get('/articles-force/', async (req, res) => {  
+  res.header("Access-Control-Allow-Origin", "*");
   res.send(await getArticlesForceScrape(req.query));
 });
 

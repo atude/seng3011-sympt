@@ -13,8 +13,9 @@ export type GenError = {
 export type URLFormattedTerms = {
   startDate: string;
   endDate: string;
-  location: string;
-  keyTerms: string[];
+  location?: string;
+  keyTerms?: string[];
+  count?: number;
 }
 
 export type PageObject = {
@@ -35,7 +36,7 @@ export type Report = {
 
 export type Location = {
   country: string;
-  location: string;
+  location?: string;
   geonameId: number;
   subArea: string | null;
 }

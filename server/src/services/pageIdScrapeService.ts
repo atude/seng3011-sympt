@@ -21,18 +21,19 @@ const urlPageResultIds = async (
   } = searchQueries;
 
   try {
-    // Join listed keywords by ' AND ' and append location
-    const formattedKeyTerms: string = `${keyTerms?.join(' AND ')} AND ${location}`;
-    
     const page = await browserInstance.newPage();
     await page.goto('https://promedmail.org/promed-posts/', {
       waitUntil: 'networkidle2',
     });
 
     // type in key terms
-    await page.waitForSelector('#searchterm');
-    await page.focus('#searchterm');
-    await page.keyboard.type(formattedKeyTerms);
+    // Join listed keywords by ' AND ' and append location
+    if (keyTerms && keyTerms.length) {
+      const formattedKeyTerms: string = `${keyTerms?.join(' AND ')} AND ${location}`;
+      await page.waitForSelector('#searchterm');
+      await page.focus('#searchterm');
+      await page.keyboard.type(formattedKeyTerms);
+    }
 
     // type in dates
     await page.waitForSelector('#date1');

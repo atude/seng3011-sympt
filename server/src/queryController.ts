@@ -5,12 +5,12 @@ import {
   ScrapeResults, PageObject, GenError, URLFormattedTerms, Location, 
 } from './types';
 import { articlesRef } from './firebase/collectionReferences';
-import { formatQueryUrl } from './utils/formatters';
+import { formatQueryUrl, getNormalisedDate } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
 
 // How many pages to scrape per call max
-const scrapeCap = 10;
+const scrapeCap = 15;
 
 // How many results to return per query
 const queryLimit = 5;
@@ -65,13 +65,12 @@ export const getArticles = async (queryUrl: string): (
   const formattedQuery = formatQueryUrl(queryUrl);
   if (isError(formattedQuery)) return formattedQuery;
   const {
-    keyTerms, startDate, endDate, location, 
+    keyTerms, startDate, endDate, location, count
   } = formattedQuery;
 
-  const formatStartDate = new Date(startDate);
-  const formatEndDate = new Date(endDate);
+  const formatStartDate: Date = getNormalisedDate(startDate);
+  const formatEndDate: Date = getNormalisedDate(endDate);
 
-  console.log(formatStartDate, formatEndDate);
   const fetchArticles = await articlesRef.get();
   const allArticles: FirebaseFirestore.DocumentData[] = 
     fetchArticles.docs.map((document) => document.data());
@@ -80,11 +79,11 @@ export const getArticles = async (queryUrl: string): (
     // Country filter
     .filter((document) => document.reports[0].locations.some(
       (locationDetails: Location) => 
-        (location ? locationDetails.country?.toLowerCase() === location : true),
+        (location ? locationDetails.country?.toLowerCase() === location.toLowerCase() : true),
     ))
     // Date filter
     .filter((document) => {
-      const date: Date = new Date(document.date_of_publication);
+      const date: Date = getNormalisedDate(document.date_of_publication);
       if (date >= formatStartDate && date <= formatEndDate) {
         return true;
       }
@@ -103,10 +102,13 @@ export const getArticles = async (queryUrl: string): (
       },
     ));
       
-  if (filteredArticles.length < 5) {
+  console.log(filteredArticles.length);
+  if ((count && filteredArticles.length < count) || !filteredArticles.length) {
     console.log("Failed to find articles in DB. Scraping instead...");
     return getArticlesForceScrape(queryUrl);
   }
   
-  return filteredArticles.splice(0, queryLimit) as PageObject[];
+  return count ? 
+    filteredArticles.splice(0, count) as PageObject[] : 
+    filteredArticles as PageObject[];
 };
