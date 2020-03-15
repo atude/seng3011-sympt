@@ -11,10 +11,10 @@ export type GenError = {
 }
 
 export type URLFormattedTerms = {
-  startDate?: string;
-  endDate?: string;
-  location?: string;
-  keyTerms?: string[];
+  startDate: string;
+  endDate: string;
+  location: string;
+  keyTerms: string[];
 }
 
 export type PageObject = {

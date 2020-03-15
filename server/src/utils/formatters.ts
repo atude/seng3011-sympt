@@ -48,7 +48,7 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
   return {
     startDate: `${startMonth}/${startDay}/${startYear}`,
     endDate: `${endMonth}/${endDay}/${endYear}`,
-    keyTerms: keyTerms.split(',').filter((keyterm) => keyterm !== ""),
+    keyTerms: keyTerms.toLowerCase().split(',').filter((keyterm) => keyterm !== ""),
     location,
   } as URLFormattedTerms;
 };
