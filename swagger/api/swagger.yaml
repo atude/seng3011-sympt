@@ -6,9 +6,6 @@ info:
   title: "Sympt Promed API"
   contact:
     email: "sympt.3011@gmail.com"
-  license:
-    name: "Apache 2.0"
-    url: "http://localhost:4001"
 # host: "localhost:4001"
 # basePath: "/"
 tags:
@@ -161,5 +158,5 @@ definitions:
 # host: "sympt-server.herokuapp.com"
 # basePath: "/"
 # Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /sympt-30117/symptAPI/1.0.0
+host: sympt-server.herokuapp.com
+basePath: /
