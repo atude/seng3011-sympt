@@ -9,8 +9,8 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://localhost:4001"
-host: "virtserver.swaggerhub.com"
-basePath: "/sympt-30117/symptAPI/1.0.0"
+# host: "localhost:4001"
+# basePath: "/"
 tags:
 - name: "developers"
   description: "Operations available to regular developers"
@@ -24,7 +24,7 @@ paths:
       summary: "searches database"
       description: "By passing in the appropriate options, you can search for\navailable\
         \ ProMed disease reports in the system\n"
-      operationId: "searchProMedDIseaseReports"
+      operationId: "searchProMedDiseaseReports"
       produces:
       - "application/json"
       parameters:
@@ -47,11 +47,6 @@ paths:
         in: "query"
         description: "a comma separated list of all the key terms"
         required: false
-        type: "string"
-      - name: "token"
-        in: "query"
-        description: "authorisation token"
-        required: true
         type: "string"
       responses:
         "200":
@@ -106,26 +101,18 @@ definitions:
           \ to cut off the source and transmission of the virus."
       reports:
         $ref: "#/definitions/Report"
-      diseases:
-        type: "array"
-        items:
-          type: "string"
-          example: "Coronavirus"
-      syndromes:
-        type: "array"
-        items:
-          type: "string"
-          example: "Fever"
+      
     example:
       reports:
         event_date: "2020-01-03 xx:xx:xx to 2020-01-15"
         locations:
           country: "China"
           location: "Wuhan"
-      date_of_publication: "2020-02-01 23:02:03"
-      diseases:
-      - "Coronavirus"
-      - "Coronavirus"
+        date_of_publication: "2020-02-01 23:02:03"
+        diseases:
+        - "Coronavirus"
+        syndromes:
+        - "Fever"
       main_text: "NOVEL CORONAVIRUS (28): CHINA (HUBEI) ANIMAL RESERVOIR ******************************************************\
         \ A ProMED-mail post  http://www.promedmail.org  ProMED-mail is a program\
         \ of the International Society for Infectious Diseases  http://www.isid.org\
@@ -144,20 +131,31 @@ definitions:
         \ public announcement on the 26th that from now on until the end of the national\
         \ epidemic, wild animal trading activities are prohibited to cut off the source\
         \ and transmission of the virus."
-      syndromes:
-      - "Fever"
-      - "Fever"
+  
       headline: "Novel coronavirus (28): China (HU) animal reservoir"
       url: "https://promedmail.org/promed-post/?id=6943858"
   Report:
     required:
     - "event_date"
+    - "locations"
+    - "diseases"
+    - "syndromes"
     properties:
       event_date:
         type: "string"
         example: "2020-01-03 xx:xx:xx to 2020-01-15"
       locations:
         $ref: "#/definitions/Location"
+      diseases:
+        type: "array"
+        items:
+          type: "string"
+          example: "Coronavirus"
+      syndromes:
+        type: "array"
+        items:
+          type: "string"
+          example: "Fever"
     example:
       event_date: "2020-01-03 xx:xx:xx to 2020-01-15"
       locations:
@@ -177,3 +175,6 @@ definitions:
     example:
       country: "China"
       location: "Wuhan"
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /sympt-30117/symptAPI/1.0.0
