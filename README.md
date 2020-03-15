@@ -1,5 +1,15 @@
 # Sympt [WIP]
 
+This API enables users to return a list of disease reports according to search criteria found from [promedmail.org/](promedmail.org/).
+
+This repository contains:
+
+* API design details 
+
+* Project management information
+
+* Swagger documentation + API endpoint which can be found at [sympt-swagger.herokuapp.com/docs/](sympt-swagger.herokuapp.com/docs/)
+
 ## Local Setup
 ### Requirements
 
