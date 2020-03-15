@@ -1,4 +1,4 @@
-import { ScrapeResults } from '../types';
+import { ScrapeResults, URLFormattedTerms, GenError } from '../types';
 import generateError from '../utils/generateError';
 
 const checkSubmitButton = "document.getElementsByName('submit') !== null";
@@ -12,121 +12,90 @@ const checkSearchResults = "document.getElementById('search_results')?.childElem
 //
 // Return an array of ids for pages to scrape from
 
-// TODO:
-// - add tighter error checking for times supplied (none currently)
-// - make use of the times supplied when parsing pages
-
 const urlPageResultIds = async (
-  urlSearchQueries: string, 
+  searchQueries: URLFormattedTerms, 
   browserInstance: any,
-): Promise<ScrapeResults> => {
-  const urlParams = new URLSearchParams(urlSearchQueries);
-  const keyTerms = urlParams.get('keyterms');
-  const startDate = urlParams.get('startdate');
-  const endDate = urlParams.get('enddate');
-  const location = urlParams.get('location');
+): Promise<ScrapeResults | GenError> => {
+  const {
+    keyTerms, startDate, endDate, location, 
+  } = searchQueries;
 
-  if (startDate === null) {
-    return generateError(403, "Bad Request", "No specified start date.");
-  } if (endDate === null) {
-    return generateError(403, "Bad Request", "No specified end date.");
-  } if (location === null) {
-    return generateError(403, "Bad Request", "No specified location.");
-  } if (keyTerms === null) {
-    return generateError(403, "Bad Request", "No specified keyterm(s).");
-  }
+  try {
+    // Join listed keywords by ' AND ' and append location
+    const formattedKeyTerms: string = `${keyTerms?.join(' AND ')} AND ${location}`;
+    
+    const page = await browserInstance.newPage();
+    await page.goto('https://promedmail.org/promed-posts/', {
+      waitUntil: 'networkidle2',
+    });
 
-  // Join listed keywords by ' AND ' and append location
-  const formattedKeyTerms: string = `${keyTerms?.split(',').join(' AND ')} AND ${location}`;
+    // type in key terms
+    await page.waitForSelector('#searchterm');
+    await page.focus('#searchterm');
+    await page.keyboard.type(formattedKeyTerms);
 
-  const dateRegex = /^([0-9]{4})-([0-9]{2})-([0-9]{2}).*/;
+    // type in dates
+    await page.waitForSelector('#date1');
+    await page.focus('#date1');
+    await page.keyboard.type(startDate);
 
-  // Compare the startdate submitted with the regex
-  const startDateGroups = startDate.match(dateRegex);
-  let startYear: string = '';
-  let startMonth: string = '';
-  let startDay: string = '';
-  if (startDateGroups !== null) {
-    [, startYear, startMonth, startDay] = startDateGroups;
-  } else {
-    return generateError(403, "Bad Request", "Invalid start date.");
-  }
+    await page.waitForSelector('#date2');
+    await page.focus('#date2');
+    await page.keyboard.type(endDate);
 
-  const formattedStartDate = `${startMonth}/${startDay}/${startYear}`;
+    // include archive numbers on results
+    await page.waitForSelector('#show_us');
+    await page.click('#show_us');
 
-  // Compare the enddate submitted with the regex
-  const endDateGroups = endDate.match(dateRegex);
-  let endYear: string = '';
-  let endMonth: string = '';
-  let endDay: string = '';
-  if (endDateGroups !== null) {
-    [, endYear, endMonth, endDay] = endDateGroups;
-  } else {
-    return generateError(403, "Bad Request", "Invalid end date.");
-  }
+    // include search terms in the subject body
+    await page.waitForSelector('#kwby2');
+    await page.click('#kwby2');
 
-  const formattedEndDate = `${endMonth}/${endDay}/${endYear}`;
+    // click on the search button
+    await page.waitForFunction(checkSubmitButton);
+    const submitButton = await page.$(
+      'form[name="as_form"] input[type="submit"]',
+    );
+    await submitButton?.click();
 
-  const page = await browserInstance.newPage();
-  await page.goto('https://promedmail.org/promed-posts/', {
-    waitUntil: 'networkidle2',
-  });
+    await page.waitForFunction(checkSearchResults);
 
-  // type in key terms
-  await page.waitForSelector('#searchterm');
-  await page.focus('#searchterm');
-  await page.keyboard.type(formattedKeyTerms);
+    // grab the results from the table (this includes any inner html objects)
+    // extract the id of the result with a regex expression and append the
+    // id to the list on match
+    const searchResultIds: string[] = await page.evaluate(() => {
+      const linkIDRegex = /([0-9]+)<\/a>$/g;
+      const searchResultsList = document.getElementById('search_results')?.children;
 
-  // type in dates
-  await page.waitForSelector('#date1');
-  await page.focus('#date1');
-  await page.keyboard.type(formattedStartDate);
+      if (searchResultsList) {
+        const results = Array.from(searchResultsList).map((result) => {
+          const getIdFromTitle = result.children[0].innerHTML.match(linkIDRegex);
+          if (getIdFromTitle) {
+            return getIdFromTitle[0].replace(/<\/a>/, '');
+          } 
+          return "";
+        });
 
-  await page.waitForSelector('#date2');
-  await page.focus('#date2');
-  await page.keyboard.type(formattedEndDate);
+        return results;
+      }
 
-  // include archive numbers on results
-  await page.waitForSelector('#show_us');
-  await page.click('#show_us');
+      return [];
+    });
 
-  // include search terms in the subject body
-  await page.waitForSelector('#kwby2');
-  await page.click('#kwby2');
+    const searchResultIdsFiltered = searchResultIds.filter((result) => result);
 
-  // click on the search button
-  await page.waitForFunction(checkSubmitButton);
-  const submitButton = await page.$(
-    'form[name="as_form"] input[type="submit"]',
-  );
-  await submitButton?.click();
+    await page.close();
 
-  await page.waitForFunction(checkSearchResults);
-
-  // grab the results from the table (this includes any inner html objects)
-  // extract the id of the result with a regex expression and append the
-  // id to the list on match
-  const searchResultIDs: string[] = await page.evaluate(() => {
-    const linkIDRegex = /([0-9]+)<\/a>$/g;
-    const searchResultsList = document.getElementById('search_results')?.children;
-
-    if (searchResultsList) {
-      const results = Array.from(searchResultsList).map((result) => {
-        const getIdFromTitle = result.children[0].innerHTML.match(linkIDRegex);
-        if (getIdFromTitle) {
-          return getIdFromTitle[0].replace(/<\/a>/, '');
-        } 
-        return "";
-      });
-
-      return results;
+    if (searchResultIdsFiltered && searchResultIdsFiltered.length) {
+      return { results: searchResultIdsFiltered };
     }
 
-    return [];
-  });
-
-  await page.close();
-  return { results: searchResultIDs };
+    // Not enough results
+    throw Error();
+  } catch (error) {
+    console.log(error);
+    return generateError(500, "Insufficient articles", "Could not find articles with these parameters.");
+  }
 };
 
 export default urlPageResultIds;

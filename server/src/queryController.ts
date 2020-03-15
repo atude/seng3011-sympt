@@ -1,78 +1,108 @@
 import puppeteer from 'puppeteer';
 import urlPageResultIds from './services/pageIdScrapeService';
 import contentScraper from './services/contentScrapeService';
-import { ScrapeResults, PageObject } from './types';
-import generateError from './utils/generateError';
-import { articlesPromedRef } from './firebase/collectionReferences';
+import {
+  ScrapeResults, PageObject, GenError, URLFormattedTerms, Location, 
+} from './types';
+import { articlesRef } from './firebase/collectionReferences';
+import { formatQueryUrl } from './utils/formatters';
+import puppeteerConfig from './constants/puppeteerConfig';
+import { isError } from './utils/checkFunctions';
 
-import * as admin from 'firebase-admin';
+// In future cases, use pagination instead of hardcap
+const queryCap = 10;
 
-const queryScrapePosts = async (queryUrl: string) => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--headless',
-    ],
-  });
+export const getArticlesForceScrape = async (queryUrl: string): (
+  Promise<PageObject[] | GenError> 
+) => {
+  const formattedQuery = formatQueryUrl(queryUrl);
+  if (isError(formattedQuery)) return formattedQuery;
+
+  const browser = await puppeteer.launch(puppeteerConfig);
 
   try {
-    const idResults: ScrapeResults = await urlPageResultIds(
-      queryUrl,
+    const idResults: ScrapeResults | GenError = await urlPageResultIds(
+      formattedQuery as URLFormattedTerms,
       browser,
     );
  
-    if (idResults.error) {
-      console.error(idResults.error);
-      return idResults.error;
-    } 
-    
-    if (idResults.results) {
-      const results: Promise<PageObject>[] = 
-        idResults.results
-          .map((pageId: string) => contentScraper(pageId, browser));
- 
-      const processedResults: PageObject[] = (await Promise.all(results))
-        .filter((pageContent) => pageContent && pageContent.id);
-        
-      await browser.close();
+    if (isError(idResults)) return idResults;
 
-      // Save to firestore
-      processedResults.forEach(async (pageData) => {
-        if (pageData.id) {
-          await articlesPromedRef.doc(pageData.id).set(pageData);
-        }
-      });
-      return processedResults;
-    } 
+    const results: Promise<PageObject>[] = 
+      idResults.results
+        .splice(0, queryCap)
+        .map((pageId: string) => contentScraper(pageId, browser));
 
-    return generateError(500, "Error while querying", "Query failed unexpectedly.");
-  } catch (error) {
-    console.error("Something went wrong while scraping. Try restarting the server.");
-    console.error(error);
+    const processedResults: PageObject[] = (await Promise.all(results))
+      .filter((pageContent) => pageContent && pageContent.id);
+      
     await browser.close();
+
+    // Save to firestore
+    processedResults.forEach(async (pageData) => {
+      if (pageData.id) {
+        await articlesRef.doc(pageData.id).set(pageData);
+      }
+    });
+
+    return processedResults;
+  } catch (error) {
+    await browser.close();
+    console.log("Something went wrong while scraping. Try restarting the server.");
+    console.log(error);
+    // TODO: Should return our own error here
     return error;
   }
 };
 
-const querySpecificPosts = async (startDate: string, endDate: string, location: string, leyterms: string[]) => {
-  
-  try {
-    const promedDocs = await admin
-      .firestore()
-      .collection("articles-promed")
-      .where("date_of_publication", ">=", startDate)
-      .where("date_of_publication", "<=", endDate)
-      .get();
-  const diseaseReports = promedDocs.docs.map((doc) => doc.data());
-    return diseaseReports;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+export const getArticles = async (queryUrl: string): (
+  Promise<PageObject[] | GenError> 
+) => {
+  const formattedQuery = formatQueryUrl(queryUrl);
+  if (isError(formattedQuery)) return formattedQuery;
+  const {
+    keyTerms, startDate, endDate, location, 
+  } = formattedQuery;
 
-export {
-  queryScrapePosts,
-  querySpecificPosts
-}
+  const formatStartDate = new Date(startDate);
+  const formatEndDate = new Date(endDate);
+
+  console.log(formatStartDate, formatEndDate);
+  const fetchArticles = await articlesRef.get();
+  const allArticles: FirebaseFirestore.DocumentData[] = 
+    fetchArticles.docs.map((document) => document.data());
+
+  const filteredArticles = allArticles
+    // Country filter
+    .filter((document) => document.reports[0].locations.some(
+      (locationDetails: Location) => 
+        (location ? locationDetails.country?.toLowerCase() === location : true),
+    ))
+    // Date filter
+    .filter((document) => {
+      const date: Date = new Date(document.date_of_publication);
+      if (date >= formatStartDate && date <= formatEndDate) {
+        return true;
+      }
+      return false;
+    })
+    // Keyterms filter
+    .filter((document) => document.reports[0].diseases.some(
+      (disease: string) => {
+        if (keyTerms && keyTerms?.length) {
+          if (keyTerms.includes(disease.toLowerCase())) {
+            return true;
+          }
+          return false;
+        }
+        return true;
+      },
+    ));
+      
+  if (!filteredArticles.length) {
+    console.log("Failed to find articles in DB. Scraping instead...");
+    return getArticlesForceScrape(queryUrl);
+  }
+  
+  return filteredArticles as PageObject[];
+};

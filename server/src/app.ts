@@ -1,37 +1,35 @@
-/* eslint-disable import/order */
-/* eslint-disable import/first */
 import express from 'express';
-import * as admin from 'firebase-admin';
-
-require('dotenv').config();
-const serviceAccount = require('../service-account.json');
-
-admin.initializeApp({ 
-  credential: admin.credential.cert({
-    ...serviceAccount,
-    private_key: process.env.FIREBASE_KEY?.replace(/\\n/g, '\n') ?? "",
-  }),
-});
-
-import {/*queryScrapePosts,*/ querySpecificPosts }from './queryController';
+import admin from './firebase/firebaseInit';
+// import diseaseList from './constants/diseaseList.json';
+import { getArticlesForceScrape, getArticles } from './queryController';
 
 const app = express();
-const port: number = Number(process.env.PORT) || 4001;
+const port: number = Number(process.env.PORT) || 4000;
+console.log(`Admin init: ${!!admin}`);
 
-var exampleQuery = '?keyterms=coronavirus,disease&startdate=2020-01-31T00:00:00&enddate=2020-02-01T00:00:00&location=china';
+// function scrapePromed(i: number) {
+//   setTimeout(async () => {
+//     const searchDisease: string = diseaseList[i].name.split(' ').join(' AND ');
+//     console.log(`searching on terms: ${searchDisease}`);
+//     // the query url is start/end date and location agnostic only taking the most recent results
+//     const queryURL: string = `?keyterms=${searchDisease}`;
+//     const results: Promise<any> = await firestoreScrapedPosts(queryURL);
+//     console.log(results); // debugging print statement
+//     // ****************************************************************
+//     // insert firestore connection and population here based on results
+//     // ****************************************************************
+//   }, 120 * 1000 * i);
+// }
 
-exampleQuery = exampleQuery.split("?")[1]
-const tokens: string[] = exampleQuery.split("&");
-const keyterms : string[] = tokens[0].split("=")[1].split(",");
-const startDate = tokens[1].split("=")[1];
-const endDate = tokens[2].split("=")[1];
-const location = tokens[3].split("=")[1];
+// eslint-disable-next-line max-len
+// const exampleQuery = '?keyterms=coronavirus&startdate=2019-12-01T00:00:00&enddate=2020-02-01T00:00:00&location=china';
 
-console.log("keyterms " + keyterms + " location " + location);
+app.get('/articles/', async (req, res) => {
+  res.send(await getArticles(req.query));
+});
 
-app.get('/proMed', async (req, res) => {
-  // res.send(await queryScrapePosts(exampleQuery));
-  res.send(await querySpecificPosts(startDate, endDate, location, keyterms));
+app.get('/articles-force/', async (req, res) => {
+  res.send(await getArticlesForceScrape(req.query));
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));

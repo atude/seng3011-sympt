@@ -1,6 +1,8 @@
-import { PageObject } from '../types';
+import { PageObject, Location, Report } from '../types';
 import diseaseList from '../constants/diseaseList.json';
-import { dateRegex, formatDateToExact } from '../utils/formatters';
+import { formatDateToExact, dateRegexWords } from '../utils/formatters';
+import worldCitiesList from '../constants/worldCitiesList.json';
+import syndromeList from '../constants/syndromeList.json';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -17,7 +19,7 @@ const contentScraper = async (
 ): Promise<PageObject> => {
   const urlData: string = `https://promedmail.org/promed-post/?id=${id}`;
   const page = await browserInstance.newPage();
-  await page.goto(urlData, { waitUntil: 'networkidle2', timeout: 0 });
+  await page.goto(urlData, { waitUntil: 'networkidle2', timeout: 150000 });
 
   try {
     await page.waitForFunction('document.getElementsByClassName("publish_date_html").length > 0');
@@ -81,11 +83,43 @@ const contentScraper = async (
       }
     });
 
+    const syndromes: string[] = [];
+    filteredMainText.split('. ').forEach((sentence) => {
+      for (let i = 0; i < syndromeList.length; i++) {
+        let syndromeCount = 0;
+        const syndromeLength = syndromeList[i].name.split(' ').length;
+        syndromeList[i].name.split(' ').forEach((syndrome) => {
+          if (sentence.toLowerCase().includes(syndrome.toLowerCase())) {
+            syndromeCount++;
+          }
+        });
+        if (syndromeCount >= syndromeLength / 2 && !syndromes.includes(syndromeList[i].name)) {
+          syndromes.push(syndromeList[i].name);
+        }
+      }
+    });
+
+    /* Filter for locations */
+    const locations: Location[] = [];
+    filteredMainText.split('. ').forEach((sentence) => {
+      for (let i = 0; i < worldCitiesList.length; i++) {
+        const country: string = worldCitiesList[i].country;
+        const location: string = worldCitiesList[i].name;
+        const geonameID: number = worldCitiesList[i].geonameid;
+        const subArea = worldCitiesList[i].subcountry;
+        if (sentence.includes(country) && sentence.includes(location) && country !== location) {
+          locations.push({
+            country, location, geonameID, subArea, 
+          });
+        }
+      }
+    });
+
     /* Filter for report dates */
     // TODO: error checking and fill missing date sections if possible
     const foundDates = 
       filteredMainText
-        .match(dateRegex)
+        .match(dateRegexWords)
         ?.map((dateStr: string) => formatDateToExact(dateStr))
         .sort();
 
@@ -97,24 +131,28 @@ const contentScraper = async (
           `${uniqueDates[0]} xx:xx:xx to ${uniqueDates[uniqueDates.length - 1]} xx:xx:xx` 
         ) : "xx:xx:xx xx:xx:xx";
 
+    const reportData: Report = {
+      diseases: foundDiseases.length ? foundDiseases : ["unknown"],
+      locations: locations.length ? locations : [],
+      event_date: filteredDates,
+      syndromes,
+    };
+
     const parsedPageData: PageObject = {
       id,
       url: urlData, 
       date_of_publication: dateData,
       headline: headlineData,
       main_text: filteredMainText,
-      reports: {
-        diseases: foundDiseases.length ? foundDiseases : ["unknown"],
-        event_date: filteredDates,
-      },
+      reports: [reportData],
     };
  
     await page.close();
     return parsedPageData;
   } catch (error) {
     await page.close();
-    console.error(`Failed to get data for page ${urlData}. Skipping this page...`);
-    console.error(error);
+    console.log(`! Failed to get page data on ${urlData}. Skipping...`);
+    console.log(`Reason: ${error.message}`);
     return { id: null };
   }
 };
