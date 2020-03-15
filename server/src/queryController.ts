@@ -10,7 +10,7 @@ import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
 
 // In future cases, use pagination instead of hardcap
-const queryCap = 20;
+const queryCap = 10;
 
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
