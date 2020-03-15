@@ -1,7 +1,8 @@
 ---
 swagger: "2.0"
 info:
-  description: "Sympt SENG3011 Promed API"
+  description: "Sympt SENG3011 Promed API\n \
+  \ API returns disease reports according to search criteria found from promedmail.org/"
   version: "1.0.0"
   title: "Sympt Promed API"
   contact:
@@ -10,15 +11,15 @@ tags:
 - name: "developers"
   description: "Operations available to regular developers"
 schemes:
-- "http"
+- "https"
 paths:
   /articles/:
     get:
       tags:
       - "developers"
-      summary: "searches database for articles"
-      description: "By passing in the appropriate options, you can search for\navailable\
-        \ ProMed disease reports in the system\n"
+      summary: "Searches database for articles according to search criterias"
+      description: "By passing in the appropriate options, you can search for available \
+        \ ProMed disease reports in the database\n A scrape of ProMed will be triggered only if there are no results in database"
       operationId: "searchProMedDiseaseReports"
       produces:
       - "application/json"
@@ -30,12 +31,60 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "pass a required start date"
+        description: "Pass a start date to search for articles published after this date"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "pass a required end date"
+        description: "Pass an end date to search for articles published before this date"
+        required: true
+        type: "string"
+      - name: "location"
+        in: "query"
+        description: "Search disease reports relavent to a location"
+        required: true
+        type: "string"
+      - name: "keyterms"
+        in: "query"
+        description: "Pass a comma seperated list of key search terms"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Disease reports matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/proMedItem"
+        "400":
+          description: "Bad input parameter"
+        "500":
+          description: "Insufficient articles"
+      x-swagger-router-controller: "Developers"
+
+  /articles-force/:
+    get:
+      tags:
+      - "developers"
+      summary: "Force scrape of Promed for articles according to search criterias"
+      description: "Will force a rescrape of the Promed website and will search on search criteria"
+      operationId: "forceScrapeProMedDiseaseReports"
+      produces:
+      - "application/json"
+      parameters:
+      # - name: auth
+      #   in: header
+      #   description: an authorization header
+      #   required: true
+      #   type: string
+      - name: "startdate"
+        in: "query"
+        description: "Pass a start date to search for articles published after this date"
+        required: true
+        type: "string"
+      - name: "enddate"
+        in: "query"
+        description: "Pass an end date to search for articles published before this date"
         required: true
         type: "string"
       - name: "location"
@@ -46,7 +95,7 @@ paths:
       - name: "keyterms"
         in: "query"
         description: "a comma separated list of all the key terms"
-        required: false
+        required: true
         type: "string"
       responses:
         "200":
@@ -60,6 +109,7 @@ paths:
         "500":
           description: "insufficient articles"
       x-swagger-router-controller: "Developers"
+  
 definitions:
   proMedItem:
     type: "object"
