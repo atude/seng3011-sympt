@@ -28,6 +28,11 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: auth
+        in: header
+        description: an authorization header
+        required: true
+        type: string
       - name: "startDate"
         in: "query"
         description: "pass a required start date"
@@ -153,5 +158,8 @@ definitions:
       country: "China"
       location: "Wuhan"
 # Added by API Auto Mocking Plugin
-host: "sympt-server.herokuapp.com"
-basePath: "/"
+# host: "sympt-server.herokuapp.com"
+# basePath: "/"
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /sympt-30117/symptAPI/1.0.0
