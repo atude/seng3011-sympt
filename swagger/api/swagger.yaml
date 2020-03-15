@@ -6,15 +6,13 @@ info:
   title: "Sympt Promed API"
   contact:
     email: "sympt.3011@gmail.com"
-# host: "localhost:4001"
-# basePath: "/"
 tags:
 - name: "developers"
   description: "Operations available to regular developers"
 schemes:
-- "https"
+- "http"
 paths:
-  /articles:
+  /articles/:
     get:
       tags:
       - "developers"
@@ -25,17 +23,17 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: auth
-        in: header
-        description: an authorization header
-        required: true
-        type: string
-      - name: "startDate"
+      # - name: auth
+      #   in: header
+      #   description: an authorization header
+      #   required: true
+      #   type: string
+      - name: "startdate"
         in: "query"
         description: "pass a required start date"
         required: true
         type: "string"
-      - name: "endDate"
+      - name: "enddate"
         in: "query"
         description: "pass a required end date"
         required: true
@@ -59,6 +57,8 @@ paths:
               $ref: "#/definitions/proMedItem"
         "400":
           description: "bad input parameter"
+        "500":
+          description: "insufficient articles"
       x-swagger-router-controller: "Developers"
 definitions:
   proMedItem:
@@ -154,9 +154,5 @@ definitions:
     example:
       country: "China"
       location: "Wuhan"
-# Added by API Auto Mocking Plugin
-# host: "sympt-server.herokuapp.com"
-# basePath: "/"
-# Added by API Auto Mocking Plugin
 host: sympt-server.herokuapp.com
 basePath: /
