@@ -27,10 +27,10 @@ const populateDb = async () => {
   const allQueryUrls: string[][] = diseaseList.map((disease: { name: string }) => {
     const queryChunk: string[] = allCountries.map((country: string) => {
       const queryUrl: string = `
-        ?keyterms=${disease.name.replace(" ", "%20")}
+        ?keyterms=${disease.name.replace(/ /g, "%20")}
         &startdate=${monthAgoDate}
         &enddate=${nowDate}
-        &location=${country.toLowerCase().replace(" ", "%20")}
+        &location=${country.toLowerCase().replace(/ /g, "%20")}
       `.replace(/\s/g, '');
       return queryUrl;
     });
