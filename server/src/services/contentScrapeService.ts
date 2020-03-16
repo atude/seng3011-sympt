@@ -66,8 +66,18 @@ const contentScraper = async (
       })
       // Avoid random fragments
       .filter((chunk) => chunk.length > minSentenceLength)
-      .join(" ");
-    // TODO: Remove links and emails and other junk from main text
+      .join(" ")
+      .replace(/(\(|\[|\{|\s|")+http.*?(\)|\]|\}|\s|")+/g, '')
+      .split('. ')
+      .filter((sentence: string) => {
+        const containsPromedLink: RegExpMatchArray | null = sentence.match(/[0-9]{5,}\.[0-9]{5,}/);
+        const containsEmail: RegExpMatchArray | null = sentence.match(/@[^\s]+/g);
+        if (containsEmail || containsPromedLink) {
+          return false;
+        }
+        return true;
+      })
+      .join('. ');
 
     
     if (!filteredMainText) {
@@ -101,23 +111,6 @@ const contentScraper = async (
 
       return syndrome.name;
     }).filter((syndrome) => syndrome !== "");
-      
-    //   console.log(doesIncludeSyndrome);
-
-    //   for (let i = 0; i < syndromeList.length; i++) {
-
-    //     let syndromeCount = 0;
-    //     const syndromeLength = syndromeList[i].name.split(' ').length;
-    //     syndromeList[i].name.split(' ').forEach((syndrome) => {
-    //       if (sentence.toLowerCase().includes(syndrome.toLowerCase())) {
-    //         syndromeCount++;
-    //       }
-    //     });
-    //     if (syndromeCount >= syndromeLength / 2 && !syndromes.includes(syndromeList[i].name)) {
-    //       syndromes.push(syndromeList[i].name);
-    //     }
-    //   }
-    // });
 
     /* Filter for locations */
     const locations: Location[] = [];
