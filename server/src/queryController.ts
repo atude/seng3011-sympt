@@ -12,9 +12,6 @@ import { isError } from './utils/checkFunctions';
 // How many pages to scrape per call max
 const scrapeCap = 8;
 
-// How many results to return per query
-// const queryLimit = 5;
-
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
 ) => {
@@ -38,7 +35,6 @@ export const getArticlesForceScrape = async (queryUrl: string): (
 
     const processedResults: PageObject[] = (await Promise.all(results))
       .filter((pageContent) => pageContent && pageContent.id);
-      // .splice(0, queryLimit);
       
     await browser.close();
     console.log("Scraped pages successfully.");
@@ -66,7 +62,7 @@ export const getArticles = async (queryUrl: string): (
   const formattedQuery = formatQueryUrl(queryUrl);
   if (isError(formattedQuery)) return formattedQuery;
   const {
-    keyTerms, startDate, endDate, location, count
+    keyTerms, startDate, endDate, location, count,
   } = formattedQuery;
 
   const formatStartDate: Date = getNormalisedDate(startDate);
@@ -78,7 +74,7 @@ export const getArticles = async (queryUrl: string): (
 
   const filteredArticles = allArticles
     // Country filter
-    .filter((document) => document.reports[0].locations.some(
+    .filter((document) => document.reports && document.reports[0]?.locations?.some(
       (locationDetails: Location) => 
         (location ? locationDetails.country?.toLowerCase() === location.toLowerCase() : true),
     ))
@@ -91,7 +87,7 @@ export const getArticles = async (queryUrl: string): (
       return false;
     })
     // Keyterms filter
-    .filter((document) => document.reports[0].diseases.some(
+    .filter((document) => document.reports && document.reports[0]?.diseases?.some(
       (disease: string) => {
         if (keyTerms && keyTerms?.length) {
           if (keyTerms.includes(disease.toLowerCase())) {
@@ -103,8 +99,8 @@ export const getArticles = async (queryUrl: string): (
       },
     ));
       
-  console.log(filteredArticles.length);
-  if ((count && filteredArticles.length < count) || !filteredArticles.length) {
+  console.log(`${filteredArticles.length} articles fetched.`);
+  if ((count && filteredArticles.length < count) || (!count && filteredArticles.length < 5)) {
     console.log("Failed to find articles in DB. Scraping instead...");
     return getArticlesForceScrape(queryUrl);
   }
