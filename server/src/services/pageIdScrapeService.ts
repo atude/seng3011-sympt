@@ -88,6 +88,7 @@ const urlPageResultIds = async (
     await page.close();
 
     if (searchResultIdsFiltered && searchResultIdsFiltered.length) {
+      console.log(`Successfully pulled ids.`);
       return { results: searchResultIdsFiltered };
     }
 

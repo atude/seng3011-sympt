@@ -10,10 +10,10 @@ import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
 
 // How many pages to scrape per call max
-const scrapeCap = 15;
+// const scrapeCap = 15;
 
 // How many results to return per query
-const queryLimit = 5;
+// const queryLimit = 5;
 
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
@@ -33,14 +33,15 @@ export const getArticlesForceScrape = async (queryUrl: string): (
 
     const results: Promise<PageObject>[] = 
       idResults.results
-        .splice(0, scrapeCap)
+        // .splice(0, scrapeCap)
         .map((pageId: string) => contentScraper(pageId, browser));
 
     const processedResults: PageObject[] = (await Promise.all(results))
-      .filter((pageContent) => pageContent && pageContent.id)
-      .splice(0, queryLimit);
+      .filter((pageContent) => pageContent && pageContent.id);
+      // .splice(0, queryLimit);
       
     await browser.close();
+    console.log("Scraped page successfully");
 
     // Save to firestore
     processedResults.forEach(async (pageData) => {
