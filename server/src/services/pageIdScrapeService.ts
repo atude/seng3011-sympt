@@ -1,5 +1,6 @@
 import { ScrapeResults, URLFormattedTerms, GenError } from '../types';
 import generateError from '../utils/generateError';
+import { articlesRef } from '../firebase/collectionReferences';
 
 const checkSubmitButton = "document.getElementsByName('submit') !== null";
 const checkSearchResults = "document.getElementById('search_results')?.childElementCount !== 0";
@@ -19,6 +20,7 @@ const urlPageResultIds = async (
   const {
     keyTerms, startDate, endDate, location, 
   } = searchQueries;
+  const blacklistIds = await articlesRef.doc("blacklist").get();
 
   try {
     const page = await browserInstance.newPage();
@@ -83,7 +85,9 @@ const urlPageResultIds = async (
       return [];
     });
 
-    const searchResultIdsFiltered = searchResultIds.filter((result) => result);
+    const searchResultIdsFiltered = searchResultIds
+      .filter((result) => result)
+      .filter((result: string) => blacklistIds.get(result) !== true || false);
 
     await page.close();
 

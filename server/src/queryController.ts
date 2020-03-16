@@ -41,7 +41,7 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       // .splice(0, queryLimit);
       
     await browser.close();
-    console.log("Scraped page successfully");
+    console.log("Scraped pages successfully.");
 
     // Save to firestore
     processedResults.forEach(async (pageData) => {
