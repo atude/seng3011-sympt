@@ -1,4 +1,19 @@
-# Sympt [WIP]
+# Sympt 
+
+[Webapp](sympt-app.herokuapp.com) | [API](sympt-server.herokuapp.com) | [Swagger Documentation](sympt-swagger.herokuapp.com/docs/)
+
+## About
+
+[WIP]
+
+### Sympt API
+
+This API enables users to return a list of disease reports according to search criteria found from [promedmail.org/](promedmail.org/).
+
+### Sympt App
+
+[WIP]
+
 
 ## Local Setup
 ### Requirements
@@ -7,9 +22,10 @@
 
 ### Setting up
 
-1. Rename `.env.example` in `./server` to `.env` and add necessary keys.
-2. Run `npm run build` from root directory.
-3. Run `npm start` to start the webapp *`(localhost:3000)`* and server *`(localhost:4000)`* concurrently.
+1. Make a copy of `.env.example` in `./server` and rename it to `.env`.
+2. Add the necessary keys to the `.env` file.
+3. Run `npm run build` from root directory.
+4. Run `npm start` to start the webapp *`(localhost:3000)`* and server *`(localhost:4000)`* concurrently.
 
 
 
