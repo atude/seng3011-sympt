@@ -1,12 +1,13 @@
 import generateError from "./generateError";
 import { GenError, URLFormattedTerms } from "../types";
 
-export const dateRegexWords = /\d{1,2} [a-zA-Z]+ \d{4}/gi;
+export const dateRegexWords = /\d{1,2} [a-zA-Z]{3} \d{4}/gi;
 export const dateRegexNum = /^([0-9]{4})-([0-9]{2})-([0-9]{2}).*/;
 
 export const getNormalisedDate = (dateString: string): Date => new Date(`${dateString} UTC`);
 
 export const formatDateToExact = (dateString: string) => {
+  console.log(dateString);
   const dateRaw = getNormalisedDate(dateString);
   return dateRaw.toISOString().split("T")[0];
 };

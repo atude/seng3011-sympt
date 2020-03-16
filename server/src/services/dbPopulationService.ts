@@ -22,7 +22,7 @@ const populateDb = async () => {
       (country: string, i: number, arr: string[]) => country !== "" && arr.indexOf(country) === i,
     );
 
-  const allQueryUrls: string[][] = diseaseList.map((disease: { name: string }) => {
+  const allQueryUrls: string[][] = diseaseList.reverse().map((disease: { name: string }) => {
     const queryChunk: string[] = allCountries.map((country: string) => {
       const queryUrl: string = `
         ?keyterms=${disease.name.replace(/ /g, "%20")}
