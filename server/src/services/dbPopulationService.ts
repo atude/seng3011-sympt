@@ -46,14 +46,6 @@ const populateDb = async () => {
     }
   };
   printUrls();
-  // flattenedUrls.forEach(async (queryUrl: string) => {
-    
-  //   // await getArticlesForceScrape(queryUrl);
-  // });
-  // const searchDisease: string = diseaseList[i].name.split(' ').join(' AND ');
-  // console.log(`searching on terms: ${searchDisease}`);
-  // const queryURL: string = `?keyterms=${searchDisease}`;
-  // await getArticlesForceScrape(queryURL);
 };
 
 export default populateDb;
