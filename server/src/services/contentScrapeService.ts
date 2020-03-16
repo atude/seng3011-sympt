@@ -10,7 +10,7 @@ const headerValues: string[] = [
   "Archive Number: ",
 ];
 
-const minSentenceLength: number = 70;
+const minSentenceLength: number = 75;
 
 const contentScraper = async (
   id: string, 
@@ -79,8 +79,8 @@ const contentScraper = async (
       })
       .join('. ');
 
-    
-    if (!filteredMainText) {
+    console.log(filteredMainText);
+    if (filteredMainText.length < 100) {
       throw new Error("Failed to find sufficient data in body text.");
     }
 
