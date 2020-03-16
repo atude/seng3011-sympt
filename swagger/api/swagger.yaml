@@ -31,17 +31,17 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n Example: 2000-02-02T00:00:00"
+        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2000-02-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format). \n Example: 2020-02-02T00:00:00"
+        description: "The end date to search for articles published before this date (ISO time string format). \n e.g. 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports relavent to a location. \n Example: china"
+        description: "Search disease reports relavent to a location. \n e.g. china"
         required: true
         type: "string"
       - name: "keyterms"
@@ -86,17 +86,17 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n Example: 2000-02-02T00:00:00"
+        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2000-02-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format). \n Example: 2020-02-02T00:00:00"
+        description: "The end date to search for articles published before this date (ISO time string format). \n e.g. 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports by a location name. \n Example: china"
+        description: "Search disease reports by a location name. \n e.g. china"
         required: true
         type: "string"
       - name: "keyterms"
@@ -212,8 +212,5 @@ definitions:
     example:
       country: "China"
       location: "Wuhan"
-# host: sympt-server.herokuapp.com
-# basePath: /
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /sympt-30117/symptAPI/1.0.0
+host: sympt-server.herokuapp.com
+basePath: /
