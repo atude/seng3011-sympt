@@ -10,7 +10,7 @@ import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
 
 // How many pages to scrape per call max
-// const scrapeCap = 15;
+const scrapeCap = 8;
 
 // How many results to return per query
 // const queryLimit = 5;
@@ -33,7 +33,7 @@ export const getArticlesForceScrape = async (queryUrl: string): (
 
     const results: Promise<PageObject>[] = 
       idResults.results
-        // .splice(0, scrapeCap)
+        .splice(0, scrapeCap)
         .map((pageId: string) => contentScraper(pageId, browser));
 
     const processedResults: PageObject[] = (await Promise.all(results))

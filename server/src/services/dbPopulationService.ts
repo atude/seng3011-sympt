@@ -8,8 +8,6 @@ import { getArticlesForceScrape } from '../queryController';
 const flatten = (arr: any[]): any => arr.reduce((flat: string | any[], toFlatten: any): any => 
   flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []);
   
-// const sleep = (m: number) => new Promise((r) => setTimeout(r, m));
-
 const populateDb = async () => {
   const nowDate: string = new Date().toISOString();
   const getMonthAgoDate = () => {

@@ -7,7 +7,8 @@ const app = express();
 const port: number = Number(process.env.PORT) || 4000;
 console.log(`Admin init: ${!!admin}`);
 
-// Populate db every 12 hrs
+// Populate db every 12 hrs and on deploy
+populateDb();
 setInterval(() => populateDb(), 1000 * 60 * 60 * 12);
 
 /* Example query */
