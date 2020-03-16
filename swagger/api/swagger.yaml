@@ -31,17 +31,17 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format)."
+        description: "The start date to search for articles published after this date (ISO time string format).\n Example: 2000-02-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format)."
+        description: "The end date to search for articles published before this date (ISO time string format). \n Example: 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports relavent to a location."
+        description: "Search disease reports relavent to a location. \n Example: china"
         required: true
         type: "string"
       - name: "keyterms"
@@ -49,11 +49,13 @@ paths:
         description: "A comma separated list of key terms related to diseases or events."
         required: false
         type: "string"
+        default: "coronavirus"
       - name: "count"
         in: "query"
         description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper."
         required: false
         type: "number"
+        default: 10
       responses:
         "200":
           description: "Disease reports matching criteria"
@@ -84,17 +86,17 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format)."
+        description: "The start date to search for articles published after this date (ISO time string format).\n Example: 2000-02-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format)."
+        description: "The end date to search for articles published before this date (ISO time string format). \n Example: 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports by a location name."
+        description: "Search disease reports by a location name. \n Example: china"
         required: true
         type: "string"
       - name: "keyterms"
@@ -102,6 +104,7 @@ paths:
         description: "A comma separated list of key terms related to diseases or events."
         required: false
         type: "string"
+        default: "coronavirus"
       responses:
         "200":
           description: "Disease reports matching criteria"
@@ -209,5 +212,8 @@ definitions:
     example:
       country: "China"
       location: "Wuhan"
-host: sympt-server.herokuapp.com
-basePath: /
+# host: sympt-server.herokuapp.com
+# basePath: /
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /sympt-30117/symptAPI/1.0.0
