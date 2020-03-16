@@ -79,11 +79,6 @@ const contentScraper = async (
       })
       .join('. ');
 
-    console.log(filteredMainText);
-    if (filteredMainText.length < 100) {
-      throw new Error("Failed to find sufficient data in body text.");
-    }
-
     /* Filter for report diseases */
     const foundDiseases: string[] = [];
     diseaseList.forEach((disease: { name: string }) => {
