@@ -59,10 +59,10 @@ paths:
         default: 2
       - name: "page"
         in: "query"
-        description: "TO COME: Leave blank! Start response articles from indicated page, each page contains X (to be decided) articles. If count parameter is also set, will retrieve count articles from page (if count is greater than X, count defaults to X)."
+        description: "TO COME: Do not change! Start response articles from indicated page, each page contains X (to be decided) articles. If count parameter is also set, will retrieve count articles from page (if count is greater than X, count defaults to X)."
         required: false
         type: "string"
-        default: ""
+        default: "1"
       responses:
         "200":
           description: "Disease reports matching criteria"
