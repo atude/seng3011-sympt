@@ -12,6 +12,7 @@ tags:
   description: "Operations available to developers"
 schemes:
 - "https"
+- "http"
 paths:
   /articles/:
     get:
@@ -69,55 +70,7 @@ paths:
           description: "Insufficient articles"
       x-swagger-router-controller: "Developers"
 
-  /articles-force/:
-    get:
-      tags:
-      - "developers"
-      summary: "Force scrape of web sources for articles according to search criterias, and returns results."
-      description: "Will force a rescrape of web sources and will search on provided criteria."
-      operationId: "forceScrapeDiseaseReports"
-      produces:
-      - "application/json"
-      parameters:
-      # - name: auth
-      #   in: header
-      #   description: an authorization header
-      #   required: true
-      #   type: string
-      - name: "startdate"
-        in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2000-02-02T00:00:00"
-        required: true
-        type: "string"
-      - name: "enddate"
-        in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format). \n e.g. 2020-02-02T00:00:00"
-        required: true
-        type: "string"
-      - name: "location"
-        in: "query"
-        description: "Search disease reports by a location name. \n e.g. china"
-        required: true
-        type: "string"
-      - name: "keyterms"
-        in: "query"
-        description: "A comma separated list of key terms related to diseases or events."
-        required: false
-        type: "string"
-        default: "coronavirus"
-      responses:
-        "200":
-          description: "Disease reports matching criteria"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Article"
-        "400":
-          description: "Bad input parameter"
-        "500":
-          description: "Insufficient articles"
-      x-swagger-router-controller: "Developers"
-  
+
 definitions:
   Article:
     type: "object"
