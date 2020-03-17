@@ -1,6 +1,6 @@
 # Sympt 
 
-[Webapp](sympt-app.herokuapp.com) | [API](sympt-server.herokuapp.com) | [Swagger Documentation](sympt-swagger.herokuapp.com/docs/)
+[Webapp](sympt-app.herokuapp.com) | [API](sympt-server.herokuapp.com) | [Swagger Documentation](http://sympt-swagger.herokuapp.com/docs/?fbclid=IwAR1uJ5p2J-usAZQ29nt7hLODq1c2752okThZDdP7B1mDMIR7Kf56rlSS9Q8#/developers/forceScrapeDiseaseReports)
 
 ## About
 
