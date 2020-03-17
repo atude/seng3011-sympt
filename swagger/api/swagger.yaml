@@ -6,7 +6,7 @@ info:
   version: "1.0.0"
   title: "Sympt API"
   contact:
-    email: "sympt.3011@gmail.com"
+    email: "sympty.3011@gmail.com"
 tags:
 - name: "developers"
   description: "Operations available to developers"
@@ -18,7 +18,7 @@ paths:
       tags:
       - "developers"
       summary: "Searches database for articles according to search criterias."
-      description: "By passing in the appropriate options, you can search for available \
+      description: "By passing in the appropriate search criteria, you can search for available \
         \ disease reports in the database.\n A scrape of disease websites will be triggered if there are no results in database."
       operationId: "searchDiseaseReports"
       produces:
@@ -55,7 +55,7 @@ paths:
         description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper."
         required: false
         type: "number"
-        default: 10
+        default: 2
       responses:
         "200":
           description: "Disease reports matching criteria"
@@ -141,7 +141,7 @@ definitions:
       
     example:
       reports:
-        event_date: "2020-01-03 xx:xx:xx to 2020-01-15"
+        event_date: "2020-01-03 xx:xx:xx to 2020-01-15 xx:xx:xx"
         locations:
           country: "China"
           location: "Wuhan"
@@ -150,16 +150,7 @@ definitions:
         - "Coronavirus"
         syndromes:
         - "Fever"
-      main_text: "NOVEL CORONAVIRUS (28): CHINA (HUBEI) ANIMAL RESERVOIR ******************************************************\
-        \ A ProMED-mail post  http://www.promedmail.org  ProMED-mail is a program\
-        \ of the International Society for Infectious Diseases  http://www.isid.org\
-        \  In this posting: [1] Measures to regulate the trade and maintenance of\
-        \ wild animals in China [2] Virus detection in environmental samples from\
-        \ the seafood market [3] Initial epidemiology, public announcement, 31 Dec\
-        \ 2019 ****** [1] Measures to regulate the trade and maintenance of wild animals\
-        \ in China Date: Fri 31 Jan 2020 Source: Xinhuanet News [in Chinese, machine\
-        \ trans., abridged, edited]  http://www.xinhuanet.com/politics/2020-01/31/c_1125515239.htm\
-        \  On 26 Jan 2020, the China Centers for Disease Control and Prevention announced\
+      main_text: "On 26 Jan 2020, the China Centers for Disease Control and Prevention announced\
         \ that the new coronavirus was detected in environmental samples from the\
         \ South China Seafood Market in Wuhan [see item 2]. The virus originated from\
         \ wild animals sold in the seafood market. For this reason, the State General\
