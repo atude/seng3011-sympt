@@ -53,10 +53,16 @@ paths:
         default: "coronavirus"
       - name: "count"
         in: "query"
-        description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper."
+        description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper. If not set, API will return all articles matching criteria."
         required: false
         type: "number"
         default: 2
+      - name: "page"
+        in: "query"
+        description: "TO COME: Leave blank! Start response articles from indicated page, each page contains X (to be decided) articles. If count parameter is also set, will retrieve count articles from page (if count is greater than X, count defaults to X)."
+        required: false
+        type: "string"
+        default: ""
       responses:
         "200":
           description: "Disease reports matching criteria"
