@@ -130,27 +130,16 @@ definitions:
     properties:
       url:
         type: "string"
+        example: "https://promedmail.org/promed-post/?id=6943858"
       date_of_publication:
         type: "string"
+        example: "2020-02-01 23:02:03"
       headline:
         type: "string"
+        example: "Novel coronavirus (28): China (HU) animal reservoir"
       main_text:
         type: "string"
-      reports:
-        $ref: "#/definitions/Report"
-      
-    example:
-      reports:
-        event_date: "2020-01-03 xx:xx:xx to 2020-01-15 xx:xx:xx"
-        locations:
-          country: "China"
-          location: "Wuhan"
-        date_of_publication: "2020-02-01 23:02:03"
-        diseases:
-        - "Coronavirus"
-        syndromes:
-        - "Fever"
-      main_text: "On 26 Jan 2020, the China Centers for Disease Control and Prevention announced\
+        example: "On 26 Jan 2020, the China Centers for Disease Control and Prevention announced \
         \ that the new coronavirus was detected in environmental samples from the\
         \ South China Seafood Market in Wuhan [see item 2]. The virus originated from\
         \ wild animals sold in the seafood market. For this reason, the State General\
@@ -159,9 +148,11 @@ definitions:
         \ public announcement on the 26th that from now on until the end of the national\
         \ epidemic, wild animal trading activities are prohibited to cut off the source\
         \ and transmission of the virus."
-  
-      headline: "Novel coronavirus (28): China (HU) animal reservoir"
-      url: "https://promedmail.org/promed-post/?id=6943858"
+      reports:
+        type: "array"
+        items:
+          $ref: "#/definitions/Report"
+      
   Report:
     required:
     - "event_date"
@@ -184,11 +175,6 @@ definitions:
         items:
           type: "string"
           example: "Fever"
-    example:
-      event_date: "2020-01-03 xx:xx:xx to 2020-01-15"
-      locations:
-        country: "China"
-        location: "Wuhan"
   Location:
     required:
     - "country"
@@ -200,8 +186,5 @@ definitions:
       location:
         type: "string"
         example: "Wuhan"
-    example:
-      country: "China"
-      location: "Wuhan"
 host: sympt-server.herokuapp.com
 basePath: /
