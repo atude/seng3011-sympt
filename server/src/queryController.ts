@@ -8,15 +8,19 @@ import { articlesRef } from './firebase/collectionReferences';
 import { formatQueryUrl, getNormalisedDate } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
+import generateError from './utils/generateError';
 
 // How many pages to scrape per call max
-const scrapeCap = 8;
+const scrapeCap = 30;
 
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
 ) => {
   const formattedQuery = formatQueryUrl(queryUrl);
-  if (isError(formattedQuery)) return formattedQuery;
+  if (isError(formattedQuery)) {
+    console.log(formattedQuery);
+    return formattedQuery;
+  }
 
   const browser = await puppeteer.launch(puppeteerConfig);
 
@@ -62,7 +66,7 @@ export const getArticles = async (queryUrl: string): (
   const formattedQuery = formatQueryUrl(queryUrl);
   if (isError(formattedQuery)) return formattedQuery;
   const {
-    keyTerms, startDate, endDate, location, count,
+    keyTerms, startDate, endDate, location, count, page,
   } = formattedQuery;
 
   const formatStartDate: Date = getNormalisedDate(startDate);
@@ -100,12 +104,17 @@ export const getArticles = async (queryUrl: string): (
     ));
       
   console.log(`${filteredArticles.length} articles fetched.`);
-  if ((count && filteredArticles.length < count) || (!count && filteredArticles.length < 5)) {
+  if (!count && filteredArticles.length < 5) {
     console.log("Failed to find articles in DB. Scraping instead...");
     return getArticlesForceScrape(queryUrl);
   }
+
+  if (count && page && ((count * page + count) > filteredArticles.length)) {
+    console.log("Page exceeds article limit.");
+    return generateError(500, "Page max reached", "Current page exceeds total articles remaining.");
+  }
   
   return count ? 
-    filteredArticles.splice(0, count) as PageObject[] : 
+    filteredArticles.splice(page ? count * page : 0, count) as PageObject[] : 
     filteredArticles as PageObject[];
 };

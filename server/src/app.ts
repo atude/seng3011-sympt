@@ -7,10 +7,6 @@ const app = express();
 const port: number = Number(process.env.PORT) || 4000;
 console.log(`Admin init: ${!!admin}`);
 
-// Populate db every 12 hrs and on deploy
-// populateDb();
-setInterval(() => populateDb(), 1000 * 60 * 60 * 12);
-
 /* Example query */
 // ?keyterms=coronavirus
 // &startdate=2019-12-01T00:00:00
@@ -28,3 +24,8 @@ app.get('/articles-force/', async (req, res) => {
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
+
+// Populate db every 12 hrs and on deploy
+console.log("Start generic scrape from yesterday's posts...");
+populateDb();
+setInterval(() => populateDb(), 1000 * 60 * 60 * 12);

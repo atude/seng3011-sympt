@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import generateError from "./generateError";
 import { GenError, URLFormattedTerms } from "../types";
 
@@ -17,17 +18,17 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
   const startDate = urlParams.get('startdate');
   const endDate = urlParams.get('enddate');
   const location = urlParams.get('location');
-  const count = Number(urlParams.get('count'));
+  const count: number | null = urlParams.get('count') ? Number(urlParams.get('count')) : null;
+  const page: number | null = Number(urlParams.get('page'));
 
   if (!startDate) {
     return generateError(403, "Bad Request", "No specified start date.");
   } if (!endDate) {
     return generateError(403, "Bad Request", "No specified end date.");
-  } if (!location) {
-    return generateError(403, "Bad Request", "No specified location.");
-  // eslint-disable-next-line no-restricted-globals
-  } if (count < 0 || count > 10 || isNaN(count)) {
-    return generateError(403, "Bad Request", "Results count must be a number between 0 and 10.");
+  } if (isNaN(Number(count)) || (count && (count <= 0 || count > 10))) {
+    return generateError(403, "Bad Request", "Count must be a number between 0 and 10.");
+  } if (isNaN(page) || (page && urlParams.get('count') === null)) {
+    return generateError(403, "Bad Request", "Page must be a number, and count must be specified.");
   }
 
   // Compare the startdate submitted with the regex
@@ -52,7 +53,8 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
     startDate: `${startMonth}/${startDay}/${startYear}`,
     endDate: `${endMonth}/${endDay}/${endYear}`,
     keyTerms: keyTerms?.toLowerCase().split(',').filter((keyterm) => keyterm !== ""),
-    location,
+    location: location || "",
     count,
+    page,
   } as URLFormattedTerms;
 };

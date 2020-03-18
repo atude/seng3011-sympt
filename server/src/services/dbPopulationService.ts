@@ -1,39 +1,24 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
-import worldCitiesList from '../constants/worldCitiesList.json';
-import { Location } from '../types';
 import { getArticlesForceScrape } from '../queryController';
 
+// Populates db with general results from a day ago
 const populateDb = async () => {
   const nowDate: string = new Date().toISOString();
-  const getMonthAgoDate = () => {
+  const getDayAgoDate = () => {
     const date: Date = new Date();
-    date.setMonth(date.getMonth() - 6);
+    date.setHours(date.getHours() - 24);
     return date.toISOString();
   };
-  const monthAgoDate: string = getMonthAgoDate();
-  
-  const allCountries: string[] = 
-    worldCitiesList.map((city: Location) => city.country).filter(
-      (country: string, i: number, arr: string[]) => country !== "" && arr.indexOf(country) === i,
-    );
+  const dayAgoDate: string = getDayAgoDate();
 
-  const queryUrls: string[] = allCountries.map((country: string) => {
-    const queryUrl: string = `
-      ?startdate=${monthAgoDate}
-      &enddate=${nowDate}
-      &location=${country.toLowerCase().replace(/ /g, "%20")}
-    `.replace(/\s/g, '');
-    return queryUrl;
-  });
+  /* General search */
+  const queryUrl: string = `
+    ?startdate=${dayAgoDate}
+    &enddate=${nowDate}
+    &location=${""}
+  `.replace(/\s/g, ''); 
 
-  const printUrls = async () => {
-    for (const url of queryUrls) {
-      console.log(url);
-      await getArticlesForceScrape(url);
-    }
-  };
-  printUrls();
+  console.log(queryUrl);
+  await getArticlesForceScrape(queryUrl);
 };
 
 export default populateDb;
