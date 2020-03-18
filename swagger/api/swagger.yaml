@@ -45,6 +45,7 @@ paths:
         description: "Search disease reports relevent to a location. \n e.g. china"
         required: false
         type: "string"
+        default: "china"
       - name: "keyterms"
         in: "query"
         description: "A comma separated list of key terms related to diseases or events. \n e.g. coronavirus,ebola"
