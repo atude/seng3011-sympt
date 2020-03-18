@@ -20,7 +20,7 @@ paths:
       - "developers"
       summary: "Searches database for articles according to search criterias."
       description: "By passing in the appropriate search criteria, you can search for available \
-        \ disease reports in the database.\n A scrape of disease websites will be triggered if there are no results in database."
+        \ disease reports in the database.\n A scrape of articles will be triggered if there are less than 5 results in the database."
       operationId: "searchDiseaseReports"
       produces:
       - "application/json"
@@ -32,7 +32,7 @@ paths:
       #   type: string
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2000-02-02T00:00:00"
+        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2019-06-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
@@ -42,27 +42,28 @@ paths:
         type: "string"
       - name: "location"
         in: "query"
-        description: "Search disease reports relavent to a location. \n e.g. china"
-        required: true
+        description: "Search disease reports relevent to a location. \n e.g. china"
+        required: false
         type: "string"
+        default: "china"
       - name: "keyterms"
         in: "query"
-        description: "A comma separated list of key terms related to diseases or events."
+        description: "A comma separated list of key terms related to diseases or events. \n e.g. coronavirus,ebola"
         required: false
         type: "string"
         default: "coronavirus"
       - name: "count"
         in: "query"
-        description: "Add a limit of articles to receive. Fetching articles beyond what is available in the database will automatically trigger the web scraper. If not set, API will return all articles matching criteria."
+        description: "The limit of articles to receive, between 0 and 10. If not set, or set to 0, the API will return all articles matching other criteria."
         required: false
         type: "number"
-        default: 2
+        default: 5
       - name: "page"
         in: "query"
-        description: "TO COME: Do not change! Start response articles from indicated page, each page contains X (to be decided) articles. If count parameter is also set, will retrieve count articles from page (if count is greater than X, count defaults to X)."
+        description: "Fetch articles from an indicated page, starting from 0; each page contains 'count' no. of articles. Requires count to be set."
         required: false
-        type: "string"
-        default: "1"
+        type: "number"
+        default: 0
       responses:
         "200":
           description: "Disease reports matching criteria"

@@ -13,9 +13,10 @@ export type GenError = {
 export type URLFormattedTerms = {
   startDate: string;
   endDate: string;
-  location?: string;
+  location: string;
   keyTerms?: string[];
   count?: number;
+  page?: number;
 }
 
 export type PageObject = {
