@@ -13,6 +13,9 @@ import generateError from './utils/generateError';
 // How many pages to scrape per call max
 const scrapeCap = 30;
 
+// Minimum articles to return when count is not set
+const minGeneralArticles = 5;
+
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
 ) => {
@@ -104,7 +107,7 @@ export const getArticles = async (queryUrl: string): (
     ));
       
   console.log(`${filteredArticles.length} articles fetched.`);
-  if (!count && filteredArticles.length < 5) {
+  if (!count && filteredArticles.length < minGeneralArticles) {
     console.log("Failed to find articles in DB. Scraping instead...");
     return getArticlesForceScrape(queryUrl);
   }
