@@ -17,7 +17,6 @@ const populateDb = async () => {
     &location=${""}
   `.replace(/\s/g, ''); 
 
-  console.log(queryUrl);
   await getArticlesForceScrape(queryUrl);
 };
 
