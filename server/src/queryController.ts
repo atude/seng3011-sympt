@@ -106,8 +106,9 @@ export const getArticles = async (queryUrl: string): (
           return false;
         }
         return true;
-      },
-    ));
+      }
+    // Reverse since ordered oldest first by default
+    )).reverse();
       
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
