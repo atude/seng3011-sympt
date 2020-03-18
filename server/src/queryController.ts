@@ -11,7 +11,7 @@ import { isError } from './utils/checkFunctions';
 import generateError from './utils/generateError';
 
 // How many pages to scrape per call max
-const scrapeCap = 30;
+const scrapeCap = 8;
 
 // Minimum articles to return when count is not set
 const minGeneralArticles = 5;
