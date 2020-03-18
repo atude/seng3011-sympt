@@ -25,17 +25,16 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       formattedQuery as URLFormattedTerms,
       browser,
     );
- 
     if (isError(idResults)) return idResults;
-
+    
     const results: Promise<PageObject>[] = 
-      idResults.results
-        .splice(0, scrapeCap)
-        .map((pageId: string) => contentScraper(pageId, browser));
-
+    idResults.results
+    .splice(0, scrapeCap)
+    .map((pageId: string) => contentScraper(pageId, browser));
+    console.log("Got Results");
+    
     const processedResults: PageObject[] = (await Promise.all(results))
       .filter((pageContent) => pageContent && pageContent.id);
-      
     await browser.close();
     console.log("Scraped pages successfully.");
 

@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/atude/seng3011-sympt#readme",
   "dependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "puppeteer": "^2.1.1"
   },
   "devDependencies": {
     "husky": "^4.2.3"
