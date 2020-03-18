@@ -38,6 +38,6 @@ export type Report = {
 export type Location = {
   country: string;
   location?: string;
-  geonameId: number;
+  geonameId?: number;
   subArea: string | null;
 }

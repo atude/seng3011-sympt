@@ -86,7 +86,11 @@ export const getArticles = async (queryUrl: string): (
     // Country filter
     .filter((document) => document.reports && document.reports[0]?.locations?.some(
       (locationDetails: Location) => 
-        (location ? locationDetails.country?.toLowerCase() === location.toLowerCase() : true),
+        (location ? (
+          locationDetails.country?.toLowerCase() === location.toLowerCase() ||
+          locationDetails.location?.toLowerCase() === location.toLowerCase()
+        ) 
+          : true),
     ))
     // Date filter
     .filter((document) => {

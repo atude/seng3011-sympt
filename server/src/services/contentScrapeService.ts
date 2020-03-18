@@ -117,13 +117,21 @@ const contentScraper = async (
     /* Filter for locations */
     const locations: Location[] = [];
     worldCitiesList.forEach((city: Location) => {
-      if (
-        ((filteredMainText.includes(city.country) || headlineData.includes(city.country)) && 
-        (filteredMainText.match(`\\b${city.location}\\b`)) && 
-        city.country !== city.location)
-      ) {
-        if (locations.indexOf(city) === -1) {
-          locations.push(city);
+      if (filteredMainText.includes(city.country) || headlineData.includes(city.country)) {
+        if (
+          ((filteredMainText.includes(city.country) || headlineData.includes(city.country)) && 
+          (filteredMainText.match(`\\b${city.location}\\b`)) && 
+          city.country !== city.location)
+        ) {
+          if (locations.indexOf(city) === -1) {
+            locations.push(city);
+          }
+          return;
+        } 
+        // Push only country
+        const countryOnly: Location = { country: city.country, subArea: null };
+        if (!locations.some((loc: Location) => loc.country === city.country)) {
+          locations.push(countryOnly);
         }
       }
     });
