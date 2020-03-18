@@ -33,7 +33,10 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       browser,
     );
  
-    if (isError(idResults)) return idResults;
+    if (isError(idResults)) {
+      console.log(idResults);
+      return idResults;
+    }
 
     const results: Promise<PageObject>[] = 
       idResults.results
