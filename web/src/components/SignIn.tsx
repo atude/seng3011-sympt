@@ -1,32 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import { CircularProgress } from '@material-ui/core';
+import { signInEmail, createAccount } from '../firebase/firebaseFunctions';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Sympt
       </Link>
       {' '}
       {new Date().getFullYear()}
-      .
     </Typography>
   );
-}
-
-function handleSignIn(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-  console.log("SignIn was clicked");
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -49,20 +47,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export const SignIn = (props: any) => {
   const classes = useStyles();
+
+  const [isSignIn, setSignIn] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
+
+    if (isSignIn) {
+      const attemptSignIn = await signInEmail(email, password);
+      if (attemptSignIn.message) {
+        setError(attemptSignIn.message);
+      }
+    } else {
+      const attemptSignUp = await createAccount(email, password);
+      if (attemptSignUp.message) {
+        setError(attemptSignUp.message);
+      }
+    }
+
+    setLoading(false);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          {/* locked out icon */}
+          <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {isSignIn ? "Sign In" : "Sign Up"}
         </Typography>
-        <form className={classes.form} noValidate>
+        <div className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -73,6 +96,11 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError("");
+            }}
+            error={!!error}
           />
           <TextField
             variant="outlined"
@@ -84,37 +112,45 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
+            error={!!error}
+            helperText={error}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSignIn}
+            onClick={() => handleSubmit()}
           >
-            Sign In
+            {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
-          {/* <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          <Grid container justify="center" direction="column" alignItems="center">
+            {loading && (
+              <Grid item>
+                <CircularProgress />
+              </Grid>
+            )}
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Button variant="text" color="secondary" onClick={() => setSignIn(!isSignIn)}>
+                {isSignIn ? 
+                  "Don't have an account? Sign Up" :
+                  "Already have an account? Sign In"
+                }
+              </Button>
             </Grid>
-          </Grid> */}
-        </form>
+          </Grid>
+        </div>
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;
