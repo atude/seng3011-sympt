@@ -2,7 +2,8 @@
 swagger: "2.0"
 info:
   description: "Sympt API - SENG3011\n \
-  \ API returns disease reports according to search criteria found from promedmail.org/"
+  \ API returns disease reports according to search criteria found from promedmail.org\n
+  \ Sign up for an API account at [ADD API APP LINK HERE]"
   version: "1.0.0"
   title: "Sympt API"
   contact:
@@ -25,9 +26,9 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "auth"
+      - name: "authorization"
         in: header
-        description: "A valid auth token"
+        description: "A valid authenitcation token"
         required: true
         type: string
       - name: "startdate"
