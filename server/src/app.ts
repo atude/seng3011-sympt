@@ -2,7 +2,6 @@ import express from 'express';
 import admin from './firebase/firebaseInit';
 import { getArticles } from './queryController';
 import populateDb from './services/dbPopulationService';
-import data from './utils/data'
 import { checkAuthenticated } from './services/firebaseService';
 import generateError from './utils/generateError';
 
