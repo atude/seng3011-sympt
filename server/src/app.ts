@@ -1,6 +1,6 @@
 import express from 'express';
 import admin from './firebase/firebaseInit';
-import { getArticlesForceScrape, getArticles } from './queryController';
+import { getArticles } from './queryController';
 import populateDb from './services/dbPopulationService';
 import data from './utils/data'
 import { checkAuthenticated } from './services/firebaseService';
@@ -19,11 +19,6 @@ app.get('/articles/', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   const result = {data, articles: await getArticles(req.query)};
   res.send(result);
-});
-
-app.get('/articles-force/', async (req, res) => {  
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(await getArticlesForceScrape(req.query));
 });
 
 app.get('/testauth', async (req, res) => {

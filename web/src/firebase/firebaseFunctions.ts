@@ -6,7 +6,7 @@ export const signInEmail = async (email: string, password: string) => {
   const response = await firebase.auth().signInWithEmailAndPassword(email, password)
     .catch((error) => {
       console.log(error.message);
-      return (error.message);
+      return (error);
     });
 
   return response;
@@ -24,7 +24,7 @@ export const createAccount = async (email: string, password: string) => {
     })
     .catch((error) => {
       console.log(error.message);
-      return (error.message);
+      return (error);
     });
   
   return response;
@@ -36,4 +36,9 @@ export const signOut = () => {
   }).catch((error) => {
     console.log(error.message);
   });
+};
+
+export const refreshToken = async () => {
+  const token = await firebase.auth().currentUser?.getIdToken(true);
+  return token;
 };

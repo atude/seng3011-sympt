@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import { signInEmail, createAccount } from '../firebase/firebaseFunctions';
+import { CircularProgress } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -46,23 +47,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export const SignIn = (props: any) => {
   const classes = useStyles();
 
   const [isSignIn, setSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    console.log("hi");
+    setLoading(true);
+    setError("");
+
     if (isSignIn) {
       const attemptSignIn = await signInEmail(email, password);
-      console.log(attemptSignIn);
+      if (attemptSignIn.message) {
+        setError(attemptSignIn.message);
+      }
     } else {
       const attemptSignUp = await createAccount(email, password);
-      console.log(attemptSignUp);
+      if (attemptSignUp.message) {
+        setError(attemptSignUp.message);
+      }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -86,7 +96,11 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError("");
+            }}
+            error={!!error}
           />
           <TextField
             variant="outlined"
@@ -98,7 +112,12 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
+            error={!!error}
+            helperText={error}
           />
           <Button
             type="submit"
@@ -110,7 +129,12 @@ export default function SignIn() {
           >
             {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
-          <Grid container justify="center">
+          <Grid container justify="center" direction="column" alignItems="center">
+            {loading && (
+              <Grid item>
+                <CircularProgress />
+              </Grid>
+            )}
             <Grid item>
               <Button variant="text" color="secondary" onClick={() => setSignIn(!isSignIn)}>
                 {isSignIn ? 
@@ -127,4 +151,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;
