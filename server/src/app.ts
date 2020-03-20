@@ -3,6 +3,7 @@ import admin from './firebase/firebaseInit';
 import { getArticlesForceScrape, getArticles } from './queryController';
 import populateDb from './services/dbPopulationService';
 import data from './utils/data'
+import { checkAuthenticated } from './services/firebaseService';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
@@ -23,6 +24,15 @@ app.get('/articles/', async (req, res) => {
 app.get('/articles-force/', async (req, res) => {  
   res.header("Access-Control-Allow-Origin", "*");
   res.send(await getArticlesForceScrape(req.query));
+});
+
+app.get('/testauth', async (req, res) => {
+  const authenticated = await checkAuthenticated(req.headers.authorization);
+  if (authenticated) {
+    res.send("You're authenticated");
+  } else {
+    res.send("Not authenticated");
+  }
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
