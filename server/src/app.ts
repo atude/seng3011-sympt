@@ -17,8 +17,13 @@ console.log(`Admin init: ${!!admin}`);
 // &enddate=2020-02-01T00:00:00
 // &location=china
 
-app.get('/articles/', async (req, res) => {
+app.all('/*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+app.get('/articles/', async (req, res) => {
   const authenticated = await checkAuthenticated(req.headers.authorization);
   if (authenticated) {
     const metadata = getMetadata();

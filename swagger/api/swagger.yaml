@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   description: "Sympt API - SENG3011\n \
   \ API returns disease reports according to search criteria found from promedmail.org\n
-  \ Sign up for an API account at [ADD API APP LINK HERE]"
+  \ Sign up for an API account at symptdev.netlify.com for your access token."
   version: "1.0.0"
   title: "Sympt API"
   contact:
@@ -27,10 +27,10 @@ paths:
       - "application/json"
       parameters:
       - name: "authorization"
-        in: header
+        in: "header"
         description: "A valid authenitcation token"
         required: true
-        type: string
+        type: "string"
       - name: "startdate"
         in: "query"
         description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2019-06-02T00:00:00"
@@ -74,6 +74,8 @@ paths:
               $ref: "#/definitions/Article"
         "400":
           description: "Bad input parameter"
+        "401":
+          description: "Failed to authenticate"
         "500":
           description: "Insufficient articles"
       x-swagger-router-controller: "Developers"
