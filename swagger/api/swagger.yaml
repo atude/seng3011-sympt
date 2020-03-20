@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   description: "Sympt API - SENG3011\n \
   \ API returns disease reports according to search criteria found from promedmail.org\n
-  \ Sign up for an API account at symptdev.netlify.com for your access token."
+  \ Sign up for an API account at https://symptdev.netlify.com for your access token."
   version: "1.0.0"
   title: "Sympt API"
   contact:
@@ -28,7 +28,7 @@ paths:
       parameters:
       - name: "authorization"
         in: "header"
-        description: "A valid authenitcation token"
+        description: "A valid authentication token (generated from the symptdev dashboard).\n https://symptdev.netlify.com"
         required: true
         type: "string"
       - name: "startdate"
