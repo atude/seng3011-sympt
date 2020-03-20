@@ -55,7 +55,7 @@ export const getArticlesForceScrape = async (queryUrl: string): (
         await articlesRef.doc(pageData.id).set(pageData);
       }
     });
-
+    console.log("Processed" + processedResults);
     return processedResults;
   } catch (error) {
     await browser.close();
@@ -113,7 +113,7 @@ export const getArticles = async (queryUrl: string): (
       }
     // Reverse since ordered oldest first by default
     )).reverse();
-      
+  
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
     console.log("Failed to find articles in DB. Scraping instead...");
