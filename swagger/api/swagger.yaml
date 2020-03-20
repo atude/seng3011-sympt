@@ -25,11 +25,11 @@ paths:
       produces:
       - "application/json"
       parameters:
-      # - name: auth
-      #   in: header
-      #   description: an authorization header
-      #   required: true
-      #   type: string
+      - name: "auth"
+        in: header
+        description: "A valid auth token"
+        required: true
+        type: string
       - name: "startdate"
         in: "query"
         description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2019-06-02T00:00:00"

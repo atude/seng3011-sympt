@@ -4,6 +4,7 @@ import { getArticles } from './queryController';
 import populateDb from './services/dbPopulationService';
 import { checkAuthenticated } from './services/firebaseService';
 import generateError from './utils/generateError';
+import getMetadata from './utils/getMetadata';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
@@ -18,8 +19,12 @@ console.log(`Admin init: ${!!admin}`);
 app.get('/articles/', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   const authenticated = await checkAuthenticated(req.headers.authorization);
-  if (authenticated) {
-    res.send(await getArticles(req.query));
+  if (!authenticated) {
+    const metadata = getMetadata();
+    res.send({
+      metadata, 
+      articles: await getArticles(req.query),
+    });
   } else {
     res.send(generateError(401, "Bad Authentication", "Failed to verify authentication token"));
   }

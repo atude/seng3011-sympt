@@ -122,9 +122,6 @@ const Dashboard = (props: any) => {
             )}
           </Grid>
         </Grid>
-        <br />
-        <br />
-        
       </Paper>
     </div>
   );

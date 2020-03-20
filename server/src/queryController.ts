@@ -55,7 +55,7 @@ export const getArticlesForceScrape = async (queryUrl: string): (
         await articlesRef.doc(pageData.id).set(pageData);
       }
     });
-    console.log("Processed" + processedResults);
+    console.log(`Processed ${processedResults}`);
     return processedResults;
   } catch (error) {
     await browser.close();
