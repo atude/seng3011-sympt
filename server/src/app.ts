@@ -24,12 +24,6 @@ app.get('/articles/', async (req, res) => {
   } else {
     res.send(generateError(401, "Bad Authentication", "Failed to verify authentication token"));
   }
-  
-});
-
-app.get('/testauth', async (req, res) => {
-  
-  
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
