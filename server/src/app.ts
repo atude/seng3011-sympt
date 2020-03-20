@@ -19,7 +19,7 @@ console.log(`Admin init: ${!!admin}`);
 
 app.all('/*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Authorization");
   next();
 });
 
