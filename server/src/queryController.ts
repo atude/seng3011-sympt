@@ -16,15 +16,6 @@ const scrapeCap = 8;
 // Minimum articles to return when count is not set
 const minGeneralArticles = 5;
 
-// Data to return with each request 
-let dateTime = new Date().toISOString()
-dateTime = dateTime.split(".")[0]
-const data: FirebaseFirestore.DocumentData = <JSON><unknown>{
-  "team": "Beams",
-  "time_accessed": dateTime,
-  "data_source": "ProMed"
-}
-
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
 ) => {
@@ -122,11 +113,7 @@ export const getArticles = async (queryUrl: string): (
       }
     // Reverse since ordered oldest first by default
     )).reverse();
-    
-
-  console.log(data);
-  filteredArticles.push(data)
-  console.log(`filteredArticles = ${filteredArticles}`);
+  
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
     console.log("Failed to find articles in DB. Scraping instead...");
