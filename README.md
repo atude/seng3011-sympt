@@ -8,7 +8,7 @@
 
 ### API Documentation
 
-This API enables users to retrieve a list of disease reports according to search criteria found from [http://promedmail.org/](promedmail.org/).
+This API enables users to retrieve a list of disease reports according to search criteria found from [promedmail.org/](http://promedmail.org/).
 
 ### Developer Dashboard
 
