@@ -122,7 +122,7 @@ export const getArticles = async (queryUrl: string): (
 
   if (count && page && ((count * page + count) > filteredArticles.length)) {
     console.log("Page exceeds article limit.");
-    return generateError(500, "Page max reached", "Current page exceeds total articles remaining.");
+    return generateError(500, "Page max reached", "Current page exceeds total articles remaining");
   }
   
   return count ? 

@@ -22,13 +22,13 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
   const page: number | null = Number(urlParams.get('page'));
 
   if (!startDate) {
-    return generateError(403, "Bad Request", "No specified start date.");
+    return generateError(403, "Bad Request", "No specified start date");
   } if (!endDate) {
-    return generateError(403, "Bad Request", "No specified end date.");
+    return generateError(403, "Bad Request", "No specified end date");
   } if (isNaN(Number(count)) || (count && (count <= 0 || count > 10))) {
-    return generateError(403, "Bad Request", "Count must be a number between 0 and 10.");
+    return generateError(403, "Bad Request", "Count must be a number between 0 and 10");
   } if (isNaN(page) || (page && urlParams.get('count') === null)) {
-    return generateError(403, "Bad Request", "Page must be a number, and count must be specified.");
+    return generateError(403, "Bad Request", "Page must be a number, and count must be specified");
   }
 
   // Compare the startdate submitted with the regex
@@ -37,7 +37,7 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
   if (startDateGroups) {
     [, startYear, startMonth, startDay] = startDateGroups;
   } else {
-    return generateError(403, "Bad Request", "Invalid start date.");
+    return generateError(403, "Bad Request", "Invalid start date");
   }
 
   // Compare the enddate submitted with the regex
@@ -46,7 +46,7 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
   if (endDateGroups) {
     [, endYear, endMonth, endDay] = endDateGroups;
   } else {
-    return generateError(403, "Bad Request", "Invalid end date.");
+    return generateError(403, "Bad Request", "Invalid end date");
   }
 
   return {

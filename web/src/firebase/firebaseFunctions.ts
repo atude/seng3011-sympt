@@ -1,4 +1,5 @@
 import firebase from './firebaseInit';
+import { ApiLog } from '../types';
 
 export const signInEmail = async (email: string, password: string) => {
   const response = await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -34,4 +35,11 @@ export const signOut = () => {
 export const refreshToken = async () => {
   const token = await firebase.auth().currentUser?.getIdToken(true);
   return token;
+};
+
+export const fetchLogs = async (userEmail: string): Promise<ApiLog[]> => {
+  const logs = await firebase.firestore().collection("apiUsers").doc(userEmail).get();
+  if (!logs) return [];
+
+  return Object.values(logs.data() ?? {});
 };
