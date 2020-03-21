@@ -6,13 +6,13 @@ describe("Testing query and date formatting", () => {
     expect(formatQueryUrl(queryMissing)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "No specified start date.",
+      errorMessage: "No specified start date",
     });
     const queryBad = "?startdate=13-02T00:00:00&enddate=2020-02-02T00:00:00";
     expect(formatQueryUrl(queryBad)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "Invalid start date.",
+      errorMessage: "Invalid start date",
     });
   });
 });
