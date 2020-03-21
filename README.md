@@ -1,6 +1,6 @@
 # Sympt 
 
-[Developer Dashboard](symptdev.netlify.com) | [API](sympt-server.herokuapp.com) | [Swagger Documentation](http://sympt-swagger.herokuapp.com/docs/)
+[Developer Dashboard](http://symptdev.netlify.com) | [API](http://sympt-server.herokuapp.com) | [Swagger Documentation](http://sympt-swagger.herokuapp.com/docs/)
 
 ## About
 
