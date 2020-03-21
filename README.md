@@ -1,18 +1,19 @@
 # Sympt 
 
-[Developer Dashboard](http://symptdev.netlify.com) | [API](http://sympt-server.herokuapp.com) | [Swagger Documentation](http://sympt-swagger.herokuapp.com/docs/)
+[API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
 ## About
 
 [WIP]
 
-### Sympt API
+### API Documentation
 
-This API enables users to return a list of disease reports according to search criteria found from [promedmail.org/](promedmail.org/).
+This API enables users to retrieve a list of disease reports according to search criteria found from [promedmail.org/](promedmail.org/).
 
-### Sympt App
+### Developer Dashboard
 
-[WIP]
+The developer dashboard allows API users to sign up for a sympt API account and gain access to our API. 
+From the dashboard, you can refresh your API token, track your API call log [WIP] and visually analyse your API usage [WIP].
 
 
 ## Local Setup
