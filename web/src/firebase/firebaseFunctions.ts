@@ -1,7 +1,5 @@
 import firebase from './firebaseInit';
 
-const usersRef = firebase.firestore().collection("users");
-
 export const signInEmail = async (email: string, password: string) => {
   const response = await firebase.auth().signInWithEmailAndPassword(email, password)
     .catch((error) => {
@@ -15,11 +13,6 @@ export const signInEmail = async (email: string, password: string) => {
 export const createAccount = async (email: string, password: string) => {
   const response = await firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((credentials) => {
-      // Create user in backend
-      usersRef.doc(email).set({
-        log: [],
-      });
-
       console.log(`Made new user => ${credentials?.user?.email}`);
     })
     .catch((error) => {
