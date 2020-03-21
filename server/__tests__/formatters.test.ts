@@ -152,7 +152,7 @@ describe("Testing query and count", () => {
   });
 });
 
-describe("Testing page and count", () => {
+describe("Testing query and page", () => {
   test("No page", () => {
     const noCount = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus&count=2";
     expect(formatQueryUrl(noCount)).toMatchObject({
