@@ -30,7 +30,6 @@ app.get('/articles/', async (req, res) => {
   const timestamp: string = (new Date().getTime() / 1000).toFixed(0).toString();
 
   if (user.authenticated) {
-    console.log(user);
     const metadata = getMetadata();
     const articles = await getArticles(req.query);
     const log: ApiLog = {
