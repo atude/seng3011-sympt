@@ -1,4 +1,4 @@
-# Sympt 
+# Sympt
 
 [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
@@ -8,7 +8,7 @@
 
 ### API Documentation
 
-This API enables users to retrieve a list of disease reports according to search criteria found from [promedmail.org/](promedmail.org/).
+This API enables users to retrieve a list of disease reports according to search criteria found from [http://promedmail.org/](promedmail.org/).
 
 ### Developer Dashboard
 
