@@ -84,7 +84,7 @@ const Dashboard = (props: any) => {
     };
 
     initFetch();
-  }, []);
+  }, [user.email]);
 
   const handleRefreshToken = async () => {
     const newToken = await refreshToken();
