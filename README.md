@@ -39,6 +39,7 @@ This API enables users to return a list of disease reports according to search c
 | `npm run build:web`         | Reset and rebuild web.                                                      |
 | `npm run lint:check`        | Check linting for both server and app.                                      |
 | `npm run lint:fix`          | Fix linting that can be automatically changed for both server and app.      |
+| `npm test`                  | Run all unit tests.                                                         |
 | `npm start`                 | Start both server and app concurrently (dev mode).                          |
 
 ### Server *(cd server)*
@@ -48,6 +49,7 @@ This API enables users to return a list of disease reports according to search c
 | `npm run lint:check`        | Check linting for server.                                                   |
 | `npm run lint:fix`          | Fix auto-fixable linting for server.                                        |
 | `npm run start:dev`         | Start the server with hot reloading (not compiled).                         |
+| `npm test`                  | Run all server unit tests.                                                  |
 | `npm start`                 | Compile and start the server.                                               |
 
 ### Web *(cd web)*

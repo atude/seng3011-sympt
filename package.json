@@ -10,6 +10,8 @@
     "start:server": "cd server && npm start",
     "start:web": "cd web && npm start",
     "start": "concurrently npm:start:*",
+    "test": "npm run test:server",
+    "test:server": "cd server && npm test",
     "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
     "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
   },
