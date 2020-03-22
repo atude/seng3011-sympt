@@ -61,7 +61,7 @@ paths:
         default: 5
       - name: "page"
         in: "query"
-        description: "Fetch articles from an indicated page, starting from 0; each page contains 'count' no. of articles. Requires count to be set."
+        description: "Fetch articles from an indicated page, starting from 0; each page contains 'count' no. of articles. Requires count to be set, otherwise 10."
         required: false
         type: "number"
         default: 0
@@ -82,6 +82,8 @@ paths:
           description: "Bad input parameter"
         "401":
           description: "Failed to authenticate"
+        "403":
+          description: "Bad request"
         "500":
           description: "Insufficient articles"
       x-swagger-router-controller: "Developers"
