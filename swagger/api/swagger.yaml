@@ -33,12 +33,12 @@ paths:
         type: "string"
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2019-06-02T00:00:00"
+        description: "The start date to search for articles published after this date (ISO time string format). If no time is given, will search on date provided.\n e.g. 2019-06-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format). \n e.g. 2020-02-02T00:00:00"
+        description: "The end date to search for articles published before this date (ISO time string format). If no time is given, will search on date provided.\n e.g. 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
@@ -61,7 +61,7 @@ paths:
         default: 5
       - name: "page"
         in: "query"
-        description: "Fetch articles from an indicated page, starting from 0; each page contains 'count' no. of articles. Requires count to be set."
+        description: "Fetch articles from an indicated page, starting from 0; each page contains 'count' no. of articles. Requires count to be set, otherwise 10."
         required: false
         type: "number"
         default: 0
@@ -69,13 +69,21 @@ paths:
         "200":
           description: "Disease reports matching criteria"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Article"
+            type: "object"
+            properties: 
+              metadata:
+                type: "object"
+                $ref: "#/definitions/Metadata"
+              articles:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Article"
         "400":
           description: "Bad input parameter"
         "401":
           description: "Failed to authenticate"
+        "403":
+          description: "Bad request"
         "500":
           description: "Insufficient articles"
       x-swagger-router-controller: "Developers"
@@ -149,5 +157,21 @@ definitions:
       location:
         type: "string"
         example: "Wuhan"
+    
+  Metadata: 
+    required:
+    - "team"
+    - "time_accessed"
+    - "data_source"
+    properties:
+      team:
+        type: "string"
+        example: "Beams"
+      time_accessed:
+        type: "string"
+        example: "2020-03-22T00:00:00"
+      data_source:
+        type: "string"
+        example: "ProMed"
 host: sympt-server.herokuapp.com
 basePath: /
