@@ -100,7 +100,7 @@ const urlPageResultIds = async (
     throw Error();
   } catch (error) {
     console.log(error);
-    return generateError(500, "Insufficient articles", "Could not find articles with these parameters.");
+    return generateError(500, "Insufficient articles", "Could not find articles with these parameters");
   }
 };
 

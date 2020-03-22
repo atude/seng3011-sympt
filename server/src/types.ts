@@ -41,3 +41,15 @@ export type Location = {
   geonameId?: number;
   subArea: string | null;
 }
+
+export type ApiLog = {
+  timestamp: string;
+  success: boolean;
+  query: string;
+  error: GenError | null;
+}
+
+export type ApiUser = {
+  authenticated: boolean;
+  email: string;
+}
