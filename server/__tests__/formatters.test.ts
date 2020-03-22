@@ -24,7 +24,7 @@ describe("Testing query and date formatting", () => {
     });
   });
   test("Check malformed/missing end date", () => {
-    const queryMissing = "?startdate=2020-02-02T00:00:00?location=china&keyterms=coronavirus";
+    const queryMissing = "?startdate=2020-02-02T00:00:00&location=china&keyterms=coronavirus";
     expect(formatQueryUrl(queryMissing)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
@@ -41,6 +41,15 @@ describe("Testing query and date formatting", () => {
       errorNo: 403, 
       errorName: "Bad Request", 
       errorMessage: "Invalid end date",
+    });
+  });
+
+  test("Check invalid start and end date order", () => {
+    const query = "?startdate=2020-05-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus";
+    expect(formatQueryUrl(query)).toMatchObject({
+      errorNo: 403,
+      errorName: "Bad Request",
+      errorMessage: "Invalid start date and end date order",
     });
   });
 });
