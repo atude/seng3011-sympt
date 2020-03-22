@@ -14,7 +14,7 @@ describe("Testing query and date formatting", () => {
     expect(formatQueryUrl(queryMissingYear)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "Invalid start date.",
+      errorMessage: "Invalid start date",
     });
     const queryMissingMonthDay = "?startdate=2000-02T00:00:00&enddate=2020-02-02T00:00:00";
     expect(formatQueryUrl(queryMissingMonthDay)).toMatchObject({
@@ -28,19 +28,19 @@ describe("Testing query and date formatting", () => {
     expect(formatQueryUrl(queryMissing)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "No specified end date.",
+      errorMessage: "No specified end date",
     });
     const queryMissingYear = "?startdate=2000-02-02T00:00:00&enddate=02-02T00:00:00";
     expect(formatQueryUrl(queryMissingYear)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "Invalid end date.",
+      errorMessage: "Invalid end date",
     });
     const queryMissingMonthDay = "?startdate=2000-02-02T00:00:00&enddate=2002-02T00:00:00";
     expect(formatQueryUrl(queryMissingMonthDay)).toMatchObject({
       errorNo: 403, 
       errorName: "Bad Request", 
-      errorMessage: "Invalid end date.",
+      errorMessage: "Invalid end date",
     });
   });
 });
@@ -145,7 +145,7 @@ describe("Testing query and count", () => {
   test("Bad request: Count over limit", () => {
     const count = `?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus&count=${overPageLimit}`;
     expect(formatQueryUrl(count)).toMatchObject({
-      errorMessage: "Count must be a number between 0 and 10.",
+      errorMessage: "Count must be a number between 0 and 10",
       errorName: "Bad Request",
       errorNo: 403,
     });
