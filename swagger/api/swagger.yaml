@@ -69,9 +69,15 @@ paths:
         "200":
           description: "Disease reports matching criteria"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Article"
+            type: "object"
+            properties: 
+              metadata:
+                type: "object"
+                $ref: "#/definitions/Metadata"
+              articles:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Article"
         "400":
           description: "Bad input parameter"
         "401":
@@ -149,5 +155,21 @@ definitions:
       location:
         type: "string"
         example: "Wuhan"
+    
+  Metadata: 
+    required:
+    - "team"
+    - "time_accessed"
+    - "data_source"
+    properties:
+      team:
+        type: "string"
+        example: "Beams"
+      time_accessed:
+        type: "string"
+        example: "2020-03-22T00:00:00"
+      data_source:
+        type: "string"
+        example: "ProMed"
 host: sympt-server.herokuapp.com
 basePath: /
