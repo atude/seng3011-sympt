@@ -33,12 +33,12 @@ paths:
         type: "string"
       - name: "startdate"
         in: "query"
-        description: "The start date to search for articles published after this date (ISO time string format).\n e.g. 2019-06-02T00:00:00"
+        description: "The start date to search for articles published after this date (ISO time string format). If no time is given, will search on date provided.\n e.g. 2019-06-02T00:00:00"
         required: true
         type: "string"
       - name: "enddate"
         in: "query"
-        description: "The end date to search for articles published before this date (ISO time string format). \n e.g. 2020-02-02T00:00:00"
+        description: "The end date to search for articles published before this date (ISO time string format). If no time is given, will search on date provided.\n e.g. 2020-02-02T00:00:00"
         required: true
         type: "string"
       - name: "location"
