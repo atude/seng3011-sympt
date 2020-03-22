@@ -46,13 +46,8 @@ describe("Testing query and date formatting", () => {
 });
 
 describe("Testing query and location", () => {
-  test("Check no location", () => {
+  test("Check no location doesn't give error", () => {
     const queryMissing = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00";
-    // expect(formatQueryUrl(queryMissing)).toMatchObject({
-    //   errorNo: 403, 
-    //   errorName: "Bad Request", 
-    //   errorMessage: "No specified location.",
-    // });
     expect(formatQueryUrl(queryMissing)).toMatchObject({
       count: null, 
       endDate: "02/03/2020", 
@@ -94,7 +89,7 @@ describe("Testing query and keyterms", () => {
       page: 0,
       startDate: "02/02/2020",
     });
-  })
+  });
   test("Two keyterms", () => {
     const twoKeyterm = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus,sars";
     expect(formatQueryUrl(twoKeyterm)).toMatchObject({
@@ -105,7 +100,7 @@ describe("Testing query and keyterms", () => {
       page: 0,
       startDate: "02/02/2020",
     });
-  })
+  });
   test("Case Insensitive", () => {
     const caseInsensitive = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus,SARS";
     expect(formatQueryUrl(caseInsensitive)).toMatchObject({
@@ -116,7 +111,29 @@ describe("Testing query and keyterms", () => {
       page: 0,
       startDate: "02/02/2020",
     });
-  })
+  });
+  test("Comma first", () => {
+    const caseInsensitive = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=,coronavirus,SARS";
+    expect(formatQueryUrl(caseInsensitive)).toMatchObject({
+      count: null, 
+      endDate: "02/03/2020", 
+      location: "china",
+      keyTerms: ["coronavirus", "sars"],
+      page: 0,
+      startDate: "02/02/2020",
+    });
+  });
+  test("Comma last", () => {
+    const caseInsensitive = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus,SARS,";
+    expect(formatQueryUrl(caseInsensitive)).toMatchObject({
+      count: null, 
+      endDate: "02/03/2020", 
+      location: "china",
+      keyTerms: ["coronavirus", "sars"],
+      page: 0,
+      startDate: "02/02/2020",
+    });
+  });
 });
 
 describe("Testing query and count", () => {
@@ -140,6 +157,14 @@ describe("Testing query and count", () => {
       keyTerms: ["coronavirus"],
       page: 0,
       startDate: "02/02/2020",
+    });
+  });
+  test("Bad request: Count less than 0", () => {
+    const count = `?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus&count=-1`;
+    expect(formatQueryUrl(count)).toMatchObject({
+      errorMessage: "Count must be a number between 0 and 10",
+      errorName: "Bad Request",
+      errorNo: 403,
     });
   });
   test("Bad request: Count over limit", () => {
@@ -173,6 +198,14 @@ describe("Testing query and page", () => {
       keyTerms: ["coronavirus"],
       page: 3,
       startDate: "02/02/2020",
+    });
+  });
+  test("Request with negative page", () => {
+    const noCount = "?startdate=2020-02-02T00:00:00&enddate=2020-02-03T00:00:00&location=china&keyterms=coronavirus&count=2&page=-1";
+    expect(formatQueryUrl(noCount)).toMatchObject({
+      errorMessage: "Page must be a positive number or 0, and count must be specified",
+      errorName: "Bad Request",
+      errorNo: 403,
     });
   });
 });
