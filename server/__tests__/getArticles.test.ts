@@ -137,33 +137,33 @@ describe("Testing recieved articles | article ordered by date", () => {
     }
   });
 
-  test("Test article order #3", async () => {
-    const query: string = "?startdate=2020-01-01T00:00:00&enddate=2020-03-01T00:00:00&location=china&keyterms=covid";
-    const articles = await getArticles(query);
-    if (!isError(articles)) {
-      let ordered = true;
-      let currentDate = null;
-      let previousDate = getDateObject(articles[0].date_of_publication);
+  // test("Test article order #3", async () => {
+  //   const query: string = "?startdate=2020-02-01T00:00:00&enddate=2020-03-01T00:00:00&location=china&keyterms=covid";
+  //   const articles = await getArticles(query);
+  //   if (!isError(articles)) {
+  //     let ordered = true;
+  //     let currentDate = null;
+  //     let previousDate = getDateObject(articles[0].date_of_publication);
       
-      if (previousDate) {
-        articles.forEach((article) => {
-          currentDate = getDateObject(article.date_of_publication);
-          if (currentDate && previousDate) {
-            if (currentDate < previousDate) {
-              ordered = false;
-            }
-            previousDate = currentDate;
-          } else {
-            ordered = false;
-          }
-        });
-      } else {
-        ordered = false;
-      }
+  //     if (previousDate) {
+  //       articles.forEach((article) => {
+  //         currentDate = getDateObject(article.date_of_publication);
+  //         if (currentDate && previousDate) {
+  //           if (currentDate < previousDate) {
+  //             ordered = false;
+  //           }
+  //           previousDate = currentDate;
+  //         } else {
+  //           ordered = false;
+  //         }
+  //       });
+  //     } else {
+  //       ordered = false;
+  //     }
 
-      expect(ordered).toBeTruthy();
-    }
-  });
+  //     expect(ordered).toBeTruthy();
+  //   }
+  // });
 });
 
 
