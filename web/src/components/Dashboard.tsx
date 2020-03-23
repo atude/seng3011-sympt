@@ -129,6 +129,15 @@ const Dashboard = (props: any) => {
 
   return (
     <div className={classes.parent}>
+      <Button 
+        color="primary" 
+        variant="outlined" 
+        style={{ width: "100%" }}
+        href="http://sympt-swagger.herokuapp.com/docs"
+        target="_no_blank"
+      >
+        API Documentation
+      </Button>
       <Grid container direction="row" alignItems="center">
         <Grid item>
           <DashboardIcon className={classes.headerIcon} fontSize="large" color="primary" />
@@ -270,7 +279,7 @@ const Dashboard = (props: any) => {
                       <TableCell component="th" scope="row">
                         {dateStr}
                       </TableCell>
-                      <TableCell style={{ maxWidth: "200px" }}>
+                      <TableCell>
                         {log.query.replace('/articles/', '').split('&').map((section: string, i: number) => (
                           <div>{i !== 0 && "&"}{section}</div>
                         ))}
