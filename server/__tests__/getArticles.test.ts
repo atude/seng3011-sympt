@@ -6,6 +6,27 @@ console.log(`Admin init: ${!!admin}`);
 
 jest.setTimeout(30000);
 
+
+const getDateObject = (datestring: string | undefined) => {
+  // datestring must be of the format 'yyyy-mm-dd hh:mm:ss'
+
+  if (!datestring) {
+    return null;
+  }
+
+  const dateTimeRegex = /(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})/g;
+
+  const dateData = datestring.match(dateTimeRegex);
+
+  if (dateData) {
+    const [, year, month, day, hours, mins, secs] = "";
+    const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 
+      parseInt(day, 10), parseInt(hours, 10), parseInt(mins, 10), parseInt(secs, 10));
+    return date;
+  }
+  return null;
+};
+
 describe("getArticles", () => {
   test("Check no articles", async () => {
     const query: string = "?startdate=2020-02-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus&count=5&page=0";
@@ -77,6 +98,93 @@ describe("Testing recieved articles | page operations ", () => {
     expect(articles).toHaveLength(5);
   });
 });
+
+
+describe("Testing recieved articles | article ordered by date", () => {
+  test("Test article order #1", async () => {
+    const query: string = "?startdate=2020-01-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus";
+    const articles = await getArticles(query);
+    if (!isError(articles)) {
+      let ordered = true;
+      let currentDate = null;
+      let previousDate = getDateObject(articles[0].date_of_publication);
+      
+      if (previousDate) {
+        articles.forEach((article) => {
+          currentDate = getDateObject(article.date_of_publication);
+          if (currentDate && previousDate) {
+            if (currentDate < previousDate) {
+              ordered = false;
+            }
+            previousDate = currentDate;
+          } else {
+            ordered = false;
+          }
+        });
+      } else {
+        ordered = false;
+      }
+
+      expect(ordered).toBeTruthy();
+    }
+  });
+  test("Test article order #2", async () => {
+    const query: string = "?startdate=2019-12-01T00:00:00&enddate=2020-01-31T00:00:00&location=china&keyterms=coronavirus";
+    const articles = await getArticles(query);
+    if (!isError(articles)) {
+      let ordered = true;
+      let currentDate = null;
+      let previousDate = getDateObject(articles[0].date_of_publication);
+      
+      if (previousDate) {
+        articles.forEach((article) => {
+          currentDate = getDateObject(article.date_of_publication);
+          if (currentDate && previousDate) {
+            if (currentDate < previousDate) {
+              ordered = false;
+            }
+            previousDate = currentDate;
+          } else {
+            ordered = false;
+          }
+        });
+      } else {
+        ordered = false;
+      }
+
+      expect(ordered).toBeTruthy();
+    }
+  });
+
+  test("Test article order #3", async () => {
+    const query: string = "?startdate=2020-01-01T00:00:00&enddate=2020-03-01T00:00:00&location=china&keyterms=covid";
+    const articles = await getArticles(query);
+    if (!isError(articles)) {
+      let ordered = true;
+      let currentDate = null;
+      let previousDate = getDateObject(articles[0].date_of_publication);
+      
+      if (previousDate) {
+        articles.forEach((article) => {
+          currentDate = getDateObject(article.date_of_publication);
+          if (currentDate && previousDate) {
+            if (currentDate < previousDate) {
+              ordered = false;
+            }
+            previousDate = currentDate;
+          } else {
+            ordered = false;
+          }
+        });
+      } else {
+        ordered = false;
+      }
+
+      expect(ordered).toBeTruthy();
+    }
+  });
+});
+
 
 /*
 describe("Testing recieved articles | query location valid", () => {
