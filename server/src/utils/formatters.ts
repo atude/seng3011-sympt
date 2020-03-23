@@ -49,9 +49,10 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
     return generateError(403, "Bad Request", "Invalid end date");
   }
 
-  const checkStart = new Date(parseInt(startYear, 10), parseInt(startMonth, 10), 
+  const checkStart = new Date(parseInt(startYear, 10), parseInt(startMonth, 10) - 1, 
     parseInt(startDay, 10));
-  const checkEnd = new Date(parseInt(endYear, 10), parseInt(endMonth, 10), parseInt(endDay, 10));
+  const checkEnd = new Date(parseInt(endYear, 10), 
+    parseInt(endMonth, 10) - 1, parseInt(endDay, 10));
   if (checkStart > checkEnd) {
     return generateError(403, "Bad Request", "Invalid start date and end date order");
   }
