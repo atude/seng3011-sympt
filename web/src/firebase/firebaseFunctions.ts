@@ -41,5 +41,5 @@ export const fetchLogs = async (userEmail: string): Promise<ApiLog[]> => {
   const logs = await firebase.firestore().collection("apiUsers").doc(userEmail).get();
   if (!logs) return [];
 
-  return Object.values(logs.data() ?? {});
+  return Object.values(logs.data() ?? {}).reverse();
 };

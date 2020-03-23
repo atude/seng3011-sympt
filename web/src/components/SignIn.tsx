@@ -62,12 +62,12 @@ export const SignIn = (props: any) => {
 
     if (isSignIn) {
       const attemptSignIn = await signInEmail(email, password);
-      if (attemptSignIn.message) {
+      if (attemptSignIn.message || null) {
         setError(attemptSignIn.message);
       }
     } else {
       const attemptSignUp = await createAccount(email, password);
-      if (attemptSignUp.message) {
+      if (attemptSignUp.message || null) {
         setError(attemptSignUp.message);
       }
     }
