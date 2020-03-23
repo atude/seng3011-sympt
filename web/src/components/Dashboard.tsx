@@ -183,7 +183,7 @@ const Dashboard = (props: any) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {logs.reverse().map((log: ApiLog) => {
+              {logs.map((log: ApiLog) => {
                 const date: Date = new Date(Number(log.timestamp) * 1000);
                 const dateStr: string = moment(date).format('LLL');
                 
