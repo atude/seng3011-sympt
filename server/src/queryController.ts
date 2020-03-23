@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import puppeteer from 'puppeteer';
 import urlPageResultIds from './services/pageIdScrapeService';
 import contentScraper from './services/contentScrapeService';
@@ -11,10 +12,13 @@ import { isError } from './utils/checkFunctions';
 import generateError from './utils/generateError';
 
 // How many pages to scrape per call max
-const scrapeCap = 8;
+// const scrapeCap = 8;
 
 // Minimum articles to return when count is not set
 const minGeneralArticles = 5;
+
+// Max number of promises to be running
+const chunkSize = 5;
 
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
@@ -38,13 +42,14 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       return idResults;
     }
 
-    const results: Promise<PageObject>[] = 
-      idResults.results
-        .splice(0, scrapeCap)
-        .map((pageId: string) => contentScraper(pageId, browser));
-
-    const processedResults: PageObject[] = (await Promise.all(results))
-      .filter((pageContent) => pageContent && pageContent.id);
+    let processedResults: PageObject[] = [];
+    for (let index = 0; index < idResults.results.length; index += chunkSize) {
+      const tempResults = idResults.results.slice(index, index + chunkSize);
+      const pagePromiseGroup: Promise<PageObject>[] = tempResults.map((pageID: string) => 
+        contentScraper(pageID, browser));
+      processedResults = processedResults.concat(await Promise.all(pagePromiseGroup));
+    }
+    processedResults = processedResults.filter((pageContent) => pageContent && pageContent.id);
       
     await browser.close();
     console.log("Scraped pages successfully.");
