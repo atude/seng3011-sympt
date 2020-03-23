@@ -163,6 +163,7 @@ definitions:
     - "team"
     - "time_accessed"
     - "data_source"
+    - "total_articles"
     properties:
       team:
         type: "string"
@@ -173,5 +174,8 @@ definitions:
       data_source:
         type: "string"
         example: "ProMed"
+      total_articles:
+        type: "string"
+        example: 25
 host: sympt-server.herokuapp.com
 basePath: /
