@@ -15,10 +15,11 @@ while read location
 do
     url="https://sympt-server.herokuapp.com/articles/?startdate=2019-06-02T00%3A00%3A00&enddate=2020-02-02T00%3A00%3A00=$location&keyterms=coronavirus&count=$2&page=0"
     touch "location_test_results/query_result$1.json"
+    echo $url
     curl -X GET "$url" -H "accept: application/json" -H "authorization: $3" | jq '.' > "location_test_results/query_result$i.json"
 
     # Regex
-    numArticles=`cat location_test_results/query_result$1.json | egrep -c "$location"`
+    numArticles=`cat location_test_results/query_result$i.json | egrep -c "$location"`
     if test $numArticles -lt $2
     then
         echo "Test query $i FAILED. Location was not listed in all articles"

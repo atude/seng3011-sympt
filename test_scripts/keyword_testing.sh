@@ -34,16 +34,16 @@ do
         echo "Maintext: $mainText, ArticleDisease: $articleDisease, Keyword: $keyword"
         if test $articleDisease -lt $2
         then
-            echo "Test query $i FAILED. Disease was not listed in all articles"
+            # echo "Test query $i FAILED. Disease was not listed in all articles"
             if test $mainText -lt $2
             then
-                echo "Test query $i FAILED. Article was not relevant to keyword"
+                # echo "Test query $i FAILED. Article was not relevant to keyword"
             else
-                echo "Test query $i PASSED. With $articleDisease/$2 articles reporting $keyword. Total mentions: $mainText"
+                # echo "Test query $i PASSED. With $articleDisease/$2 articles reporting $keyword. Total mentions: $mainText"
             fi
         fi
     else
-        echo "Test query $i FAILED. Returned zero articles"
+        # echo "Test query $i FAILED. Returned zero articles"
     fi
 
     i=$((i + 1))
