@@ -1,0 +1,561 @@
+{
+  "metadata": {
+    "team": "Beams",
+    "time_accessed": "2020-03-24T05:07:55",
+    "data_source": "ProMed",
+    "total_articles": 5
+  },
+  "articles": [
+    {
+      "reports": [
+        {
+          "syndromes": [
+            "Acute respiratory syndrome",
+            "Pneumonia"
+          ],
+          "diseases": [
+            "coronavirus",
+            "mers"
+          ],
+          "locations": [
+            {
+              "country": "China",
+              "subArea": null
+            },
+            {
+              "country": "China",
+              "subArea": "Henan Sheng",
+              "location": "Zhumadian",
+              "geonameId": 1783873
+            },
+            {
+              "location": "Wuhan",
+              "geonameId": 1791247,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "subArea": "Shanxi Sheng",
+              "location": "Taiyuan",
+              "geonameId": 1793511,
+              "country": "China"
+            },
+            {
+              "location": "Songjiang",
+              "geonameId": 1794035,
+              "country": "China",
+              "subArea": "Shanghai Shi"
+            },
+            {
+              "subArea": "Guangdong",
+              "location": "Shenzhen",
+              "geonameId": 1795565,
+              "country": "China"
+            },
+            {
+              "location": "Shanghai",
+              "geonameId": 1796236,
+              "country": "China",
+              "subArea": "Shanghai Shi"
+            },
+            {
+              "subArea": "Chongqing Shi",
+              "location": "Chongqing",
+              "geonameId": 1814906,
+              "country": "China"
+            },
+            {
+              "country": "China",
+              "subArea": "Beijing",
+              "location": "Beijing",
+              "geonameId": 1816670
+            },
+            {
+              "subArea": "Jilin Sheng",
+              "location": "Jilin",
+              "geonameId": 2036502,
+              "country": "China"
+            },
+            {
+              "location": "Huanan",
+              "geonameId": 2036753,
+              "country": "China",
+              "subArea": "Heilongjiang Sheng"
+            },
+            {
+              "location": "Hohhot",
+              "geonameId": 2036892,
+              "country": "China",
+              "subArea": "Inner Mongolia"
+            },
+            {
+              "country": "Mongolia",
+              "subArea": null
+            }
+          ],
+          "event_date": "2019-12-12 xx:xx:xx to 2020-12-23 xx:xx:xx"
+        }
+      ],
+      "id": "6943858",
+      "headline": "Novel coronavirus (28): China (HU) animal reservoir",
+      "date_of_publication": "2020-02-01 23:02:03",
+      "url": "https://promedmail.org/promed-post/?id=6943858",
+      "main_text": "On 26 Jan 2020, the China Centers for Disease Control and Prevention announced that the new coronavirus was detected in environmental samples from the South China Seafood Market in Wuhan [see item 2]. The virus originated from wild animals sold in the seafood market. For this reason, the State General Administration of Market Supervision, the Ministry of Agriculture and Rural Affairs, and the National Forestry and Grassland Bureau jointly issued a public announcement on the 26th that from now on until the end of the national epidemic, wild animal trading activities are prohibited to cut off the source and transmission of the virus. On 28 Jan 2020, the State Forestry and Grassland Administration issued the Work Plan on Supervision and Inspection of Strengthening the Implementation and Control of Wildlife Control Measures, requiring local supervisory agencies to implement inspection responsibilities for wildlife trading markets, restaurants, and other places, and for wildlife trading. [There is] supervision and inspection of the clearance and surveillance of wild animal epidemics and the establishment of a daily reporting system. Hubei, Shanghai, Sichuan, Yunnan, Guangdong, Zhejiang, Jilin, Henan, Inner Mongolia, Jiangsu, Hunan, and other provinces/autonomous regions and municipalities immediately issued policies to urgently suspend wildlife trading. In addition to banning wildlife trade, some provinces have stopped trading live birds. Hubei, Inner Mongolia, and Henan have banned the sale of live poultry and wild animals. The Henan Provincial Market Supervision Bureau issued a document on 21 Jan 2020, demanding that the sale of live poultry be banned on the market from now on. Operators who still sell live poultry on the market and kill poultry products such as poultry onsite will be ordered to cease operations. Shanghai requires that from 25 Jan to 30 Apr 2020, Shanghai will implement a seasonal suspension of live bird trading. Yunnan province prohibits bamboo rats, tadpoles, and other wild animals that may carry the new coronavirus from being transported, traded, and sold on the market. It also requires strict implementation of the ban on live birds at the local farmers' market. Jilin, Shandong, Hubei, and other places announced the suspension of all wildlife-related transactions and exhibition activities. The Shaanxi Provincial Forestry Bureau has introduced 10 measures to ensure a safe distance between people and animals. From 22 Jan 2020, Wuhan Zoo, Jiufeng Forest Zoo, and other scenic spots have been closed to the outside world. Breeders disinfect the cages and out-of-house playgrounds in accordance with the established disinfection system every day. Some regions have policies that prohibit online wildlife trading. Zhejiang province strengthened the monitoring of e-commerce platforms, banned online trading of wild animals, and searched and blocked 32 keywords of wild animals. Shenzhen requires various edible agricultural products wholesale markets, farmer's markets, shopping malls, supermarkets and other trading markets (places) and their internal operators, and various catering service units and e-commerce platform operators are strictly prohibited from trading wild animals and their products. Shanxi Taiyuan Market Supervision and Administration Bureau issued the \"Notice on Strengthening the Supervision of Wild Animal Markets.\" The operators of various farmers' markets, supermarkets, restaurants, and e-commerce platforms in the city are strictly prohibited from trading wild animals and their products in any form and closing live bird trading. In order to effectively prevent the spread of pneumonia outbreaks of new coronavirus infections, many regions have implemented strict law enforcement to ban wild animal trading venues and block trading channels. Inner Mongolia Autonomous Region will monitor the business entities that sell wild animals and live poultry and live animals on the internet within the autonomous region. As of the afternoon of 25 Jan 2020, 7 online shops suspected of selling related products have been monitored, involving 7 alliance cities including Hohhot. All products in the 7 shops have, by now, been removed and their websites closed. On the afternoon of 26 Jan 2020, Zhou Zhenghua, deputy director of the Zhumadian Forestry Public Security Bureau of Henan province, led a team to conduct a one-by-one inspection on Zhumadian's agricultural product market, pet market, flower and bird trading market, and wildlife domestication, breeding, and trading venues. As of 5 p.m. on 27 Jan [2020], Zhumadian had dispatched a total of 11 police cars with more than 50 police officers to investigate more than 30 markets in the city. Due to the publicity in place, no wild animals were found. Songjiang district of Shanghai issued notices to 3 indoor zoo-type business establishments, including Xingmeng pet, and suspended operations. At present, the monitoring of epidemic diseases is mainly carried out. Daily inspections are carried out at 5 wildlife monitoring stations at or above the municipal level to observe whether there is abnormal behavior of wild animals and whether there are abnormal deaths. Guangdong province temporarily suspended the application for national administrative protection permits for wildlife hunting, breeding, sale, purchase, utilization, and transportation. Transshipment and trafficking of wild animals is strictly forbidden. As of 27 Jan 2020, the market supervision department inspected a total of 3835 farmers' markets and 8984 live poultry operators and found that there were 8 problems with illegal sales of wild animals, of which 7 completed rectification and filed a case for investigation. Hunan province has implemented a \"one control, 4 prohibitions\" measure and sealed off and isolated all wild animals in artificial breeding sites. In Zhejiang province, a total of 7486 inspection and enforcement officers were dispatched by the market supervision department. They have inspected 2224 farmers' markets, 13 507 households, and 787 malls and supermarkets. Beijing, Hebei, Chongqing, Shanxi, Ningxia, and other places have initiated joint prevention and control measures to severely investigate and deal with activities such as wildlife trading and transshipment. [For the detailed additional control/investigation/enforcement activities in other provinces, please refer to the full report (in Chinese) at the source URL. - Mod.AS] [The measures undertaken in China to intensify the control upon and even limit the trade in wild animals and their products have been long due; in fact, they have been advocated by China's leading scientists in the field of coronavirus research and their animal reservoir. - Mod.AS] A total of 585 samples were collected from 2 batches of South China Seafood City. PCR tests showed that 33 samples were positive for the new coronavirus nucleic acid. The investigation found that the South China Seafood Market was nominally a seafood market but was actually a comprehensive market. China Daily, 26 Jan 2020 (reporter Wang Xiaodong). A reporter learned today from the China Centers for Disease Control and Prevention that since the outbreak of a new coronavirus, the center's virus disease center has continued to address the virus traceability research and made progress. For the 1st time, from 585 environmental samples from the South China Seafood Market, 33 samples contained novel coronavirus nucleic acids, and the virus was successfully isolated from positive environmental specimens, suggesting that the virus originated from wild animals sold in the South China Seafood Market [see comment]. Most of the early confirmed cases of Wuhan's new coronavirus epidemic came from Wuhan South China Seafood Market. On 31 Dec 2019, according to the requirements of the China Centers for Disease Control and Prevention, the selected expert group went to Wuhan to participate in the epidemic prevention and control activities, and in the early morning of 1 Jan 2020, drafted the \"Environment Traceability Work Plan.\" At 8 a.m. on 1 Jan 2020, I went to South China Seafood City to collect 515 environmental samples from case-related merchants and related neighborhoods and transported them to the virus disease laboratory for testing. On 12 Jan 2020, experts from the Institute of Viral Diseases collected an additional 70 specimens of wild animal vendors in the South China Seafood Market and transferred them to the laboratory for testing. PCR tests showed that 33 samples out of the 585 collected were positive for the new coronavirus nucleic acid. These positive samples were collected from 22 stalls and one garbage truck on the market, of which 93.9% (31/33) positive specimens were distributed in the western part of the South China Seafood Market. The investigation found that the South China Seafood Market was nominally a seafood market but was actually a comprehensive market. There is a wildlife trade in the western part of the South China Seafood Market, especially in the areas near 7th and 8th streets within the western area, where there are many wildlife dealers; the positive samples were concentrated in this area, accounting for 42.4% of all positive samples (14/33). In summary, it is highly suspected that the outbreak is related to the wildlife trade. Virus isolation was carried out on coronavirus-sensitive cell lines. Electron microscopy, PCR, and in-depth sequencing results have shown that the novel coronavirus has been successfully isolated from environmental samples, further confirming the seafood [market] in South China. There are a large number of new coronaviruses 2019-nCoV in urban environments. [Denoting the \"South China Seafood City\" market as the source of the 2019nCoV was 1st expressed in the initial public announcement of Wuhan's Municipal Health Committee, published Fri 31 Dec 2019 (item 3). - Mod.AS] Recently, some medical institutions found that many of the pneumonia cases received were related to South China Seafood City. After receiving the report, the Municipal Health and Health Commission immediately launched a case search and retrospective investigation related to South China Seafood City in the city's medical health institutions; 27 cases have been found, of which 7 are in serious condition, and the remaining cases are stable and controllable. Two patients are expected to be discharged in the near future. The clinical manifestations of the cases were mainly fever; a few patients had difficulty breathing, and chest radiographs showed bilateral lung infiltrative lesions. At present, all cases have been isolated for treatment; follow-up investigations and medical observations of close contacts are ongoing, and hygiene investigations and environmental sanitation disposals for South China Seafood City are ongoing. Wuhan organized consultations with clinical, medical, epidemiological, and virological experts from Tongji Hospital, Provincial CDC, Wuhan Institute of Virology, Chinese Academy of Sciences, Wuhan Infectious Diseases Hospital, and Wuhan CDC. According to the analysis of epidemiological investigations and preliminary laboratory tests, the above cases are considered to be viral pneumonia. The investigation so far has not found any obvious human-to-human transmission and no medical staff infection. Detection of the pathogen and investigation of the cause of the infection are ongoing. Viral pneumonia is more common in winter and spring and can be spread or outbreak. The clinical manifestations are fever, soreness, dyspnea in a small part, and lung infiltration. Viral pneumonia is related to the virulence of the virus, the route of infection, and the age and immune status of the host. Viruses that cause viral pneumonia are common with influenza viruses, and others are parainfluenza virus, cytomegalovirus, adenovirus, rhinovirus, and coronavirus. Confirmation depends on pathogenic tests, including virus isolation, serological tests, and viral antigen and nucleic acid tests. The disease is preventable and controllable, and indoor air circulation is prevented to prevent public places and closed places where there is no air circulation. People can wear masks when going out. Symptomatic treatment is the main clinical practice, and bed rest is required. If you have the above symptoms, especially the persistent fever, you should go to the medical institution in time. [While the large \"South China Seafood City\" market, or rather its western part (and within that part, in particular the areas near the 7th and 8th streets), may have played a role in the epidemiology of the disease, the lack of evidence of infection in animals kept/traded/slaughtered in the market is in need of explanation. A recent paper (Ref 1 below) includes \"Figure 1. Onset of Illness among the First 425 Confirmed Cases of Novel Coronavirus (2019-nCoV)-Infected Pneumonia (NCIP).\" The following timeline data, extracted from the paper, have relevance to the assessment of animal involvement in 2019nCoV: The authors indicate that \"the majority of cases (55%) with onset before 1 Jan 2020 were linked to the Huanan Seafood Wholesale Market, as compared with 8.6% of the subsequent cases.\" The paper does not elaborate on the market's \"closing\" procedures. However, some details could be retrieved from China's \"Sina Technology\" website, dated 31 Dec 2019 (Google translation), as follows: \"On [31 Dec 2019], an official report from Hubei province said: \"The investigation found that most of the cases were operated by South China Seafood City in Jianghan district, Wuhan. The National Health and Health Commission has decided to send an expert group to our province to guide the epidemic disposal on the morning of [31 Dec 2019]. At present, related virus typing, isolation treatment, public opinion control, and terminal disinfection are underway.Additional information was included in the following media report from Sina Technology (in Chinese, Google translated) dated 9 Jan 2020: \"A scholar close to the expert group told the reporter of Caijing that the wild animals sold in the South China Seafood Market are currently under inspection to track down the source of the virus. From the above sources it may be concluded that the closing of the market (on 1 Jan 2020) followed the \"disposal\" of the market's animals (on 31 Dec 2019?) and their sampling for lab examination. This scenario deserves to be confirmed or corrected. Pending questions include the following: How many animals have been sampled/culled? What were their respective species? What were the lab results? Another paper (Ref 2 below), by the team that diagnosed the 1st cases of the epidemic, published on 23 Jan 2020, included the following abstract: \"Since the SARS outbreak 18 years ago, a large number of severe acute respiratory syndrome-related coronaviruses (SARSr-CoV) have been discovered in their natural reservoir host, bats. Previous studies indicated that some of those bat SARSr-CoVs have the potential to infect humans. Here we report the identification and characterization of a novel coronavirus (nCoV-2019), which caused an epidemic of acute respiratory syndrome in humans in Wuhan, China. The epidemic, started from 12 Dec 2019, has caused 198 laboratory-confirmed infections with 3 fatal cases by 20 Jan 2020. Full-length genome sequences were obtained from 5 patients at the early stage of the outbreak. They are almost identical to each other and share 79.5% sequence identity to SARS-CoV. Furthermore, it was found that nCoV-2019 is 96% identical at the whole genome level to a bat coronavirus. The pairwise protein sequence analysis of 7 conserved non-structural proteins show that this virus belongs to the species of SARSr-CoV. The nCoV-2019 virus was then isolated from the bronchoalveolar lavage fluid of a critically ill patient, which can be neutralized by sera from several patients. Importantly, we have confirmed that this novel CoV uses the same cell entry receptor, ACE2, as SARS-CoV.\" The above paper includes Table 1 presenting the data of the 7 1st 2019nCoV patients. While 6 patients (ICU 04, 05, 06, 08, 09, 10; 4 males, 2 females, dates of onset between 17 and 23 Dec 2020) were all described as \"fresh seafood market peddlers or deliverymen,\" the 1st patient, No. ICU-01 (male, 62, date of onset 12 Dec 2019, date of admission 27 Dec 2019, recovered and discharged) was not known to be related to the market (\"contact history unclear\"). The mode, animal source (an intermediate domestic or wild animal, in case not infected directly from bats), and place of the initial 2019-nCoV human infection in China remain to be identified. According to the said 2 papers, its likeliness to have taken place on the seafood market is doubted. 1. Qun Li, Xuhua Guan, Peng Wuand et al.: Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus-Infected Pneumonia. NEJM. 29 Jan 2020. DOI: 10.1056/NEJMoa2001316. 2. Peng Zhou, Xing-Lou Yang, Xian-Guang Wang et al.: Discovery of a novel coronavirus associated with the recent pneumonia outbreak in humans and its potential bat origin. bioRxiv. 2020.01.22.914952; doi:."
+    },
+    {
+      "date_of_publication": "2020-02-01 22:23:15",
+      "url": "https://promedmail.org/promed-post/?id=6943724",
+      "main_text": "Four more African countries have quarantined passengers arriving from China over suspected cases of Wuhan coronavirus even as tests ruled out infection in a person who was under medical observation in Ivory Coast. In Sudan, health minister Akram Ali Altoum announced that 2 of its citizens were being examined after displaying symptoms following a visit to Wuhan, the epicentre of the outbreak. \"We received 2 suspected cases who came from China through Cairo and Addis Ababa,\" Altoum said, adding that infections had not been confirmed. The country does not have the necessary testing equipment and has sent samples to Germany and India, as recommended by the World Health Organisation, state-owned Sudan News Agency reported. The lack of equipped medical labs and kits has raised fears that many African nations may not have the capacity to detect and handle the virus. Altoum said Sudan had increased surveillance and screening at airports and borders, setting up 7 checkpoints to monitor the movement of people entering the country. China is a major investor and trading partner in Sudan, with thousands of workers in the oil sector, including in South Sudan, where it has invested heavily in oil exploration and refining. Equatorial Guinea, a small central African nation, reported that it has quarantined 4 travelers who arrived on Tuesday [28 Jan 2020] via an Ethiopian Airline flight from Beijing to the capital Malabo. The country had announced that it would hold and isolate passengers from China for 14 days. It is not clear whether the 4 had coronavirus symptoms. On the small island of Mauritius, the health ministry said that all passengers that were traveling from Wuhan or had visited it in the last 14 days would be quarantined for observation, PanAfrican News Agency reported. Mauritian health and wellness minister Dr Kailesh Kumar Singh Jagutpal said on Tuesday [28 Jan 2020] that although the country has no confirmed cases, it has had 9 symptomatic people under quarantine; 2 of them have left for China, and the others remain under observation. The country's national carrier, Air Mauritius, has cancelled all its direct flights to and from Shanghai but said it has made alternative arrangements for passengers to travel to China via Hong Kong, Kuala Lumpur, or Singapore. \"Air Mauritius is closely monitoring the situation and has intensified precautionary measures in line with the recommendations of local and international health authorities and according to its internal procedures,\" the airline said on Thursday [30 Jan 2020]. In Angola, which sells most of its oil to China, officials said a Chinese national who arrived in the country about 12 days ago has been hospitalised in Luanda after exhibiting symptoms, including high fever and a cough. There was relief in Ivory Coast after the announcement on Wednesday [29 Jan 2020] that a suspected coronavirus patient had tested negative. The West African nation had isolated a 34-year-old woman who had arrived at Felix-Houphouet-Boigny International Airport in Abidjan on a flight from Beijing on Saturday [25 Jan 2020] with a cough and breathing problems, the country's health ministry said. But tests by research institutes in Ivory Coast and France found that she did not have the virus, and she has been reunited with her family. The cases in Sudan, Angola, and Equatorial Guinea came after Kenya and Ethiopia had also quarantined passengers arriving from China. Kenya has sent samples from a student who is in isolation at a Nairobi hospital to South Africa for testing, health officials said. He had travelled from Guangzhou after spending time in Wuhan and exhibited flu-like symptoms upon arrival via Kenya Airways on Tuesday [28 Jan 2020]. On Thursday [30 Jan 2020], Kenya Airways said all passengers from Wuhan needed to be cleared by Guangzhou Airport health authorities before being allowed to board its aircraft. There were 4 Ethiopian nationals who were placed in quarantine this week after arriving at Addis Ababa's Bole International Airport from China. Of these, 3 were students at universities near Wuhan, said Lia Tadesse, the state minister of health. South Africa, Nigeria, Ghana, Rwanda, Uganda, and Zambia have all issued alerts and increased screening to prevent the spread of the disease. The cases in Sudan, Angola, and Equatorial Guinea came after Kenya and Ethiopia had also quarantined passengers arriving from China. Kenya has sent samples from a student who is in isolation at a Nairobi hospital to South Africa for testing, health officials said. He had travelled from Guangzhou after spending time in Wuhan and exhibited flu-like symptoms upon arrival via Kenya Airways on Tuesday [28 Jan 2020]. On Thursday [30 Jan 2020], Kenya Airways said all passengers from Wuhan needed to be cleared by Guangzhou Airport health authorities before being allowed to board its aircraft. Africa has become home to millions of Chinese businesspeople and workers since Beijing began an aggressive push into the continent in search of raw materials for its industries and markets for its products. Students and tourists also travel regularly between the 2 regions. According to Dr John Nkengasong, director of the African Centre for Disease Control and Prevention, Africa is at high risk for the spread of the coronavirus because of the number of flights between China and the continent. He said air traffic between the regions had risen by more than 600% in the past decade. [The report also cites a total international case count from China's NHC, state media, other authorities.] [The above report does not mention if any of the Pasteur Institute regional reference laboratories in Africa or the national laboratories in Uganda, Kenya, or the DR Congo are prepared to test samples. Apparently South Africa is. Given the risk of infected individuals coming into African countries from other countries with cases mentioned above, contingency plans for dealing with local transmission is urgent. - Mod.TY",
+      "reports": [
+        {
+          "syndromes": [],
+          "diseases": [
+            "coronavirus"
+          ],
+          "locations": [
+            {
+              "country": "Angola",
+              "subArea": null
+            },
+            {
+              "country": "Angola",
+              "subArea": "Luanda",
+              "location": "Luanda",
+              "geonameId": 2240449
+            },
+            {
+              "country": "Ivory Coast",
+              "subArea": null
+            },
+            {
+              "location": "Abidjan",
+              "geonameId": 2293538,
+              "country": "Ivory Coast",
+              "subArea": "Lagunes"
+            },
+            {
+              "country": "China",
+              "subArea": null
+            },
+            {
+              "country": "China",
+              "subArea": "Hubei",
+              "location": "Wuhan",
+              "geonameId": 1791247
+            },
+            {
+              "location": "Shanghai",
+              "geonameId": 1796236,
+              "country": "China",
+              "subArea": "Shanghai Shi"
+            },
+            {
+              "location": "Guangzhou",
+              "geonameId": 1809858,
+              "country": "China",
+              "subArea": "Guangdong"
+            },
+            {
+              "subArea": "Beijing",
+              "location": "Beijing",
+              "geonameId": 1816670,
+              "country": "China"
+            },
+            {
+              "subArea": null,
+              "country": "Germany"
+            },
+            {
+              "country": "Ethiopia",
+              "subArea": null
+            },
+            {
+              "location": "Addis Ababa",
+              "geonameId": 344979,
+              "country": "Ethiopia",
+              "subArea": "Ādīs Ābeba"
+            },
+            {
+              "country": "France",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "Ghana"
+            },
+            {
+              "country": "Guinea",
+              "subArea": null
+            },
+            {
+              "country": "Equatorial Guinea",
+              "subArea": null
+            },
+            {
+              "subArea": "Bioko Norte",
+              "location": "Malabo",
+              "geonameId": 2309527,
+              "country": "Equatorial Guinea"
+            },
+            {
+              "country": "Hong Kong",
+              "subArea": null
+            },
+            {
+              "country": "India",
+              "subArea": null
+            },
+            {
+              "country": "Kenya",
+              "subArea": null
+            },
+            {
+              "country": "Kenya",
+              "subArea": "Nairobi Area",
+              "location": "Nairobi",
+              "geonameId": 184745
+            },
+            {
+              "country": "Mauritius",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "Niger"
+            },
+            {
+              "country": "Nigeria",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "Rwanda"
+            },
+            {
+              "country": "Sudan",
+              "subArea": null
+            },
+            {
+              "country": "Singapore",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "South Sudan"
+            },
+            {
+              "country": "Uganda",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "South Africa"
+            },
+            {
+              "country": "Zambia",
+              "subArea": null
+            }
+          ],
+          "event_date": "2020-01-25 xx:xx:xx to 2020-01-30 xx:xx:xx"
+        }
+      ],
+      "id": "6943724",
+      "headline": "Novel coronavirus (27): updates, Africa"
+    },
+    {
+      "main_text": "Qun Li, M. Med., Xuhua Guan, PhD, Peng Wu, PhD, Xiaoye Wang, Lei Zhou, M.Med., Yeqing Tong, et al.: Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus-Infected Pneumonia. New England Journal of Medicine. 2020; DOI: 10.1056/NEJMoa2001316 The initial cases of novel coronavirus (2019-nCoV)-infected pneumonia (NCIP) occurred in Wuhan, Hubei province, China, in December 2019 and January 2020. We analyzed data on the 1st 425 confirmed cases in Wuhan to determine the epidemiologic characteristics of NCIP. We collected information on demographic characteristics, exposure history, and illness timelines of laboratory-confirmed cases of NCIP that had been reported by 22 Jan 2020. We described characteristics of the cases and estimated the key epidemiologic time-delay distributions. In the early period of exponential growth, we estimated the epidemic doubling time and the basic reproductive number. Among the 1st 425 patients with confirmed NCIP, the median age was 59 years, and 56% were male. The majority of cases (55%) with onset before 1 Jan 2020 were linked to the Huanan Seafood Wholesale Market, as compared with 8.6% of the subsequent cases. The mean incubation period was 5.2 days (95% confidence interval [CI], 4.1-7.0), with the 95th percentile of the distribution at 12.5 days. In its early stages, the epidemic doubled in size every 7.4 days. With a mean serial interval of 7.5 days (95% CI, 5.3-19), the basic reproductive number was estimated to be 2.2 (95% CI, 1.4-3.9). On the basis of this information, there is evidence that human-to-human transmission has occurred among close contacts since the middle of December 2019. Considerable efforts to reduce transmission will be required to control outbreaks if similar dynamics apply elsewhere. Measures to prevent or reduce transmission should be implemented in populations at risk. We estimated an R0 of approximately 2.2, meaning that on average each patient has been spreading infection to 2.2 other people. In general, an epidemic will increase as long as R0 is greater than 1, and control measures aim to reduce the reproductive number to less than 1. The R0 of SARS was estimated to be around 3, and SARS outbreaks were successfully controlled by isolation of patients and careful infection control. In the case of NCIP, challenges to control include the apparent presence of many mild infections and limited resources for isolation of cases and quarantine of their close contacts. Our estimate of R0 was limited to the period up to 4 Jan [2020] because increases in awareness of the outbreak and greater availability and use of tests in more recent weeks will have increased the proportions of infections ascertained. It is possible that subsequent control measures in Wuhan, and more recently elsewhere in the country as well as overseas, have reduced transmissibility, but the detection of an increasing number of cases in other domestic locations and around the world suggest that the epidemic has continued to increase in size. Although the population quarantine of Wuhan and neighboring cities since 23 Jan [2020] should reduce the exportation of cases to the rest of the country and overseas, it is now a priority to determine whether local transmission at a similar intensity is occurring in other locations. It is notable that few of the early cases occurred in children, and almost half the 425 cases were in adults 60 years of age or older, although our case definition specified severe enough illness to require medical attention, which may vary according to the presence of coexisting conditions. Furthermore, children might be less likely to become infected or, if infected, may show milder symptoms, and either of these situations would account for underrepresentation in the confirmed case count. Serosurveys after the 1st wave of the epidemic would clarify this question. Although infections in healthcare workers have been detected, the proportion has not been as high as during the SARS and MERS outbreaks. One of the features of SARS and MERS outbreaks is heterogeneity in transmissibility, and, in particular, the occurrence of super-spreading events, particularly in hospitals. Super-spreading events have not yet been identified for NCIP, but they could become a feature as the epidemic progresses. Although delays between the onset of illness and seeking medical attention were generally short, with 27% of patients seeking attention within 2 days after onset, delays to hospitalization were much longer, with 89% of patients not being hospitalized until at least day 5 of illness (Figure 2). This indicates the difficulty in identifying and isolating cases at an earlier stage of disease. It may be necessary to commit considerable resources to testing in outpatient clinics and emergency departments for proactive case finding, both as part of the containment strategy in locations without local spread yet as well as to permit earlier clinical management of cases. Such an approach would also provide important information on the subclinical infections for a better assessment of severity. Our preliminary estimate of the incubation period distribution provides important evidence to support a 14-day medical observation period or quarantine for exposed persons. Our estimate was based on information from 10 cases and is somewhat imprecise; it would be important for further studies to provide more information on this distribution. [The report indicates that cases of NCIP [novel coronavirus (2019-nCoV)-infected pneumonia] occurred earlier in Wuhan city than originally thought and illustrates the difficulty in recognizing the presence of a new pathogenic virus in the earliest cases. The R0 of 2.2 is an important piece of information and, as the authors point out, will need to be reduced to less than 1 to stop the outbreak. - Mod.TY",
+      "reports": [
+        {
+          "syndromes": [
+            "Pneumonia"
+          ],
+          "diseases": [
+            "coronavirus"
+          ],
+          "locations": [
+            {
+              "subArea": null,
+              "country": "China"
+            },
+            {
+              "location": "Wuhan",
+              "geonameId": 1791247,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "country": "China",
+              "subArea": "Heilongjiang Sheng",
+              "location": "Huanan",
+              "geonameId": 2036753
+            }
+          ],
+          "event_date": "2020-01-01 xx:xx:xx to 2020-01-22 xx:xx:xx"
+        }
+      ],
+      "id": "6943519",
+      "headline": "Novel coronavirus (26): research, early spread in Wuhan, China",
+      "date_of_publication": "2020-02-01 22:02:23",
+      "url": "https://promedmail.org/promed-post/?id=6943519"
+    },
+    {
+      "main_text": "840 new cases of pneumonia caused by new coronavirus infection were added in Hubei Province (315 in Wuhan, 33 in Huangshi, 23 in Shiyan, and new [sic?] in Xiangyang). 61 new cases, 12 new cases in Yichang, 30 new cases in Jingzhou, 28 new cases in Jingmen, 27 new cases in Ezhou, 101 new cases in Xiaogan City, 111 new cases in Huanggang City, 21 new cases in Xianning City (46 cases in Suizhou City, 13 cases in Enshi Prefecture, 5 cases in Xiantao City, 11 cases in Tianmen City, 1 case in Qianjiang City, and 2 cases in Shennongjia Forest District).  There were 25 new deaths in the province, including 19 in Wuhan, 2 in Xiaogan, and 1 in Jingmen, Ezhou, Huanggang, and Tianmen. As of 24:00 on Jan 28, 2020, Hubei Province has cumulatively reported 3554 cases of pneumonia caused by new coronavirus infection (including 1905 cases in Wuhan City, 86 cases in Huangshi City, 88 cases in Shiyan City, 131 cases in Xiangyang City, 63 cases in Yichang City, 101 cases in Jingzhou City, 142 cases in Jingmen City, 84 cases in Ezhou City, 274 cases in Xiaogan City, 324 cases in Huanggang City, 112 cases in Xianning City, 116 cases in Suizhou City, 51 cases in Enshi Prefecture, 32 cases in Xiantao City, 34 cases in Tianmen City. There were 8 cases in Qianjiang and 3 cases in Shennongjia Forest District. 80 cases were cured and 125 died (including 104 cases in Wuhan, 1 in Huangshi City, 1 in Yichang City, 2 in Jingzhou City, 4 in Jingmen City, and Ezhou City). 1 case, 3 in Xiaogan, 5 in Huanggang City, 3 in Tianmen, and 1 in Qianjiang). At present, 3349 patients are still being treated in the hospital, of which 671 are critically ill and 228 are critically ill, and they are all receiving isolation treatment at designated medical institutions. A total of 22 095 close contacts have been tracked, and 20 366 people are still under medical observation.At 04:00 on 28 Jan [2020], 31 provinces (autonomous regions and municipalities) reported 1459 new confirmed cases, 263 new severe cases, and 26 new deaths (25 in Hubei and 1 in Henan). 43 new cases were cured and discharged, and 3248 suspected cases were added (including 1 in Tibet). As of 24:00 on 28 Jan 2020, the National Health and Health Commission has received a total of 5974 confirmed cases in 31 provinces (autonomous regions, municipalities), 1239 severe cases, 132 deaths, and 103 patients cured and discharged. There are 9239 suspected cases. At present, 65 537 close contacts have been tracked. 1604 medical observations were lifted that day, and 59 990 people are currently undergoing medical observation. Accumulated confirmed cases reported in Hong Kong, Macao and Taiwan: 8 cases in Hong Kong Special Administrative Region, 7 cases in Macao Special Administrative Region, 8 cases in Taiwan.[The above count does not include the 3 new cases from Germany and the UAE reported cases. - Mod.UBA]- WHO is continually monitoring developments, and the Director-General can reconvene the Emergency Committee on very short notice as needed. Committee members are regularly informed of developments. Patients with 2019-nCoV infection, are presenting with a wide range of symptoms. Most seem to have mild disease, and about 20% appear to progress to severe disease, including pneumonia, respiratory failure and in some cases death. Clinical care of suspected patients with 2019-nCoV should focus on early recognition, immediate isolation (separation), implementation of appropriate infection prevention and control (IPC) measures and provision of optimized supportive care. WHO is convening a bi-weekly call with clinical experts around the globe, to better understand, in real time, the clinical presentation and treatment interventions. WHO has published interim clinical care guidance for hospitalized patients and for mildly ill patients at home, and developed a standardized clinical case record form (CRF) that will be available on the website. To facilitate the aggregation of standardized clinical data, WHO is launching a Global 2019-nCoV Clinical Data Platform to allow Member States to contribute anonymized clinical data in order to inform the public health clinical response. As there is currently no known effective antiviral therapy for 2019-nCoV, the WHO RD blueprint is conducting a systematic review to evaluate potential therapeutics and develop master clinical protocols that are necessary to accelerate this globally. WHO has also updated the Disease Commodity Package that includes an essential list of biomedical equipment, medicines and supplies necessary to care for patients with 2019-nCoV. In addition, a notification was sent out to the Emergency Medical Teams network requesting an expression of interest for clinical operations support teams to support triage, referral systems, clinical care and IPC. [6] New countries confirming imported cases: UAE, United Arab Emirates; Finland A family in the United Arab Emirates, arriving from China's central city of Wuhan, has been diagnosed with a case of the new coronavirus, the health ministry said on Wednesday [29 Jan 2020]. It is the 1st known confirmed case in the UAE of a virus that has killed at least 132 people in China. The UAE is a major air transport hub with its Dubai International airport ranked the world's 3rd busiest, and the hub of Emirates airline. It was not immediately clear how many people had been infected. The ministry of health and the government communications office did not immediately respond to a request for comment. Those diagnosed with the virus were in stable condition and under medical observation, the ministry said in a statement carried by state news agency WAM. The statement did not say where the family was being treated. The UAE is a country of 7 emirates, though the majority of the population lives in Abu Dhabi and Dubai. Chinese authorities have said the total number of deaths from the flu-like virus has risen by 26 to 132, while the number of confirmed cases has risen by 1459 to a total of 5974. The number of cases in China now exceeds the 5327 infected there with the severe acute respiratory syndrome (SARS) coronavirus that killed about 800 people worldwide in 2002-2003. Major UAE airports in Dubai and Abu Dhabi last week said passengers arriving in China would be screened on arrival, a precaution taken by airports elsewhere. Fears of the spreading virus have already pushed airlines to reduce flights to China. Emirates said on Wednesday [29 Jan 2020] that its flights were operating normally. Dubai's DP World is among the companies worldwide that have restricted employee travel to China. A virus patient from Saariselka is now in isolation at Lapland Central Hospital. A traveler from Wuhan, China has been diagnosed with a coronavirus infection at the Central Lapland Hospital in Rovaniemi, the Lapland Hospital District and the National Institute for Health and Welfare (THL) report. This is the 1st confirmed case of coronavirus in Finland. Finland is the 17th in the world and the 3rd country in Europe where the disease has been found with certainty. Iltalehti reported the suspicion as early as Tuesday [28 Jan 2020]. The virus patient is a 32-year-old Chinese woman. Samples taken were examined on Wednesday [29 Jan 2020] in HelsinkiThree more coronavirus cases in Bavaria in connection with the 1st case have been found. Bavaria's Minister of Health said that around 40 people should be tested on Wednesday [29 Jan 2020] as a precautionFrance has confirmed a 5th case of infection by the new coronavirus from China, the French health minister said on Wednesday [29 Jan 2020], adding that the patient was the daughter of an 80-year-old man already hospitalized with the disease.Australian travellers, elderly people and children will be evacuated from the coronavirus-stricken city of Wuhan and sent to Christmas Island for quarantine. Scott Morrison revealed that the government has decided to start evacuations from Wuhan this morning [29 Jan 2020] after the US, South Korea and Japan began their own repatriations. Qantas will provide the charter planes for the assisted departures, which the Prime Minister said would be on a \"last in, 1st out\" basis. Children, elderly people and short-term travellers who have no support base in Wuhan will be prioritised for the flights. A plane carrying 206 Japanese officials repatriated from Wuhan has now landed in Tokyo, and South Korea says a plane for their citizens [will arrive?] in Wuhan tomorrow. All Australians rescued would spend 14 days in the Christmas Island processing centre -- famously used for asylum seekers -- for quarantine. A Qantas spokesman confirmed they were working with the government to bring the Australians home from Wuhan. But he said the Qantas 747 would not be able to land at Christmas Island, so arrangements were still being finalised. That could mean the residents landed in Darwin or Perth and travelled to Christmas Island from there. The United States and Japan evacuated their nationals from a quarantined city, while British Airways suspended flights to mainland China as deaths from a fast-spreading new virus leapt to 132 and the 1st cases emerged in the Middle East. The FCO continue to advise against all travel to Hubei Province, and now advise against all but essential travel to the rest of mainland China (not including Hong Kong and Macao). The Foreign and Commonwealth Office (FCO) advise against all travel to Hubei Province due to the ongoing novel coronavirus outbreak. If you're in this area and able to leave, you should do so. The FCO advise against all but essential travel to the rest of mainland China (not including Hong Kong and Macao). The Chinese government continues to impose further restrictions on movement within China in response to the coronavirus outbreak. It may become harder over the coming weeks for those who wish to leave China to do so. If you feel that you may want to leave China soon, you should consider making plans to do so before any further restrictions may be imposed. Due to increasing travel restrictions and difficulty accessing medical assistance, the FCO is working to make an option available for British nationals to leave Hubei Province. This may happen quickly and with short notice. If you're a British national in Hubei Province and need assistance, contact our 24/7 number +86 (0) 10 8529 6600 or the FCO in London on (+44) (0)207 008 1500 to register your desire to leave before 29 Jan 2020 at 11am local time. You will be contacted once arrangements are confirmed. On 23 Jan 2020, the Wuhan authorities closed all transport hubs including airports, railway and bus stations. Some shops and amenities are closed; public events have been cancelled and Chinese authorities have advised the public to avoid crowds. Travel restrictions are also in place in other cities in Hubei Province. Across Africa, countries are ramping up airport screenings of passengers arriving from China in efforts to prevent the spread of coronavirus on a continent already facing multiple outbreaks, including Ebola and measles. This comes amid the 2019-nCoV outbreak, which was 1st reported in a cluster of individuals from Wuhan city, Hubei Province, in China in December 2019 and has since spread across the country and internationally. While the World Health Organization has refrained from calling the outbreak a global emergency, it is a national emergency in China, with multiple cities shutting down public transportation including railway and airport stations in efforts to curb the spread of the virus, which has now infected over 4000 individuals across the country and killed 106 people, according to the latest report by China's National Health Commission. \"The key message at the moment is there are so many unknowns about the transmission of this virus, so there needs to be a high level of alertness and readiness.German health authorities confirmed a case of 2019-nCoV in Bavaria on 27 Jan 2020. This brings the cases reported in Europe to 4. The cases in France had a direct link to Wuhan, China. Based on current information, the infection in Germany followed a close contact with a visitor from China during a stay in Germany (diagnosed with 2019-nCoV after return to China) who had previously been visited by relatives from the Wuhan area. The German authorities are investigating this case and taking the necessary steps to trace and inform any contacts. At this stage of the on-going outbreak in Hubei province in China, it is likely that there will be more imported cases in Europe. As a consequence, it could be expected to see (limited) local transmission in Europe. A single detected case in Europe does not change the overall picture for Europe, nor does it change the assessment that there is currently a moderate likelihood of importation of cases of 2019-nCoV to the EU/EEA. As more and more cases are reported globally, this also increases the probability of sporadically imported cases to EU/EEA countries. Based on this, EU/EEA countries should ensure that timely and rigorous infection prevention and control measures (IPC) are applied around any detected nCoV cases in the EU/EEA in order to prevent further spread in the community and healthcare settings. Healthcare workers in the EU/EEA need to be aware and vigilant in order to detect possible nCoV cases early and apply appropriate infection control measures when handling patients. Right now, the focus still should be on the development of the outbreak in China and the related information on the characteristics of the virus. The source of infection is unknown and could still be active. Human-to-human transmission has been confirmed, but more information is needed to evaluate the full extent of this mode of transmission and understanding how the virus spreads. As this is a rapidly evolving situation, ECDC is revising its risk assessment for Europe.Tom Inglesby on Twitter: \"The following thread regards how we should be planning for the possibility that nCoV cannot be contained. Correct. The linked Lancet article demonstrated that the 1st case seen in Wuhan did not have links to the seafood market. This is a graph from the article. Spread uncontroversially took off in the market but may not be the source.,.\" / TwitterHong Kong researchers have already developed vaccine but need time to test it, expert reveals. Doherty Institute scientists are 1st to grow and share Wuhan coronavirus. This is the 1st time the virus has been grown in cell culture outside of China. The Royal Melbourne Hospital's Dr Julian Druce, Virus Identification Laboratory Head at the Doherty Institute, said this was a significant breakthrough as it will allow accurate investigation and diagnosis of the virus globally. The virus was grown from a patient sample that arrived at the Royal Melbourne Hospital's Victorian Infectious Diseases Reference Laboratory (VIDRL) at the Doherty Institute on Fri 24 Jan [2020]. \"We've planned for an incident like this for many, many years, and that's really why we were able to get an answer so quickly,\" said Dr Catton. Dr Catton also credited the success to Australia's network of laboratories and public health authorities effectively working together. \"We are very pleased at how it has come together and are glad we were able to respond quickly, which we will continue to do so.\"",
+      "reports": [
+        {
+          "syndromes": [
+            "Acute respiratory syndrome",
+            "Pneumonia"
+          ],
+          "diseases": [
+            "coronavirus",
+            "measles"
+          ],
+          "locations": [
+            {
+              "country": "United Arab Emirates",
+              "subArea": null
+            },
+            {
+              "location": "Dubai",
+              "geonameId": 292223,
+              "country": "United Arab Emirates",
+              "subArea": "Dubai"
+            },
+            {
+              "country": "United Arab Emirates",
+              "subArea": "Abu Dhabi",
+              "location": "Abu Dhabi",
+              "geonameId": 292968
+            },
+            {
+              "subArea": null,
+              "country": "Australia"
+            },
+            {
+              "country": "Australia",
+              "subArea": "Western Australia",
+              "location": "Perth",
+              "geonameId": 2063523
+            },
+            {
+              "subArea": "Northern Territory",
+              "location": "Darwin",
+              "geonameId": 2073124,
+              "country": "Australia"
+            },
+            {
+              "subArea": "Victoria",
+              "location": "Melbourne",
+              "geonameId": 2158177,
+              "country": "Australia"
+            },
+            {
+              "country": "China",
+              "subArea": null
+            },
+            {
+              "location": "Qianjiang",
+              "geonameId": 1786067,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "location": "Yichang",
+              "geonameId": 1786764,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "location": "Xiaogan",
+              "geonameId": 1790254,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Xiantao",
+              "geonameId": 1790371,
+              "country": "China"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Xianning",
+              "geonameId": 1790396,
+              "country": "China"
+            },
+            {
+              "country": "China",
+              "subArea": "Hubei",
+              "location": "Xiangyang",
+              "geonameId": 1790587
+            },
+            {
+              "location": "Wuhan",
+              "geonameId": 1791247,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "location": "Suizhou",
+              "geonameId": 1793879,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Shiyan",
+              "geonameId": 1794903,
+              "country": "China"
+            },
+            {
+              "location": "Shiyan",
+              "geonameId": 1794904,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Jingzhou",
+              "geonameId": 1805540,
+              "country": "China"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Jingmen",
+              "geonameId": 1805611,
+              "country": "China"
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Huangshi",
+              "geonameId": 1807234,
+              "country": "China"
+            },
+            {
+              "country": "China",
+              "subArea": "Guangdong",
+              "location": "Huanggang",
+              "geonameId": 1807508
+            },
+            {
+              "location": "Ezhou",
+              "geonameId": 1811619,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "location": "Enshi",
+              "geonameId": 1811720,
+              "country": "China",
+              "subArea": "Hubei"
+            },
+            {
+              "country": "Christmas Island",
+              "subArea": null
+            },
+            {
+              "country": "Germany",
+              "subArea": null
+            },
+            {
+              "country": "Finland",
+              "subArea": null
+            },
+            {
+              "subArea": "Lapland",
+              "location": "Rovaniemi",
+              "geonameId": 638936,
+              "country": "Finland"
+            },
+            {
+              "subArea": null,
+              "country": "France"
+            },
+            {
+              "country": "Hong Kong",
+              "subArea": null
+            },
+            {
+              "country": "Japan",
+              "subArea": null
+            },
+            {
+              "country": "Japan",
+              "subArea": "Tokyo",
+              "location": "Tokyo",
+              "geonameId": 1850147
+            },
+            {
+              "country": "South Korea",
+              "subArea": null
+            },
+            {
+              "subArea": null,
+              "country": "Macao"
+            },
+            {
+              "country": "Taiwan",
+              "subArea": null
+            },
+            {
+              "country": "United States",
+              "subArea": null
+            },
+            {
+              "subArea": "Florida",
+              "location": "Melbourne",
+              "geonameId": 4163971,
+              "country": "United States"
+            },
+            {
+              "location": "Central",
+              "geonameId": 4319435,
+              "country": "United States",
+              "subArea": "Louisiana"
+            }
+          ],
+          "event_date": "2020-01-23 xx:xx:xx to 2020-01-29 xx:xx:xx"
+        }
+      ],
+      "id": "6929532",
+      "headline": "Novel coronavirus (23): updates, China, UAE, Finland, ECDC, research",
+      "date_of_publication": "2020-01-29 22:59:29",
+      "url": "https://promedmail.org/promed-post/?id=6929532"
+    },
+    {
+      "headline": "Novel coronavirus (20): China, wildlife trade ban",
+      "date_of_publication": "2020-01-27 13:16:35",
+      "url": "https://promedmail.org/promed-post/?id=6922060",
+      "main_text": "China on [Sun 26 Jan 2020] ordered a temporary ban on the trade in wild animals as the country struggles to contain a deadly virus believed to have been spawned in a market that sold wild animals as food. Raising, transporting, or selling all wild animal species is forbidden \"from the date of the announcement until the national epidemic situation is over,\" said a joint directive from the country's market watchdog, agricultural ministry, and forestry bureau said in a joint statement. The lethal virus, which has caused 56 confirmed deaths and nearly 2000 total infections in China, and spread to about a dozen countries, is believed to have originated in a market in the central city of Wuhan, where a range of wildlife was reportedly sold. Conservationists have long accused China of tolerating a shadowy trade in exotic animals for food or as ingredients in traditional medicines, including highly endangered species such as the pangolin or tiger. Health experts say the trade poses a significant and growing public health risk as potentially dangerous animal-borne pathogens that people would normal not be exposed to make the jump to humans. The SARS (severe acute respiratory syndrome) virus that killed hundreds of people in China and Hong Kong in 2002-2003 also has been traced to wild animals, with scientists saying it likely originated in bats, later reaching humans via civets. Civets, a cat-like creature, were among dozens of species listed on an exhaustive price list for one of the animal-trading businesses at the Wuhan market. Other items included various rats, snakes, giant salamanders, and even live wolf pups. Sunday's announcement said all businesses, markets, food and beverage outlets, and e-commerce platforms are \"strictly prohibited from trading in wild animals in any form.\" It added that \"consumers must fully understand the health risks of eating wild animals, avoid wild game, and eat healthy.\" The so-called bushmeat trade, along with broader human encroachment on wild habitats, is bringing humans into ever-closer contact with animal viruses that can spread rapidly in today's connected world, scientists say. A study by the Global Virome Project, a worldwide effort to increase preparedness for pandemics, estimated that there are nearly 1.7 million undiscovered viruses in the animal kingdom, nearly half of which could be harmful to humans. Peter Daszak, a virology expert with the project, told AFP its research also indicated that we can expect around 5 new animal-borne pathogens to infect humanity each year. China has launched previous crackdowns on the wildlife trade, including after SARS, but conservationists say the trade typically resumes over time. [Wildlife trade as a potential risk for pathogen exposure and translocation has been the focus of a large number of scientific reports and reviews. Legal and illegal movements of wildlife and wildlife products, including bushmeat, are a potential source of zoonotic diseases. Once a virus acquires the ability to be transmitted from person to person, exposure to natural animal hosts is no longer needed for the pathogen to propagate. A wildlife trade ban at this point may be a late response, but it surely is an important step forward if the ban persists and is enforced. The epidemics of SARS or the ongoing Wuhan coronavirus outbreak might have never taken place if direct exposure to an infected wildlife host was not as obscene as that which occurs in food markets where bushmeat is sold. It is important that hazard and risk are differentiated to understand the role of wildlife trade. The huge diversity of pathogens that are part of the parasite community of the wildlife species of a region constitutes a hazard for emerging infectious diseases. But while hazard is the potential to cause harm (that is, infecting and causing disease in a human), the risk is the probability of infection. Wildlife trade operates increasing the risk of exposure to novel pathogens, not only to humans, but also to other species which may amplify the virus or cause it to change into a more pathogenic type. - Mod.PMB",
+      "reports": [
+        {
+          "syndromes": [
+            "Acute respiratory syndrome"
+          ],
+          "diseases": [
+            "coronavirus",
+            "mers"
+          ],
+          "locations": [
+            {
+              "country": "China",
+              "subArea": null
+            },
+            {
+              "subArea": "Hubei",
+              "location": "Wuhan",
+              "geonameId": 1791247,
+              "country": "China"
+            },
+            {
+              "country": "Hong Kong",
+              "subArea": null
+            }
+          ],
+          "event_date": "2020-01-26 xx:xx:xx"
+        }
+      ],
+      "id": "6922060"
+    }
+  ]
+}
