@@ -1,5 +1,5 @@
 // Metadata to return with each request 
-const getMetadata = () => {
+const getMetadata = (nArticles: number) => {
   const dateTime = new Date();
   dateTime.setTime(dateTime.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
 
@@ -8,6 +8,7 @@ const getMetadata = () => {
     team: "Beams",
     time_accessed: dateStr,
     data_source: "ProMed",
+    total_articles: nArticles,
   };
 };
 

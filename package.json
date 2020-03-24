@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/atude/seng3011-sympt#readme",
   "dependencies": {
+    "@types/jest": "^25.1.4",
     "concurrently": "^5.1.0"
   },
   "devDependencies": {

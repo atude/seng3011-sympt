@@ -30,7 +30,6 @@ app.get('/articles/', async (req, res) => {
   const timestamp: string = (new Date().getTime() / 1000).toFixed(0).toString();
 
   if (user.authenticated) {
-    const metadata = getMetadata();
     const articles = await getArticles(req.query);
     const log: ApiLog = {
       timestamp,
@@ -38,6 +37,13 @@ app.get('/articles/', async (req, res) => {
       query: req.originalUrl,
       error: isError(articles) ? articles : null,
     };
+
+    let metadata = null;
+    if (!isError(articles)) {
+      metadata = getMetadata(articles.length);
+    } else {
+      metadata = getMetadata(0);
+    }
 
     await addLog(user, log);
     if (isError(articles)) {
