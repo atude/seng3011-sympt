@@ -112,6 +112,7 @@ const Dashboard = (props: any) => {
     };
 
     initFetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefreshToken = async () => {

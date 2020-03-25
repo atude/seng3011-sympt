@@ -15,6 +15,7 @@ parserOptions:
   sourceType: module
 plugins:
   - react
+  - react-hooks
   - '@typescript-eslint'
 rules:
   react/jsx-filename-extension:
@@ -36,5 +37,4 @@ rules:
   no-console: 0
   no-nested-ternary: 0
   react/jsx-one-expression-per-line: 0
-
-
+  react-hooks/exhaustive-deps: 0
