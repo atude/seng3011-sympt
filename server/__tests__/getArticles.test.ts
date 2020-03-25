@@ -46,6 +46,7 @@ describe("Testing recieved articles | count operations", () => {
     const articles = await getArticles(query);
     expect(articles).toHaveLength(7);
   });
+});
 
 describe("Testing recieved articles | page operations ", () => {
   test("Test page articles #1", async () => {
