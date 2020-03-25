@@ -174,7 +174,11 @@ const contentScraper = async (
     await page.close();
     console.log(`! Failed to get page data on ${urlData}. Skipping...`);
     console.log(`Reason: ${error.message}`);
-    return { id: null };
+    return { 
+      id: null,
+      date_of_publication: "",
+      reports: [],
+    };
   }
 };
 

@@ -41,14 +41,19 @@ export const getArticlesForceScrape = async (queryUrl: string): (
 
     console.log(`!  testing: number of processed results = ${idResults.results.length}`);
     console.log(`!  testing: list of id results = ${idResults.results}`);
+
     let processedResults: PageObject[] = [];
+
     for (let index = 0; index < idResults.results.length; index += chunkSize) {
       const tempResults = idResults.results.slice(index, index + chunkSize);
       console.log(`processing resultant pages: ${tempResults}`);
-      const pagePromiseGroup: Promise<PageObject>[] = tempResults.map((pageID: string) => 
-        contentScraper(pageID, browser));
+
+      const pagePromiseGroup: Promise<PageObject>[] = 
+        tempResults.map((pageID: string) => contentScraper(pageID, browser));
+
       processedResults = processedResults.concat(await Promise.all(pagePromiseGroup));
     }
+
     processedResults = processedResults.filter((pageContent) => pageContent && pageContent.id);
       
     await browser.close();
@@ -57,7 +62,29 @@ export const getArticlesForceScrape = async (queryUrl: string): (
     // Save to firestore
     processedResults.forEach(async (pageData) => {
       if (pageData.id) {
-        await articlesRef.doc(pageData.id).set(pageData);
+        // Format page data for easier firestore indexing
+        const searchTerms: string[] = [
+          ...pageData.reports[0].syndromes, 
+          ...pageData.reports[0].diseases,
+        ];
+        const timestamp: number = getNormalisedDate(pageData.date_of_publication).getTime() / 1000;
+        const locationsRaw: string[] = [];
+        pageData.reports[0].locations.forEach((location: Location) => {
+          locationsRaw.push(location.country.toLowerCase());
+          locationsRaw.push(location.location?.toLowerCase() || "");
+          locationsRaw.push(location.subArea?.toLowerCase() || "");
+        });
+        const locations: string[] = [...new Set(
+          locationsRaw.filter((strLocation) => strLocation && strLocation !== ""),
+        )];
+
+
+        await articlesRef.doc(pageData.id).set({
+          ...pageData,
+          _search: searchTerms,
+          _timestamp: timestamp,
+          _locations: locations,
+        });
       }
     });
     
@@ -80,55 +107,19 @@ export const getArticles = async (queryUrl: string): (
     keyTerms, startDate, endDate, location, count, page,
   } = formattedQuery;
 
-  const formatStartDate: Date = getNormalisedDate(startDate);
-  const formatEndDate: Date = getNormalisedDate(endDate);
+  const startDateTimestamp = getNormalisedDate(startDate).getTime() / 1000;
+  const endDateTimestamp = getNormalisedDate(endDate).getTime() / 1000;
 
-  const fetchArticles = await articlesRef.get();
-  const allArticles: FirebaseFirestore.DocumentData[] = 
-    fetchArticles.docs.map((document) => document.data());
+  const fetchArticles = await articlesRef
+    .where("_search", "array-contains", keyTerms)
+    .where("_timestamp", ">=", startDateTimestamp)
+    .where("_timestamp", "<=", endDateTimestamp)
+    // .where("_locations", "array-contains", location)
+    .get();
+  console.log(location);
 
-  const filteredArticles = allArticles
-    // Country filter
-    .filter((document) => document.reports && document.reports[0]?.locations?.some(
-      (locationDetails: Location) => 
-        (location ? (
-          locationDetails.country?.toLowerCase() === location.toLowerCase() ||
-          locationDetails.location?.toLowerCase() === location.toLowerCase()
-        ) 
-          : true),
-    ))
-    // Date filter
-    .filter((document) => {
-      const date: Date = getNormalisedDate(document.date_of_publication);
-      if (date >= formatStartDate && date <= formatEndDate) {
-        return true;
-      }
-      return false;
-    })
-    // Keyterms filter
-    .filter((document) => document.reports && (document.reports[0]?.diseases?.some(
-      (disease: string) => {
-        if (keyTerms && keyTerms?.length) {
-          if (keyTerms.includes(disease.toLowerCase())) {
-            return true;
-          }
-          return false;
-        }
-        return true;
-      }
-    // Syndromes filter
-    ) || document.reports[0]?.syndromes?.some(
-      (syndrome: string) => {
-        if (keyTerms && keyTerms?.length) {
-          if (keyTerms.includes(syndrome.toLowerCase())) {
-            return true;
-          }
-          return false;
-        }
-        return true;
-      }
-    // Reverse since ordered oldest first by default
-    ))).reverse();
+  const filteredArticles: FirebaseFirestore.DocumentData[] = 
+    fetchArticles.docs.map((document) => document.data()).reverse();
   
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
