@@ -39,9 +39,12 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       return idResults;
     }
 
+    console.log(`!  testing: number of processed results = ${idResults.results.length}`);
+    console.log(`!  testing: list of id results = ${idResults.results}`);
     let processedResults: PageObject[] = [];
     for (let index = 0; index < idResults.results.length; index += chunkSize) {
       const tempResults = idResults.results.slice(index, index + chunkSize);
+      console.log(`processing resultant pages: ${tempResults}`);
       const pagePromiseGroup: Promise<PageObject>[] = tempResults.map((pageID: string) => 
         contentScraper(pageID, browser));
       processedResults = processedResults.concat(await Promise.all(pagePromiseGroup));

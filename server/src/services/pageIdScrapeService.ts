@@ -1,9 +1,11 @@
+/* eslint-disable no-await-in-loop */
 import { ScrapeResults, URLFormattedTerms, GenError } from '../types';
 import generateError from '../utils/generateError';
 import { articlesRef } from '../firebase/collectionReferences';
+import { peelIDFromResultLinks } from './idScraperService';
 
 const checkSubmitButton = "document.getElementsByName('submit') !== null";
-const checkSearchResults = "document.getElementById('search_results')?.childElementCount !== 0";
+const idLimitCap = 100;
 
 // takes a url query string of the form
 // ?keyterms=something[,somethingelse,hi]
@@ -61,39 +63,38 @@ const urlPageResultIds = async (
     );
     await submitButton?.click();
 
-    await page.waitForFunction(checkSearchResults);
-
-    // grab the results from the table (this includes any inner html objects)
-    // extract the id of the result with a regex expression and append the
-    // id to the list on match
-    const searchResultIds: string[] = await page.evaluate(() => {
-      const linkIDRegex = /([0-9]+)<\/a>$/g;
-      const searchResultsList = document.getElementById('search_results')?.children;
-
-      if (searchResultsList) {
-        const results = Array.from(searchResultsList).map((result) => {
-          const getIdFromTitle = result.children[0].innerHTML.match(linkIDRegex);
-          if (getIdFromTitle) {
-            return getIdFromTitle[0].replace(/<\/a>/, '');
-          } 
-          return "";
-        });
-
-        return results;
+    let searchResultIdsFiltered = await peelIDFromResultLinks(page);
+    
+    try {
+      while (page.$('form[id=search_hidden] > p > input[value=next]')) {
+        await page.waitForSelector('form[id=search_hidden] > p > input[value=next]', { timeout: 1500 });
+        await page.click('form[id=search_hidden] > p > input[value=next]');
+        searchResultIdsFiltered = searchResultIdsFiltered.concat(await peelIDFromResultLinks(page));
       }
+    } catch (error) {
+      console.log('Scraped the final page of results');
+    } finally {
+      await page.close();
+    }
 
-      return [];
-    });
+    let finalIdsArray = [];
+    const idSkip = Math.floor(searchResultIdsFiltered.length / idLimitCap);
+    
+    if (!idSkip) {
+      finalIdsArray = searchResultIdsFiltered;
+    } else {
+      for (let i = 0; finalIdsArray.length < idLimitCap; i += idSkip) {
+        finalIdsArray.push(searchResultIdsFiltered[i]);
+      }
+    }
 
-    const searchResultIdsFiltered = searchResultIds
+    finalIdsArray = finalIdsArray
       .filter((result) => result)
       .filter((result: string) => blacklistIds.get(result) !== true || false);
 
-    await page.close();
-
-    if (searchResultIdsFiltered && searchResultIdsFiltered.length) {
+    if (finalIdsArray && finalIdsArray.length) {
       console.log(`Successfully pulled ids.`);
-      return { results: searchResultIdsFiltered };
+      return { results: finalIdsArray };
     }
 
     // Not enough results
