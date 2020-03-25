@@ -6,5 +6,6 @@ export default {
     '--disable-dev-shm-usage',
     '--headless',
     '--single-process',
+    '--disk-cache-size=0',
   ],
 };
