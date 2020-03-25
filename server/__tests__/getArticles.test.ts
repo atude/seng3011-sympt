@@ -47,19 +47,6 @@ describe("Testing recieved articles | count operations", () => {
     expect(articles).toHaveLength(7);
   });
 
-  test("Test count articles #6", async () => {
-    const query: string = "?startdate=2020-01-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus&count=0&page=0";
-    const articles = await getArticles(query);
-    expect(articles).toHaveLength(25);
-  });
-
-  test("Test count articles #7", async () => {
-    const query: string = "?startdate=2020-01-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus";
-    const articles = await getArticles(query);
-    expect(articles).toHaveLength(25);
-  });
-});
-
 describe("Testing recieved articles | page operations ", () => {
   test("Test page articles #1", async () => {
     const query: string = "?startdate=2020-01-02T00:00:00&enddate=2020-02-02T00:00:00&location=china&keyterms=coronavirus&count=10&page=0";
@@ -79,7 +66,6 @@ describe("Testing recieved articles | page operations ", () => {
     expect(articles).toHaveLength(5);
   });
 });
-
 
 describe("Testing recieved articles | article ordered by date", () => {
   test("Test article order #1", async () => {
