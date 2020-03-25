@@ -106,7 +106,7 @@ export const getArticles = async (queryUrl: string): (
       return false;
     })
     // Keyterms filter
-    .filter((document) => document.reports && document.reports[0]?.diseases?.some(
+    .filter((document) => document.reports && (document.reports[0]?.diseases?.some(
       (disease: string) => {
         if (keyTerms && keyTerms?.length) {
           if (keyTerms.includes(disease.toLowerCase())) {
@@ -116,8 +116,19 @@ export const getArticles = async (queryUrl: string): (
         }
         return true;
       }
+    // Syndromes filter
+    ) || document.reports[0]?.syndromes?.some(
+      (syndrome: string) => {
+        if (keyTerms && keyTerms?.length) {
+          if (keyTerms.includes(syndrome.toLowerCase())) {
+            return true;
+          }
+          return false;
+        }
+        return true;
+      }
     // Reverse since ordered oldest first by default
-    )).reverse();
+    ))).reverse();
   
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
