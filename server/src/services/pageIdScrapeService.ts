@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { ScrapeResults, URLFormattedTerms, GenError } from '../types';
 import generateError from '../utils/generateError';
-import { articlesRef } from '../firebase/collectionReferences';
 import { peelIDFromResultLinks } from './idScraperService';
 
 const checkSubmitButton = "document.getElementsByName('submit') !== null";
@@ -22,7 +21,7 @@ const urlPageResultIds = async (
   const {
     keyTerms, startDate, endDate, location, 
   } = searchQueries;
-  const blacklistIds = await articlesRef.doc("blacklist").get();
+
   try {
     const page = await browserInstance.newPage();
     await page.goto('https://promedmail.org/promed-posts/', {
@@ -87,9 +86,10 @@ const urlPageResultIds = async (
       }
     }
 
+    console.log(finalIdsArray);
+
     finalIdsArray = finalIdsArray
-      .filter((result) => result)
-      .filter((result: string) => blacklistIds.get(result) !== true || false);
+      .filter((result) => result);
 
     if (finalIdsArray && finalIdsArray.length) {
       console.log(`Successfully pulled ids.`);

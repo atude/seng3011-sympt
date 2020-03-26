@@ -22,17 +22,17 @@ export type URLFormattedTerms = {
 export type PageObject = {
   id: string | null;
   url?: string;
-  date_of_publication?: string;
+  date_of_publication: string;
   headline?: string;
   main_text?: string;
-  reports?: Report[];
+  reports: Report[];
 }
 
 export type Report = {
-  diseases?: string[];
-  syndromes?: string[];
+  diseases: string[];
+  syndromes: string[];
   event_date?: string;
-  locations?: Location[];
+  locations: Location[];
 }
 
 export type Location = {
