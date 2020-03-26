@@ -40,7 +40,6 @@ export const getArticlesForceScrape = async (queryUrl: string): (
     console.log('Tried to click the promed cookies button but it did not appear');
   }
 
-
   try {
     const idResults: ScrapeResults | GenError = await urlPageResultIds(
       formattedQuery as URLFormattedTerms,
@@ -53,19 +52,12 @@ export const getArticlesForceScrape = async (queryUrl: string): (
     }
 
     let processedResults: PageObject[] = [];
-
     for (let index = 0; index < idResults.results.length; index += chunkSize) {
       const tempResults = idResults.results.slice(index, index + chunkSize);
-
-      const pagePromiseGroup: Promise<PageObject>[] = 
-        tempResults.map((pageID: string) => contentScraper(pageID, browser));
-
       const pagePromiseGroup: Promise<PageObject>[] = tempResults.map((pageID: string) => 
         contentScraper(pageID, browser));
-
       processedResults = processedResults.concat(await Promise.all(pagePromiseGroup));
     }
-
     processedResults = processedResults.filter((pageContent) => pageContent && pageContent.id);
       
     await browser.close();
@@ -89,7 +81,6 @@ export const getArticlesForceScrape = async (queryUrl: string): (
         const locations: string[] = [...new Set(
           locationsRaw.filter((strLocation) => strLocation && strLocation !== ""),
         )];
-
 
         await articlesRef.doc(pageData.id).set({
           ...pageData,
