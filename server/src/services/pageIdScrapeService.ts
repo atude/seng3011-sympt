@@ -23,11 +23,10 @@ const urlPageResultIds = async (
     keyTerms, startDate, endDate, location, 
   } = searchQueries;
   const blacklistIds = await articlesRef.doc("blacklist").get();
-
   try {
     const page = await browserInstance.newPage();
     await page.goto('https://promedmail.org/promed-posts/', {
-      waitUntil: 'networkidle2',
+      waitUntil: 'networkidle0',
     });
 
     // type in key terms
@@ -62,9 +61,9 @@ const urlPageResultIds = async (
       'form[name="as_form"] input[type="submit"]',
     );
     await submitButton?.click();
-
-    let searchResultIdsFiltered = await peelIDFromResultLinks(page);
     
+    let searchResultIdsFiltered = await peelIDFromResultLinks(page);
+
     try {
       while (page.$('form[id=search_hidden] > p > input[value=next]')) {
         await page.waitForSelector('form[id=search_hidden] > p > input[value=next]', { timeout: 1500 });

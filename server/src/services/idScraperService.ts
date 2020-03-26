@@ -22,12 +22,11 @@ export const peelIDFromResultLinks = async (page: any) => {
           } 
           return "";
         });
-    
         return results;
       }
-    
       return [];
     });
+    console.log(`first id in subresults list: ${searchResultIds[0]}`);
     return searchResultIds;
   } catch (error) {
     return [];
