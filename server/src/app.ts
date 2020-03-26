@@ -26,7 +26,7 @@ app.all('/*', (req, res, next) => {
 });
 
 app.get('/articles/', async (req, res) => {
-  const user: ApiUser = await verifyUser("eyJhbGciOiJSUzI1NiIsImtpZCI6IjFmODhiODE0MjljYzQ1MWEzMzVjMmY1Y2RiM2RmYjM0ZWIzYmJjN2YiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vc3ltcHQtMTI1OWUiLCJhdWQiOiJzeW1wdC0xMjU5ZSIsImF1dGhfdGltZSI6MTU4NTE0NjE5MSwidXNlcl9pZCI6Im1MYW5iNGJiVWZXZUJIcW1DQndZNDc2WjdrcjEiLCJzdWIiOiJtTGFuYjRiYlVmV2VCSHFtQ0J3WTQ3Nlo3a3IxIiwiaWF0IjoxNTg1MTc5NjA3LCJleHAiOjE1ODUxODMyMDcsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsidGVzdEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.DYXh_5NWFgCcJXnf6usMsgvmxpX1vnU8Agv_hDaEDFXw_KjQmbId52JqWxxA4uYAEh5ySvrEmOuLtXjhGuTT8hxfNFnoyWzWZECI4u3qXIZT0aZKqqT7QHBQdZnk6RYgp9S4bTanxz4kOaNfTK8sUeshRzEcaOtB3YkOwfl97NCAM0qGzojsYuMZzQKlwwMMP6N4QCCZEfWOa3s6YJZzHWhVWqqkHFypDiB0gMoy3ANTcaO5iKx3uORONh--Vgfiej-OwLbd5JGCj9z0s1d-MhcH07MgBL5uZK5rmak1PSRogJRMbBRRdBj2BoRt62glMdYARFYqdFuTpKQToWFbUQ");
+  const user: ApiUser = await verifyUser(req.headers.authorization);
   const timestamp: string = (new Date().getTime() / 1000).toFixed(0).toString();
 
   if (user.authenticated) {

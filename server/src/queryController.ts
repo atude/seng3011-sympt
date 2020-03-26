@@ -109,17 +109,31 @@ export const getArticles = async (queryUrl: string): (
 
   const startDateTimestamp = getNormalisedDate(startDate).getTime() / 1000;
   const endDateTimestamp = getNormalisedDate(endDate).getTime() / 1000;
+  console.log(startDateTimestamp);
+  console.log(endDateTimestamp);
 
   const fetchArticles = await articlesRef
-    .where("_search", "array-contains", keyTerms)
+    .where("_search", "array-contains-any", keyTerms)
     .where("_timestamp", ">=", startDateTimestamp)
     .where("_timestamp", "<=", endDateTimestamp)
-    // .where("_locations", "array-contains", location)
     .get();
+
   console.log(location);
 
-  const filteredArticles: FirebaseFirestore.DocumentData[] = 
-    fetchArticles.docs.map((document) => document.data()).reverse();
+  const filteredArticles: PageObject[] = fetchArticles.docs
+    .map((document: any) => document.data())
+    .filter((document: any) => {
+      if (!location) return true;
+      if (document._locations.includes(location.toLowerCase())) return true;
+      return false;
+    })
+    .map((document: any) => {
+      delete document._locations;
+      delete document._searchterms;
+      delete document._timestamp;
+      return document as PageObject;
+    })
+    .reverse();
   
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
@@ -133,6 +147,6 @@ export const getArticles = async (queryUrl: string): (
   }
   
   return count ? 
-    filteredArticles.splice(page ? count * page : 0, count) as PageObject[] : 
-    filteredArticles as PageObject[];
+    filteredArticles.splice(page ? count * page : 0, count) : 
+    filteredArticles;
 };
