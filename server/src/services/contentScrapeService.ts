@@ -3,7 +3,6 @@ import diseaseList from '../constants/diseaseList.json';
 import { formatDateToExact, dateRegexWords } from '../utils/formatters';
 import worldCitiesList from '../constants/worldCitiesList.json';
 import syndromeList from '../constants/syndromeList.json';
-import { articlesRef } from '../firebase/collectionReferences';
 
 const headerValues: string[] = [
   "Published Date: ", 
@@ -82,7 +81,6 @@ const contentScraper = async (
 
     if (!filteredMainText.length) {
       // Add this article to blacklist
-      await articlesRef.doc("blacklist").update({ [id]: true });
       throw new Error("Insufficient body text.");
     }
 
