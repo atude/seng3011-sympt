@@ -36,6 +36,7 @@ export const getArticlesForceScrape = async (queryUrl: string): (
     await page.goto('https://promedmail.org/promed-posts/', { waitUntil: 'networkidle0' });
     await page.waitForFunction(checkCookieButton);
     await page.click("#CybotCookiebotDialogBodyLevelButtonAccept");
+    await page.waitFor(1000);
   } catch (error) {
     console.log('Tried to click the promed cookies button but it did not appear');
   }
