@@ -17,6 +17,10 @@ const minGeneralArticles = 5;
 // Max number of promises to be running
 const chunkSize = 5;
 
+// Click the cookies button preliminarily for promed site
+const checkCookieButton = "document.getElementById('CybotCookiebotDialogBodyLevelButtonAccept') !== null";
+
+
 export const getArticlesForceScrape = async (queryUrl: string): (
   Promise<PageObject[] | GenError> 
 ) => {
@@ -29,6 +33,16 @@ export const getArticlesForceScrape = async (queryUrl: string): (
   const browser = await puppeteer.launch(puppeteerConfig);
 
   try {
+    const page = await browser.newPage();
+    await page.goto('https://promedmail.org/promed-posts/', { waitUntil: 'networkidle0' });
+    await page.waitForFunction(checkCookieButton);
+    await page.click("#CybotCookiebotDialogBodyLevelButtonAccept");
+  } catch (error) {
+    console.log('Tried to click the promed cookies button but it did not appear');
+  }
+
+
+  try {
     const idResults: ScrapeResults | GenError = await urlPageResultIds(
       formattedQuery as URLFormattedTerms,
       browser,
@@ -39,12 +53,9 @@ export const getArticlesForceScrape = async (queryUrl: string): (
       return idResults;
     }
 
-    console.log(`!  testing: number of processed results = ${idResults.results.length}`);
-    console.log(`!  testing: list of id results = ${idResults.results}`);
     let processedResults: PageObject[] = [];
     for (let index = 0; index < idResults.results.length; index += chunkSize) {
       const tempResults = idResults.results.slice(index, index + chunkSize);
-      console.log(`processing resultant pages: ${tempResults}`);
       const pagePromiseGroup: Promise<PageObject>[] = tempResults.map((pageID: string) => 
         contentScraper(pageID, browser));
       processedResults = processedResults.concat(await Promise.all(pagePromiseGroup));
