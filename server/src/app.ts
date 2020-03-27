@@ -40,9 +40,9 @@ app.get('/articles/', async (req, res) => {
 
     let metadata = null;
     if (!isError(articles)) {
-      metadata = getMetadata(articles.length);
+      metadata = getMetadata(articles.length, user.email);
     } else {
-      metadata = getMetadata(0);
+      metadata = getMetadata(0, user.email);
     }
 
     await addLog(user, log);
@@ -55,7 +55,7 @@ app.get('/articles/', async (req, res) => {
     const error = generateError(
       401, 
       "Invalid authentication token", 
-      "Token may be invalid or expired",
+      "Could not match token with user",
     );
     await addLog(user, {
       timestamp,

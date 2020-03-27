@@ -32,11 +32,6 @@ export const signOut = () => {
   });
 };
 
-export const refreshToken = async () => {
-  const token = await firebase.auth().currentUser?.getIdToken(true);
-  return token;
-};
-
 export const fetchLogs = async (userEmail: string): Promise<ApiLog[]> => {
   const logs = await firebase.firestore().collection("apiUsers").doc(userEmail).get();
   if (!logs) return [];

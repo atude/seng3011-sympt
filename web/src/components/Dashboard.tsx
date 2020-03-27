@@ -32,11 +32,13 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { signOut, refreshToken, fetchLogs } from '../firebase/firebaseFunctions';
+import { signOut, fetchLogs } from '../firebase/firebaseFunctions';
 import firebase from '../firebase/firebaseInit';
 import { ApiLog } from '../types';
 
 const moment = require('moment');
+
+const logsPerPage = 20;
 
 const useStyles = makeStyles((theme: Theme) => ({
   parent: {
@@ -82,11 +84,13 @@ const Dashboard = (props: any) => {
   const [logs, setLogs] = useState<ApiLog[]>([]);
   const [graphLogs, setGraphLogs] = useState<any>();
   const [showToken, setShowToken] = useState(false);
+  const [showMoreCounter, setShowMoreCounter] = useState(1);
 
   useEffect(() => {
     const initFetch = async () => {
       setLoading(true);
-      const getToken = await firebase.auth().currentUser?.getIdToken();
+
+      const getToken = firebase.auth().currentUser?.uid;
       setToken(getToken ?? "Error fetching token.");
 
       const getLogs = await fetchLogs(user.email);
@@ -114,11 +118,6 @@ const Dashboard = (props: any) => {
     initFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleRefreshToken = async () => {
-    const newToken = await refreshToken();
-    setToken(newToken ?? "Error refreshing token.");
-  };
 
   if (loading) {
     return (
@@ -156,11 +155,6 @@ const Dashboard = (props: any) => {
             <Grid item container direction="column" spacing={1} justify="center" alignItems="center">
               <Grid item>
                 <AccountCircle className={classes.accountIcon} color="secondary" />
-              </Grid>
-              <Grid item>
-                <Button color="primary" variant="contained" onClick={() => handleRefreshToken()}>
-                  Refresh Token
-                </Button>
               </Grid>
               <Grid item>
                 <Button color="secondary" variant="contained" onClick={() => signOut()}>
@@ -271,7 +265,7 @@ const Dashboard = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {logs.map((log: ApiLog) => {
+                {logs.splice(0, showMoreCounter * logsPerPage).map((log: ApiLog) => {
                   const date: Date = new Date(Number(log.timestamp) * 1000);
                   const dateStr: string = moment(date).format('LLL');
                   
@@ -312,6 +306,16 @@ const Dashboard = (props: any) => {
                 })}
               </TableBody>
             </Table>
+            {(showMoreCounter * logsPerPage < logs.length) && (
+              <Button 
+                onClick={() => setShowMoreCounter(showMoreCounter + 1)}
+                color="primary" 
+                variant="outlined" 
+                style={{ width: "100%" }}
+              >
+                Show more
+              </Button>
+            )}
           </TableContainer>
         ) : (
           <Typography 
