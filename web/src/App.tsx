@@ -7,7 +7,7 @@ import {
   MuiThemeProvider,
   createMuiTheme,
 } from '@material-ui/core';
-import { purple, blueGrey } from '@material-ui/core/colors';
+import { blueGrey } from '@material-ui/core/colors';
 
 import firebase from './firebase/firebaseInit';
 import Topbar from './components/Topbar';
@@ -19,7 +19,7 @@ const mainTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: purple[800],
+      main: "#1c87ac",
     },
     secondary: {
       main: blueGrey[800],

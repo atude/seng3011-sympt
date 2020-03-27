@@ -7,6 +7,7 @@ import {
   Theme, 
   createStyles, 
 } from '@material-ui/core';
+import banner from '../assets/banner-plain.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: {
       justifyContent: "space-between",
     },
+    banner: {
+      width: "7em",
+    },
   }),
 );
 
@@ -29,9 +33,7 @@ const Topbar = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6">
-            sympt
-          </Typography>
+          <img src={banner} alt="sympt" className={classes.banner} />
           <Typography variant="h6">
             API Dashboard
           </Typography>
