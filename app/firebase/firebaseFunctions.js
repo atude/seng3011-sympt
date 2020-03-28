@@ -1,17 +1,16 @@
 import firebase from './firebaseInit';
 
-const usersRef = firebase.firestore().collection("users");
+// const usersRef = firebase.firestore().collection("users");
 
 export const signInEmail = async (email, password) => {
   return await firebase.auth().signInWithEmailAndPassword(email, password)
   .catch(error => {
-    const { code, message } = error;
-    console.warn(message);
-    return(message);
+    console.warn(error.message);
+    return(error);
   });
-}
+};
 
-export const createAccount = async (email, password, username) => {
+export const createAccount = async (email, password) => {
   // Check if username unused
   // const getUser = await getUserByUsername(username);
   // console.log(getUser);
@@ -20,25 +19,19 @@ export const createAccount = async (email, password, username) => {
   //Create auth details
   return await firebase.auth().createUserWithEmailAndPassword(email, password)
   .then((credentials) => {
-    //Create username in auth to link to firestore data
-    credentials.user.updateProfile({
-      displayName: username.toLowerCase()
-    });
-
-    //Create firestore doc for user
-    usersRef.doc(username.toLowerCase()).set({
-      id: credentials.user.uid,
-      email: credentials.user.email
-    });
+    // Create firestore doc for user
+    // usersRef.doc(username.toLowerCase()).set({
+    //   id: credentials.user.uid,
+    //   email: credentials.user.email
+    // });
 
     console.log("Made new user => " + credentials.user.email);
   })
-  .catch((error) => {
-    const { code, message } = error;
-    console.warn(message);
-    return(message);
+  .catch(error => {
+    console.warn(error.message);
+    return(error);
   });
-}
+};
 
 export const signOut = () => {
   firebase.auth().signOut().then(() => {
@@ -46,5 +39,4 @@ export const signOut = () => {
   }).catch(error => {
     console.log(error.message);
   });
-}
-
+};

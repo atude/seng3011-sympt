@@ -10,11 +10,17 @@ import firebase from './firebase/firebaseInit';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { mapping } from '@eva-design/eva';
+
+import { myTheme } from './constants/lightTheme';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 const Stack = createStackNavigator();
 
 export default function App(props) {
 	const [isLoadingComplete, setLoadingComplete] = useState(false);
+	const [isUserLoadingComplete, setUserLoadingComplete] = useState(false);
 	const [initialNavigationState, setInitialNavigationState] = useState();
 	const containerRef = useRef();
   const { getInitialState } = useLinking(containerRef);
@@ -48,6 +54,7 @@ export default function App(props) {
 					} else {
 						setUser(null);
 					}
+					setUserLoadingComplete(true);
 				});
 			} catch (e) {
 				console.warn(e);
@@ -60,21 +67,24 @@ export default function App(props) {
 		loadResourcesAndDataAsync();
 	}, []);
 
-	if (!isLoadingComplete && !props.skipLoadingScreen) {
+	if ((!isLoadingComplete || !isUserLoadingComplete) && !props.skipLoadingScreen) {
 		return null;
 	} else {
 		return (
 			<View style={styles.container}>
-				{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        {!user ? (
-          <LoginScreen />
-        ) : (
-          <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-            <Stack.Navigator>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        )}
+				<IconRegistry icons={EvaIconsPack} />
+				<ApplicationProvider mapping={mapping} theme={myTheme}>
+					{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+					{!user ? (
+						<LoginScreen />
+					) : (
+						<NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+							<Stack.Navigator>
+								<Stack.Screen name="Root" component={BottomTabNavigator} />
+							</Stack.Navigator>
+						</NavigationContainer>
+					)}
+				</ApplicationProvider>
 			</View>
 		);
 	}

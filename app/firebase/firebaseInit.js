@@ -1,5 +1,6 @@
 import firebase from 'firebase';
-import '@firebase/firestore';
+import 'firebase/firestore';
+
 import { REACT_APP_FIREBASE_API_KEY } from 'react-native-dotenv';
 
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
 // First init
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
+  console.log("Initialised firebase.");
 }
 
 export default firebase;

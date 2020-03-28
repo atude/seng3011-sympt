@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
+
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import StatsScreen from '../screens/StatsScreen';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -14,21 +15,27 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <BottomTab.Navigator initialRouteName={defaultRouteName}>
+    <BottomTab.Navigator 
+      initialRouteName={defaultRouteName}
+      tabBarOptions={{ style: {
+        height: 64,
+      }}}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
+        
         options={{
-          title: 'Home',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="activity" />,
         }}
       />
       <BottomTab.Screen
         name="Yes"
-        component={LinksScreen}
+        component={StatsScreen}
         options={{
-          title: 'Yes',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-2" />,
         }}
       />
     </BottomTab.Navigator>

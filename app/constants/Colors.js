@@ -1,14 +1,17 @@
-const tintColor = '#2f95dc';
+import { myTheme } from "./lightTheme";
+
+const primary = myTheme["color-primary-500"];
+const success = myTheme["color-success-500"];
+const info = myTheme["color-info-500"];
+const warning = myTheme["color-warning-500"];
+const danger = myTheme["color-danger-500"];
 
 export default {
-  tintColor,
-  tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
+  primary,
+  success,
+  info,
+  warning,
+  danger,
+  dull: '#ccc',
   tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
 };
