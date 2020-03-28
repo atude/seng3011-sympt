@@ -115,6 +115,7 @@ const Dashboard = (props: any) => {
       setLoading(false);
     };
 
+    console.log("going");
     initFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -265,7 +266,7 @@ const Dashboard = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {logs.splice(0, showMoreCounter * logsPerPage).map((log: ApiLog) => {
+                {logs.slice(0, showMoreCounter * logsPerPage).map((log: ApiLog) => {
                   const date: Date = new Date(Number(log.timestamp) * 1000);
                   const dateStr: string = moment(date).format('LLL');
                   
@@ -276,7 +277,7 @@ const Dashboard = (props: any) => {
                       </TableCell>
                       <TableCell>
                         {log.query.replace('/articles/', '').split('&').map((section: string, i: number) => (
-                          <div>{i !== 0 && "&"}{section}</div>
+                          <div key={section}>{i !== 0 && "&"}{section}</div>
                         ))}
                       </TableCell>
                       <TableCell>
