@@ -6,6 +6,11 @@
 
 [WIP]
 
+
+### Sympt App
+
+[WIP]
+
 ### [API Documentation](http://sympt-swagger.herokuapp.com/docs/)
 
 This API enables users to retrieve a list of disease reports according to search criteria found from [promedmail.org/](http://promedmail.org/).
@@ -19,20 +24,34 @@ From the dashboard, you can refresh your API token, track your API call log and 
 ## Local Setup
 ### Requirements
 
-- Node 12
+- Node v12.X.X
+- Expo & Expo CLI
 
 ### Setting up
 
+#### API and Dashboard
+
 1. Make a copy of `.env.example` in `./server` and rename it to `.env`.
 1. Make a copy of `.env.example` in `./web` and rename it to `.env`.
-2. Add the necessary keys to both `server` and `web` `.env` files.
-3. Run `npm run build` from root directory.
-4. Run `npm start` to start the webapp *`(localhost:3000)`* and server *`(localhost:4000)`* concurrently.
+1. Add the necessary keys to both `server` and `web` `.env` files.
+1. Run `npm run build` from root directory.
+1. Run `npm start` to start the developer dashboard webapp *`(localhost:3000)`* and API server *`(localhost:4000)`* concurrently.
 
+#### App
+
+1. Make a copy of `.env.example` in `./app` and rename it to `.env`.
+1. Add the necessary keys to the `.env` file.
 
 
 ## Scripts
-### Root
+
+### App
+| Script                      | Description                                                                 |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `expo install`              | Install necessary dependencies using npm (with expo compatible packages if available). |
+| `expo start`                | Start the development server.                                               |
+
+### Root (For server and webapp)
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run build`             | Reset and rebuild both server and web directories.                          |
@@ -43,7 +62,7 @@ From the dashboard, you can refresh your API token, track your API call log and 
 | `npm test`                  | Run all unit tests.                                                         |
 | `npm start`                 | Start both server and app concurrently (dev mode).                          |
 
-### Server *(cd server)*
+### Server 
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run build`             | Reset and build server.                                                     |
@@ -53,7 +72,7 @@ From the dashboard, you can refresh your API token, track your API call log and 
 | `npm test`                  | Run all server unit tests.                                                  |
 | `npm start`                 | Compile and start the server.                                               |
 
-### Web *(cd web)*
+### Web
 | Script                      | Description                                                                 |
 | --------------------------- | --------------------------------------------------------------------------- |
 | `npm run build`             | Reset and build webapp.                                                     |
