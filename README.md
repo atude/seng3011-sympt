@@ -43,8 +43,8 @@ From the dashboard, you can refresh your API token, track your API call log and 
 1. Add the necessary keys to the `.env` file.
 1. Run `expo install` to setup necessary dependencies.
 1. Run `expo start` to start the development server.
-1. Open AVD and run the Expo client on a virtual device on `Local` mode.
-1. *(Optionally)* Open the Expo client on a mobile device and scan the QR code (or send an access email) on `LAN` or `Tunnel` mode.
+1. Open AVD and run the Expo app on a virtual device using `Local` mode, and copy the connection address to the Expo app.
+1. *(Optionally)* Open the Expo app on a mobile device and scan the QR code (or send an access email) on `LAN` or `Tunnel` mode.
 
 
 ## Scripts
