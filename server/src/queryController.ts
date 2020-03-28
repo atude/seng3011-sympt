@@ -17,6 +17,9 @@ const minGeneralArticles = 5;
 // Max number of promises to be running
 const chunkSize = 5;
 
+// Max articles to read from the db
+const readHardCap = 100;
+
 // Click the cookies button preliminarily for promed site
 const checkCookieButton = "document.getElementById('CybotCookiebotDialogBodyLevelButtonAccept') !== null";
 
@@ -120,6 +123,7 @@ export const getArticles = async (queryUrl: string): (
     .where("_search", "array-contains-any", keyTerms)
     .where("_timestamp", ">=", startDateTimestamp)
     .where("_timestamp", "<=", endDateTimestamp)
+    .limit(readHardCap)
     .get();
 
   console.log(location);
