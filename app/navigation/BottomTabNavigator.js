@@ -4,6 +4,7 @@ import TabBarIcon from '../components/TabBarIcon';
 
 import HomeScreen from '../screens/HomeScreen';
 import StatsScreen from '../screens/StatsScreen';
+import FeedScreen from '../screens/FeedScreen';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -31,6 +32,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Feed"
+        component={FeedScreen}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-2" />,
+        }}
+      />
+      <BottomTab.Screen
         name="Yes"
         component={StatsScreen}
         options={{
@@ -48,6 +57,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Home';
+    case 'Feed':
+      return 'Feed'
     case 'Yes':
       return 'Yes this is a screen';
   }
