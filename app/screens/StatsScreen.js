@@ -7,8 +7,7 @@ import Colors from '../constants/Colors';
 
 export default function StatsScreen() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text>hi</Text>
+    <ScrollView contentContainerStyle={styles.container}>
       <Button onPress={() => signOut()}>temp sign out button</Button>
     </ScrollView>
   );
@@ -16,10 +15,7 @@ export default function StatsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: Colors.bg,
-  },
-  contentContainer: {
-    paddingTop: 15,
-  },
+    padding: 24,
+  }, 
 });

@@ -18,8 +18,8 @@ export default function HomeScreen() {
         <Text>
           {diseaseContext.diseaseName}
         </Text>
-        <Button onPress={() => diseaseContext.setDisease("other disease")}>
-
+        <Button onPress={() => diseaseContext.setDisease("mers")}>
+          Change to mers app wide 
         </Button>
       </StyledCard>
     </ScrollView>
