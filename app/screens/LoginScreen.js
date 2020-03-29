@@ -9,15 +9,15 @@ import Colors from '../constants/Colors';
 const initAnimDurationMs = 2000;
 
 const LoginScreen = () => {
-  const [fadeAnim] = useState(new Animated.Value(0));
-  const [yPosAnim] = useState(new Animated.Value(-200));
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignIn, setSignIn] = useState(false);
+  const [isSignIn, setSignIn] = useState(true);
   const [error, setError] = useState("");
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [fadeAnim] = useState(new Animated.Value(0));
+  const [yPosAnim] = useState(new Animated.Value(-200));
 
   const handleSubmit = async () => {
     setLoadingSubmit(true);

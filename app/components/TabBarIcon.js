@@ -6,8 +6,8 @@ const TabBarIcon = (props) => {
   return (
     <Icon
       name={props.name}
-      width={28}
-      height={28}
+      width={24}
+      height={24}
       fill={props.focused ? Colors.primary : Colors.dull}
       style={{
         marginTop: 8,

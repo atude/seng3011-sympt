@@ -12,6 +12,6 @@ export default {
   info,
   warning,
   danger,
-  dull: '#ccc',
-  tabBar: '#fefefe',
+  bg: "#F1F3F5",
+  dull: '#999',
 };

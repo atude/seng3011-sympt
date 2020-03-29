@@ -15,6 +15,7 @@ import { mapping } from '@eva-design/eva';
 
 import { myTheme } from './constants/lightTheme';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { UserContext, DiseaseContext } from './context/context';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,20 @@ export default function App(props) {
 	const containerRef = useRef();
   const { getInitialState } = useLinking(containerRef);
 
-  const [user, setUser] = useState(null);
+	const [user, setUser] = useState(firebase.auth().currentUser);
+	const [diseaseName, setDisease] = useState("covid-19");
+
+	// Context definers
+	const userContextValue = {
+		user: user || null,
+	};
+
+	const diseaseContextValue = {
+		diseaseName,
+		setDisease: (newDiseaseName) => setDisease(newDiseaseName),
+	};
+
+	console.log(diseaseName);
 
 	// Load any resources or data that we need prior to rendering the app
 	useEffect(() => {
@@ -44,13 +58,14 @@ export default function App(props) {
 					'open-sans-semibold': require('./assets/fonts/OpenSans-SemiBold.ttf'),
 					'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
 					'open-sans-italic': require('./assets/fonts/OpenSans-Italic.ttf'),
+					'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
 				});
 
-				// Setup firebase
-				firebase.auth().onAuthStateChanged((user) => {
-					if (user) {
-						setUser(user);
-						console.log("Auth state changed => " + user.email);
+				// Setup firebase user
+				firebase.auth().onAuthStateChanged((currUser) => {
+					if (currUser) {
+						setUser(currUser);
+						console.log("Auth state changed => " + currUser.email);
 					} else {
 						setUser(null);
 					}
@@ -74,16 +89,20 @@ export default function App(props) {
 			<View style={styles.container}>
 				<IconRegistry icons={EvaIconsPack} />
 				<ApplicationProvider mapping={mapping} theme={myTheme}>
-					{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-					{!user ? (
-						<LoginScreen />
-					) : (
-						<NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-							<Stack.Navigator>
-								<Stack.Screen name="Root" component={BottomTabNavigator} />
-							</Stack.Navigator>
-						</NavigationContainer>
-					)}
+					<UserContext.Provider value={userContextValue}>
+						<DiseaseContext.Provider value={diseaseContextValue}>
+							<StatusBar barStyle="dark-content" />
+							{!user ? (
+								<LoginScreen />
+							) : (
+								<NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+									<Stack.Navigator>
+										<Stack.Screen name="Root" component={BottomTabNavigator} />
+									</Stack.Navigator>
+								</NavigationContainer>
+							)}
+						</DiseaseContext.Provider>
+					</UserContext.Provider>
 				</ApplicationProvider>
 			</View>
 		);
