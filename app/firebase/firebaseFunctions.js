@@ -1,4 +1,7 @@
 import firebase from './firebaseInit';
+import { parseKeyTerms, getCurrentTime } from '../utils/apiQueryFormatter';
+
+import { REACT_APP_FIREBASE_API_KEY } from 'react-native-dotenv';
 
 // const usersRef = firebase.firestore().collection("users");
 
@@ -39,4 +42,27 @@ export const signOut = () => {
   }).catch(error => {
     console.log(error.message);
   });
+};
+
+const fetchStats = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    authorization: REACT_APP_FIREBASE_API_KEY
+  }
+}
+
+// location: string, keyterms: array
+export const getFeedArticles = async (location, keyterms) => {
+
+  const startDate = "2015-01-01T00:00:00";
+  const endDate = getCurrentTime();
+  const searchTerms = parseKeyTerms(keyterms); // Turns key terms array into comma seperated string
+
+  fetch(`https://sympt-server.herokuapp.com/articles/?startdate=${startDate}&enddate=${endDate}&location=${location}&keyterms=${searchTerms}`, fetchStats)
+    .then(response => response.json())
+    .then((responseJson) => {
+      console.log('getting data from fetch', responseJson)
+    })
+    .catch(error => console.log(error))
 };
