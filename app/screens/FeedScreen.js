@@ -6,7 +6,7 @@ import TopTabFeedNavigator from '../navigation/TopTabFeedNavigator';
 export default function FeedScren() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text>This is where articles and newsfeed will go</Text>
+      <Text>This is where Articles and Trending go!</Text>
 
       <NavigationContainer independent={true}>
         <TopTabFeedNavigator />
@@ -20,4 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   }, 
+  contentContainer: {
+    paddingTop: 15,
+  },
 });
