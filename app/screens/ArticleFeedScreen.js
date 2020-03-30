@@ -26,7 +26,6 @@ const ArticlesScreen = (props) => {
   }, []);
 
   const articleFeed = articles.map((article,i) => {
-    console.log("urls", article.url);
     return (
       <View key={i}> 
         <ArticleCard article={article} navigation={props.navigation}/>
