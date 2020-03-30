@@ -9,10 +9,8 @@ const ArticleCard = (props) => {
   const navigation = props.navigation;
 
   const goToExpandedArticle = (navigation, article) => {
-    console.log("Expanding Article", article.url);
     navigation.navigate('ArticleScreen', {article: article});
   };
-    
 
   return (
     <View>
