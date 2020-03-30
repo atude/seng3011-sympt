@@ -1,25 +1,30 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import StyledCard from './StyledCard';
 import StyledText from './StyledText';
+import { ListItem } from 'react-native-elements';
 
 const ArticleCard = (props) => {
     const article = props.article;
+  
   return (
     <View>
       <StyledCard>
-        <StyledText>{article.headline}</StyledText>
-        <StyledText>
-          {article.url}
-        </StyledText>
+          <ListItem title={article.headline} subtitle={
+              <View>
+                <StyledText>{article.date_of_publication}</StyledText>
+                <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
+              </View>
+              }/>
       </StyledCard>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  text: {
+  textPreview: {
     fontFamily: "sfpro",
+    color: 'grey',
   }, 
 });
 
