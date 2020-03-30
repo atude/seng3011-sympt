@@ -4,9 +4,10 @@ import StyledText from '../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ArticleScreen = (props) => {
+  const article = props.article;
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <StyledText>This is an expanded article!</StyledText>
+      <StyledText>This is an expanded article! {article.main_text}</StyledText>
     </ScrollView>
   );
 };

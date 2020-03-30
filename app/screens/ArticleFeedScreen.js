@@ -2,9 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import StyledCard from '../components/StyledCard';
 import { UserContext } from '../context/context';
-import StyledText from '../components/StyledText';
 import { getFeedArticles } from '../functions/articleFunctions';
 import ArticleCard from '../components/ArticleCard';
 
@@ -31,7 +29,7 @@ const ArticlesScreen = (props) => {
     console.log("urls", article.url);
     return (
       <View key={i}> 
-        <ArticleCard article={article}/>
+        <ArticleCard article={article} navigation={props.navigation}/>
       </View>
     );
   });

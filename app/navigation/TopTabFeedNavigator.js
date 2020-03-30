@@ -10,7 +10,7 @@ export default function TopTabFeedNavigator() {
   return (
     <Tab.Navigator initialRouteName="Trending">
       <Tab.Screen name="Trending" component={TrendingScreen} />
-      <Tab.Screen name="Articles"  component={ArticlesFeedScreen} />
+      <Tab.Screen name="Articles" component={ArticlesFeedScreen} />
     </Tab.Navigator>
   );
 }
