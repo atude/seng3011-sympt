@@ -1,20 +1,26 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
 import ActivityScreen from '../screens/ActivityScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { Button, Image } from 'react-native';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { Overlay } from 'react-native-elements';
+import StyledText from '../components/StyledText';
+import Layout from '../constants/Layout';
 
-import SymptLogo from '../assets/images/logo-plain.png'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+// TODO: In future versions, the diseases file can be fetched from the backend
+import diseases from '../constants/diseases.json';
+import DiseaseSelectCard from '../components/DiseaseSelectCard';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
 
 export default function BottomTabNavigator({ navigation, route }) {
+  const [isDiseasesOpen, setDiseasesOpen] = useState(false);
+
   navigation.setOptions({ 
     headerTitle: getHeaderTitle(route),
     headerTitleStyle: {
@@ -32,6 +38,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     },
     headerRight: () => (
       <TouchableOpacity 
+        onPress={() => setDiseasesOpen(true)}
         style={{
           marginTop: 20,
           marginRight: 14,
@@ -39,6 +46,55 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       >
         <TabBarIcon name="filter-outline"/>
+        {/* Dummy overlay for fade bg effect */}
+        <Overlay
+          isVisible={isDiseasesOpen}
+          fullScreen
+          animationType="fade"
+          height={0}
+          width={0}
+          overlayBackgroundColor="transparent"
+        >
+        </Overlay>
+
+        <Overlay 
+          isVisible={isDiseasesOpen}
+          width={Layout.window.width}
+          height={340}
+          // borderRadius={20}
+          overlayStyle={{
+            position: "absolute",
+            bottom: 0,
+            borderTopEndRadius: 20,
+            borderTopStartRadius: 20,
+          }}
+          windowBackgroundColor="transparent"
+          onBackdropPress={() => setDiseasesOpen(false)}
+          animationType="slide"
+        >
+          <View>
+            <StyledText style={styles.selectHeading}>
+              Select Disease
+            </StyledText>
+            <ScrollView
+              horizontal
+              decelerationRate={"fast"}
+              snapToAlignment="start"
+              snapToInterval={Layout.window.width}
+            >
+              {diseases.map((disease, i) => (
+                <DiseaseSelectCard
+                  style={{ width: "100%" }}
+                  setDiseasesOpen={setDiseasesOpen}
+                  diseaseName={disease.name}
+                  diseaseNameFormatted={disease.nameFormatted}
+                  diseaseDescription={disease.description}
+                  last={i === diseases.length - 1}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </Overlay>
       </TouchableOpacity>
     )
   });
@@ -63,7 +119,7 @@ export default function BottomTabNavigator({ navigation, route }) {
               focused={focused} 
               name="dna" 
             />
-          )
+          ),
         }}
       />
       <BottomTab.Screen
@@ -108,3 +164,12 @@ function getHeaderTitle(route) {
       return 'Profile';
   }
 }
+
+const styles = StyleSheet.create({
+  selectHeading: {
+    fontWeight: "bold",
+    fontFamily: "sfpro",
+    fontSize: 28,
+    padding: 24,
+  }
+});

@@ -14,9 +14,6 @@ const ActivityScreen = (props) => {
     <ScrollView contentContainerStyle={styles.container}>
       <StyledCard>
         <StyledText>
-          {userContext.user.email}
-        </StyledText>
-        <StyledText>
           {diseaseContext.diseaseName}
         </StyledText>
         <StyledButton 
