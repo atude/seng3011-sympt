@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getFeedArticles } from '../firebase/firebaseFunctions';
+import { getFeedArticles } from '../utils/feedTools';
 
 const diseases = ["coronavirus"];
 const location = "china";
