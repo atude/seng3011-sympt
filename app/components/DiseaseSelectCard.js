@@ -10,8 +10,8 @@ const DiseaseSelectCard = (props) => {
 
   const handleClick = () => {
     setDiseasesOpen(false);
-    diseaseContext.setDisease(diseaseName)
-  }
+    diseaseContext.setDisease(diseaseName);
+  };
 
   return (
     <TouchableOpacity 
