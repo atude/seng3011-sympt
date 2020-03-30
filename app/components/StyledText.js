@@ -7,9 +7,12 @@ const StyledText = (props) => {
     <Text
       {...props}
       style={[
-        props.style,
         styles.text,
-        { color: props.color ? mapColors(props.color) : "rgb(28, 28, 30)"}
+        props.style,
+        { color: props.color ? 
+          mapColors(props.color) : 
+          "rgb(28, 28, 30)"
+        }
       ]}
     >
       {props.children}
@@ -20,6 +23,7 @@ const StyledText = (props) => {
 const styles = StyleSheet.create({
   text: {
     fontFamily: "sfpro",
+    fontSize: 16,
   }, 
 });
 
