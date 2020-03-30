@@ -6,16 +6,15 @@ import { ListItem } from 'react-native-elements';
 
 const ArticleCard = (props) => {
   const article = props.article;
-  const navigation = props.navigation;
 
-  const goToExpandedArticle = (navigation, article) => {
-    navigation.navigate('ArticleScreen', {article: article});
+  const goToExpandedArticle = (article) => {
+      props.navigation.navigate("ArticleScreen", {article: article});
   };
 
   return (
     <View>
       <StyledCard>
-          <ListItem onPress={() => {goToExpandedArticle(navigation, article)}} title={article.headline} subtitle={
+          <ListItem onPress={() => {goToExpandedArticle(article)}} title={article.headline} subtitle={
               <View>
                 <StyledText>{article.date_of_publication}</StyledText>
                 <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
