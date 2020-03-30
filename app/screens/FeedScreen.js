@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import TopTabFeedNavigator from '../navigation/TopTabFeedNavigator';
 import Colors from '../constants/Colors';
+import ArticleScreen from './ArticleScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const TabsTheme = {
   dark: false,
@@ -14,12 +15,18 @@ const TabsTheme = {
   },
 };
 
+const FeedStack = createStackNavigator();
+
 const FeedScreen = (props) => {
   return (
-    <NavigationContainer independent={true} theme={TabsTheme}>
-      <TopTabFeedNavigator />
-    </NavigationContainer>
-  );
+    <FeedStack.Navigator 
+      screenOptions={{
+        headerShown: false
+      }}>
+      <FeedStack.Screen name="TopTabFeedNavigator" component={TopTabFeedNavigator} />
+      <FeedStack.Screen name="ArticleScreen" component={ArticleScreen} />
+    </FeedStack.Navigator>
+  )
 };
 
 export default FeedScreen;
