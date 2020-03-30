@@ -1,21 +1,28 @@
-import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import Colors from '../constants/Colors';
+import StyledCard from '../components/StyledCard';
+import StyledText from '../components/StyledText';
 
 export default function TrendingScreen() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text>Trending Stuff!</Text>
+    <ScrollView style={styles.containerParent} contentContainerStyle={styles.container}>
+      <StyledCard>
+        <StyledText>
+          hello this is some styled text
+        </StyledText>
+      </StyledCard>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    padding: 15,
-  },
+    backgroundColor: Colors.bg,
+    padding: 24,
+  }, 
+  containerParent: {
+    height: "100%",
+  }
 });

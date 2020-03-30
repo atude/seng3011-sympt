@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '../constants/Colors';
-import { Text } from '@ui-kitten/components';
 
 const StyledCard = (props) => {
   return (
@@ -17,6 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 16,
     borderRadius: 16,
+    marginBottom: 20,
 
     shadowColor: "#000",
     shadowOffset: {

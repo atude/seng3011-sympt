@@ -2,32 +2,45 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
-import HomeScreen from '../screens/HomeScreen';
-import StatsScreen from '../screens/StatsScreen';
+import ActivityScreen from '../screens/ActivityScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
+import { Button, Image } from 'react-native';
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+
+import SymptLogo from '../assets/images/logo-plain.png'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
 
 export default function BottomTabNavigator({ navigation, route }) {
-  // Set the header title on the parent stack navigator depending on the
-  // currently active tab. Learn more in the documentation:
-  // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ 
     headerTitle: getHeaderTitle(route),
     headerTitleStyle: {
-      // fontWeight: "bold",
-      fontFamily: "montserrat-semibold",
-      fontSize: 22,
-      marginLeft: 8,
-      marginTop: 14,
+      fontWeight: "bold",
+      fontFamily: "sfpro",
+      fontSize: 28,
+      marginLeft: 10,
+      marginTop: 18,
     },
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
-      height: 100,
+      height: 120,
       backgroundColor: "#fff",
-    }
+    },
+    headerRight: () => (
+      <TouchableOpacity 
+        style={{
+          marginTop: 20,
+          marginRight: 14,
+          padding: 10,
+        }}
+      >
+        <TabBarIcon name="filter-outline"/>
+      </TouchableOpacity>
+    )
   });
 
   return (
@@ -41,11 +54,16 @@ export default function BottomTabNavigator({ navigation, route }) {
       }}}
     >
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Activity"
+        component={ActivityScreen}
         options={{
           tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="activity" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="dna" 
+            />
+          )
         }}
       />
       <BottomTab.Screen
@@ -53,15 +71,25 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={FeedScreen}
         options={{
           tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-2" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="card-bulleted-outline" 
+            />
+          )
         }}
       />
       <BottomTab.Screen
-        name="Yes"
-        component={StatsScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-2" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="account-circle-outline" 
+            />
+          )
         }}
       />
     </BottomTab.Navigator>
@@ -72,11 +100,11 @@ function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? defaultRouteName;
 
   switch (routeName) {
-    case 'Home':
-      return 'Home';
+    case 'Activity':
+      return 'Activity';
     case 'Feed':
-      return 'Feed'
-    case 'Yes':
-      return 'Yes this is a screen';
+      return 'Your Feed'
+    case 'Profile':
+      return 'Profile';
   }
 }

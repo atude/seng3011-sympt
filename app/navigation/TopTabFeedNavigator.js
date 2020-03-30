@@ -8,9 +8,9 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function TopTabFeedNavigator() {
   return (
-    <Tab.Navigator initialRouteName="Articles">
-      <Tab.Screen name="Articles" component={ArticlesScreen} />
+    <Tab.Navigator initialRouteName="Trending">
       <Tab.Screen name="Trending" component={TrendingScreen} />
+      <Tab.Screen name="Articles"  component={ArticlesScreen} />
     </Tab.Navigator>
   );
 }

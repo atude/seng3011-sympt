@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Animated, Easing, ActivityIndicator } from 'react-native';
 import SymptBanner from '../assets/images/banner.png';
 
-import { Input, Text, Button, Icon } from '@ui-kitten/components';
-import { signInEmail, createAccount } from '../firebase/firebaseFunctions';
+import { signInEmail, createAccount } from '../functions/accountFunctions';
 import Colors from '../constants/Colors';
+import { Input } from 'react-native-elements';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import StyledText from '../components/StyledText';
+import StyledButton from '../components/StyledButton';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const initAnimDurationMs = 2000;
 
@@ -57,59 +61,50 @@ const LoginScreen = () => {
     <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
       <Animated.Image 
         source={SymptBanner} 
-        style={[{ 
-          marginBottom: yPosAnim,
-        }, styles.banner]}
+        style={[{ marginBottom: yPosAnim }, styles.banner]}
       />
       <View style={styles.inputFieldContainer}>
         <Input 
           autoCapitalize="none"
-          style={styles.inputField}
+          containerStyle={styles.inputField}
           textContentType="emailAddress"
           value={email}
           placeholder='email@email.com'
-          textStyle={styles.inputText}
-          labelStyle={styles.inputLabel}
-          captionTextStyle={styles.inputCaption}
+          inputStyle={styles.inputText}
           onChangeText={(value) => setEmail(value)}
           label='Email Address'
-          status={error ? "danger" : "primary"}
-          size="large"
         />
         <Input 
           autoCapitalize="none"
-          style={styles.inputField}
+          containerStyle={styles.inputField}
           textContentType="password"
           secureTextEntry={!showPassword}
-          icon={() => 
-            <Icon 
-              width={28} height={28} 
-              fill={Colors.primary} 
-              name={showPassword ? "eye" : "eye-off"}
-            />
+          rightIcon={() => 
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+              <MaterialCommunityIcons 
+                style={{ fontSize: 20 }}
+                color={Colors.primary} 
+                name={showPassword ? "eye" : "eye-off"}
+              />
+            </TouchableOpacity>
           }
           onIconPress={() => setShowPassword(!showPassword)}
           value={password}
           placeholder='*******'
-          textStyle={styles.inputText}
-          labelStyle={styles.inputLabel}
-          captionTextStyle={styles.inputCaption}
+          inputStyle={styles.inputText}
           onChangeText={(value) => setPassword(value)}
           label='Password'
-          status={error ? "danger" : "primary"}
-          size="large"
         />
-        <Text style={styles.errorText} status="danger">
+        <StyledText style={styles.errorText} color="error">
           {error}
           {"\n"}
-        </Text>
-        <Button 
+        </StyledText>
+        <StyledButton 
           size="large" 
           onPress={() => handleSubmit()} 
-          status={isSignIn ? "primary" : "info"}
-        >
-          {isSignIn ? "SIGN IN" : "SIGN UP"}
-        </Button>
+          color={isSignIn ? "primary" : "secondary"}
+          title={isSignIn ? "SIGN IN" : "SIGN UP"}
+        />
         <ActivityIndicator 
           size={50} 
           style={styles.spinner} 
@@ -117,23 +112,22 @@ const LoginScreen = () => {
           color={Colors.info}
         />
       </View>
-      <Text 
+      <StyledText 
+        color="secondary"
         style={styles.toggleSubmitText} 
-        status="info"
         onPress={() => setSignIn(!isSignIn)}
       >
         {isSignIn ? 
           "Don't have an account? Sign up instead." :
           "Already have an account? Sign in instead."
         }
-      </Text>
+      </StyledText>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
@@ -153,6 +147,12 @@ const styles = StyleSheet.create({
   inputField: {
     marginBottom: 20,
   },
+  inputText: {
+    fontFamily: "sfpro",
+  },
+  labelText: {
+    fontFamily: "sfpro",
+  },  
   toggleSubmitText: {
     textDecorationLine: "underline",
   },  

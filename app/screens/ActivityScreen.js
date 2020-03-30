@@ -1,30 +1,33 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
-import { Text, Button } from '@ui-kitten/components';
 import StyledCard from '../components/StyledCard';
 import { UserContext, DiseaseContext } from '../context/context';
+import StyledText from '../components/StyledText';
+import StyledButton from '../components/StyledButton';
 
-export default function HomeScreen() {
+const ActivityScreen = (props) => {
   const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <StyledCard>
-        <Text>
+        <StyledText>
           {userContext.user.email}
-        </Text>
-        <Text>
+        </StyledText>
+        <StyledText>
           {diseaseContext.diseaseName}
-        </Text>
-        <Button onPress={() => diseaseContext.setDisease("mers")}>
-          Change to mers app wide 
-        </Button>
+        </StyledText>
+        <StyledButton 
+          color="primary"
+          onPress={() => diseaseContext.setDisease("mers")} 
+          title="yes"
+        />
       </StyledCard>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -32,3 +35,5 @@ const styles = StyleSheet.create({
     padding: 24,
   }, 
 });
+
+export default ActivityScreen;

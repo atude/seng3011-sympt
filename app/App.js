@@ -10,11 +10,7 @@ import firebase from './firebase/firebaseInit';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { mapping } from '@eva-design/eva';
 
-import { myTheme } from './constants/lightTheme';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { UserContext, DiseaseContext } from './context/context';
 
 const Stack = createStackNavigator();
@@ -59,6 +55,7 @@ export default function App(props) {
 					'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
 					'open-sans-italic': require('./assets/fonts/OpenSans-Italic.ttf'),
 					'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+					'sfpro': require('./assets/fonts/SFPro-Regular.ttf'),
 				});
 
 				// Setup firebase user
@@ -87,23 +84,20 @@ export default function App(props) {
 	} else {
 		return (
 			<View style={styles.container}>
-				<IconRegistry icons={EvaIconsPack} />
-				<ApplicationProvider mapping={mapping} theme={myTheme}>
-					<UserContext.Provider value={userContextValue}>
-						<DiseaseContext.Provider value={diseaseContextValue}>
-							<StatusBar barStyle="dark-content" />
-							{!user ? (
-								<LoginScreen />
-							) : (
-								<NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-									<Stack.Navigator>
-										<Stack.Screen name="Root" component={BottomTabNavigator} />
-									</Stack.Navigator>
-								</NavigationContainer>
-							)}
-						</DiseaseContext.Provider>
-					</UserContext.Provider>
-				</ApplicationProvider>
+				<UserContext.Provider value={userContextValue}>
+					<DiseaseContext.Provider value={diseaseContextValue}>
+						<StatusBar barStyle="dark-content" />
+						{!user ? (
+							<LoginScreen />
+						) : (
+							<NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+								<Stack.Navigator>
+									<Stack.Screen name="Root" component={BottomTabNavigator} />
+								</Stack.Navigator>
+							</NavigationContainer>
+						)}
+					</DiseaseContext.Provider>
+				</UserContext.Provider>
 			</View>
 		);
 	}

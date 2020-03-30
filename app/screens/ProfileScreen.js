@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from '@ui-kitten/components';
-import { signOut } from '../firebase/firebaseFunctions';
+import { signOut } from '../functions/accountFunctions';
 import Colors from '../constants/Colors';
+import StyledButton from '../components/StyledButton';
 
-export default function StatsScreen() {
+const ProfileScreen = (props) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Button onPress={() => signOut()}>temp sign out button</Button>
+      <StyledButton 
+        onPress={() => signOut()} 
+        title="Sign out"
+      />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -19,3 +22,5 @@ const styles = StyleSheet.create({
     padding: 24,
   }, 
 });
+
+export default ProfileScreen;

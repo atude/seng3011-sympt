@@ -1,17 +1,16 @@
 import React from 'react';
-import { Icon } from "@ui-kitten/components";
 import Colors from '../constants/Colors';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const TabBarIcon = (props) => {
   return (
-    <Icon
+    <MaterialCommunityIcons
       name={props.name}
-      width={24}
-      height={24}
-      fill={props.focused ? Colors.primary : Colors.dull}
+      color={props.focused ? Colors.primary : Colors.dull}
       style={{
         marginTop: 8,
         marginBottom: 8,
+        fontSize: 26,
       }}
     />
   );

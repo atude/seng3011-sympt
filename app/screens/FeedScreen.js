@@ -1,26 +1,25 @@
-import * as React from 'react';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TopTabFeedNavigator from '../navigation/TopTabFeedNavigator';
+import Colors from '../constants/Colors';
 
-export default function FeedScren() {
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text>This is where Articles and Trending go!</Text>
-
-      <NavigationContainer independent={true}>
-        <TopTabFeedNavigator />
-      </NavigationContainer>
-    </ScrollView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  }, 
-  contentContainer: {
-    paddingTop: 15,
+const TabsTheme = {
+  dark: false,
+  colors: {
+    primary: Colors.primary,
+    background: Colors.bg,
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
   },
-});
+};
+
+const FeedScreen = (props) => {
+  return (
+    <NavigationContainer independent={true} theme={TabsTheme}>
+      <TopTabFeedNavigator />
+    </NavigationContainer>
+  );
+};
+
+export default FeedScreen;

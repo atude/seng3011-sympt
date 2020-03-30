@@ -1,4 +1,4 @@
-import firebase from './firebaseInit';
+import firebase from '../firebase/firebaseInit';
 
 // const usersRef = firebase.firestore().collection("users");
 
