@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
@@ -19,21 +19,33 @@ const ArticlesScreen = (props) => {
     setLoadingArticles(true);
     const fetchFeedArticles = async () => {
       const articlesResponse = await getFeedArticles(userContext.user.uid, location, diseases);
-      setArticles(articlesResponse);
-      console.log(articlesResponse);
+      setArticles(articlesResponse.articles);
     };  
 
     fetchFeedArticles();
     setLoadingArticles(false);
   }, []);
 
+  const articleFeed = articles.map((article,i) => {
+    console.log("urls", article.url);
+    return (
+      <View key={i}> 
+        <StyledCard>
+          <StyledText>
+            {article.url}
+          </StyledText>
+        </StyledCard>
+      </View>
+    );
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <StyledCard>
-        <StyledText>something</StyledText>
-      </StyledCard>
+      
+        {articleFeed}
     </ScrollView>
   );
+
 };
 
 const styles = StyleSheet.create({
