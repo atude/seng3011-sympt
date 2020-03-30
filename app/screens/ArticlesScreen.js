@@ -6,6 +6,7 @@ import StyledCard from '../components/StyledCard';
 import { UserContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import { getFeedArticles } from '../functions/articleFunctions';
+import ArticleCard from '../components/ArticleCard';
 
 const diseases = ["coronavirus"];
 const location = "china";
@@ -30,18 +31,13 @@ const ArticlesScreen = (props) => {
     console.log("urls", article.url);
     return (
       <View key={i}> 
-        <StyledCard>
-          <StyledText>
-            {article.url}
-          </StyledText>
-        </StyledCard>
+        <ArticleCard article={article}/>
       </View>
     );
   });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      
         {articleFeed}
     </ScrollView>
   );
