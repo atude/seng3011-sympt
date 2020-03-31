@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
+import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
@@ -29,6 +30,8 @@ export default function BottomTabNavigator({ navigation, route }) {
     switch (routeName) {
     case 'Activity':
       return diseasesContext.disease.nameFormatted || "Activity";
+    case 'Self Reported Cases':
+      return 'Self Reported Cases';
     case 'Feed':
       return 'Your Feed';
     case 'Profile':
@@ -138,6 +141,19 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Self Reported Cases"
+        component={SelfReportMapScreen}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="earth" 
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Feed"
         component={FeedScreen}
         options={{
@@ -166,8 +182,6 @@ export default function BottomTabNavigator({ navigation, route }) {
     </BottomTab.Navigator>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   selectHeading: {
