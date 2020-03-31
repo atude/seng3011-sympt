@@ -1,0 +1,52 @@
+[
+    {
+        "nameFormatted": "COVID-19 (Coronavirus)",
+        "name": "covid-19",
+        "description": "Transmitted through human contact, causes flu-like symptoms, including fever, cough, fatigue and shortness of breath"
+    },
+    {
+        "nameFormatted": "AIDS (Acquired immune deficiency syndrome)",
+        "name": "aids",
+        "description": "Transmitted through sexual contact, causes throat inflammation, rash, headache and sores of the mouth and genitals"
+    },
+    {
+        "nameFormatted": "Malaria",
+        "name": "malaria",
+        "description": "Transmitted through mosquitoes, causes fever, tiredness, vomitting and headaches."
+    },
+    {
+        "nameFormatted": "Measels",
+        "name": "measels",
+        "description": "Transmitted through human contact, causes fever, cough, runny nose, inflamed eyes and a red flat rash"
+    },
+    {
+        "nameFormatted": "Influenza",
+        "name": "influenza",
+        "description": "Transmitted through human contact, causes high fever, runny nose, sore throat, muscle and join pains and coughing."
+    },
+    {
+        "nameFormatted": "EVD (Ebola Virus Disease)",
+        "name": "ebola",
+        "description": "Transmitted through direct contact with the blood or other body fluids of an infected person, causes influenza-like symptoms, followed by internal bleeding and decreased blood clotting"
+    },
+    {
+        "nameFormatted": "Smallpox",
+        "name": "smallpox",
+        "description": "Transmitted through inhalation of airborne Variola virus, causes common cold and fever, muscle pain, malaise, headache and fatigue"
+    },
+    {
+        "nameFormatted": "Rabies",
+        "name": "rabies",
+        "description": "Transmitted through exposure to infected mammals, causes inflammation of the brain in humands and other mammals, followed by uncontrolled excitement and an inabillity to move parts of the body."
+    },
+    {
+        "nameFormatted": "Syphilis",
+        "name": "syphilis",
+        "description": "Transmitted through sexual contact, causes skin rash, mucous membranes and lymph nodes."
+    },
+    {
+        "nameFormatted": "Hepatitis-B",
+        "name": "hepatitis-b",
+        "description": "Transmitted through direct contact with the blood of other body fluids of an infected person, causes loss of appetite, nausea, vomiting and dark urine."
+    }
+]
