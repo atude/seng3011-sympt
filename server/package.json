@@ -31,9 +31,11 @@
   "dependencies": {
     "@types/express": "^4.16.1",
     "@types/puppeteer": "^2.0.1",
+    "afinn-165": "^1.0.4",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "firebase-admin": "^8.9.2",
+    "natural": "^0.6.3",
     "newsapi": "^2.4.0",
     "puppeteer": "^2.1.1",
     "typescript": "^3.8.3"
