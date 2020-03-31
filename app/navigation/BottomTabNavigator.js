@@ -153,8 +153,8 @@ export default function BottomTabNavigator({ navigation, route }) {
   );
 }
 
-function getHeaderTitle(route) {
-  const routeName = route.state.routes[route.state.index].name || defaultRouteName;
+const getHeaderTitle = (route) => {
+  const routeName = route.state?.routes[route.state.index].name ?? defaultRouteName;
 
   switch (routeName) {
   case 'Activity':
@@ -164,7 +164,7 @@ function getHeaderTitle(route) {
   case 'Profile':
     return 'Profile';
   }
-}
+};
 
 const styles = StyleSheet.create({
   selectHeading: {
