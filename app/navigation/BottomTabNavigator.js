@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
 import ActivityScreen from '../screens/ActivityScreen';
+import SelfReportMapScreen from '../screens/SelfReportMapScreen'
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import { Image, StyleSheet, View } from 'react-native';
@@ -124,6 +125,19 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Self Reported Cases"
+        component={SelfReportMapScreen}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="dna" 
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Feed"
         component={FeedScreen}
         options={{
@@ -159,6 +173,8 @@ const getHeaderTitle = (route) => {
   switch (routeName) {
   case 'Activity':
     return 'Activity';
+  case 'Self Reported Cases':
+    return 'Self Reported Cases';
   case 'Feed':
     return 'Your Feed';
   case 'Profile':
