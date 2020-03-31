@@ -132,7 +132,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon 
               focused={focused} 
-              name="dna" 
+              name="earth" 
             />
           ),
         }}
