@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
-import { UserContext, DiseaseContext } from '../context/context';
+import { DiseaseContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
 
-const ActivityScreen = (props) => {
-  const userContext = useContext(UserContext);
+const ActivityScreen = () => {
+  // const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
 
   return (

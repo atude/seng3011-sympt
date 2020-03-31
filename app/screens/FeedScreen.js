@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const FeedStack = createStackNavigator();
 
-const FeedScreen = (props) => {
+const FeedScreen = () => {
   return (
     <FeedStack.Navigator 
       headerMode="float"

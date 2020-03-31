@@ -5,7 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import ActivityScreen from '../screens/ActivityScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import StyledText from '../components/StyledText';
