@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
 import ActivityScreen from '../screens/ActivityScreen';
-import SelfReportMapScreen from '../screens/SelfReportMapScreen'
+import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import { Image, StyleSheet, View } from 'react-native';
