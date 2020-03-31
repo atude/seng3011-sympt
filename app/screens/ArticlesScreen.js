@@ -6,21 +6,15 @@ import { UserContext, DiseaseContext } from '../context/context';
 import { getFeedArticles } from '../functions/articleFunctions';
 import ArticleCard from '../components/ArticleCard';
 import StyledText from '../components/StyledText';
+import { ActivityIndicator } from 'react-native';
 
 const location = "china";
 
 const ArticlesScreen = (props) => {
-  const [articles, setArticles] = useState([]);
-  const [isRefreshingArticles, setRefreshingArticles] = useState(false);
+  const [articles, setArticles] = useState(null);
+  const [isLoadingArticles, setLoadingArticles] = useState(false);
   const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
-
-  const fetchFeedArticles = async () => {
-    setRefreshingArticles(true);
-    const articlesResponse = await getFeedArticles(userContext.user.uid, location, [diseaseContext.disease.name]);
-    setArticles(articlesResponse.articles || []);
-    setRefreshingArticles(false);
-  };  
 
   useEffect(() => {
     if (!articles) {
@@ -28,28 +22,36 @@ const ArticlesScreen = (props) => {
     }
   }, []);
 
+  const fetchFeedArticles = async () => {
+    setLoadingArticles(true);
+    const articlesResponse = await getFeedArticles(userContext.user.uid, location, [diseaseContext.disease.name]);
+    setArticles(articlesResponse.articles || []);
+    setLoadingArticles(false);
+  };  
+
+  const formatArticles = (articles) => {
+    if(!articles) {
+      return <StyledText nofound>No articles found</StyledText>;
+    }
+    return articles.map((article, i) => (
+      <View key={i}> 
+        <ArticleCard article={article} navigation={props.navigation}/>
+      </View>
+    ));
+  };
+
   return (
     <ScrollView 
       contentContainerStyle={styles.container}
       refreshControl={
         <RefreshControl 
           colors={[Colors.primary, Colors.secondary]} 
-          refreshing={isRefreshingArticles} 
+          refreshing={isLoadingArticles} 
           onRefresh={() => fetchFeedArticles()}
         />
       }
     >
-      {!isRefreshingArticles && (articles && articles?.length ? 
-        articles.map((article, i) => (
-          <View key={i}> 
-            <ArticleCard article={article} navigation={props.navigation}/>
-          </View>
-        ))
-        :
-        <StyledText nofound>
-          No articles found
-        </StyledText>
-      )}
+      {articles ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
     </ScrollView>
   );
 

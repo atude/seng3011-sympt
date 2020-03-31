@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import StyledText from './StyledText';
 import Layout from '../constants/Layout';
 import { DiseaseContext } from '../context/context';
+import { getDiseaseImage } from '../utils/mapDiseaseImages';
 
 const DiseaseSelectCard = (props) => {
   const diseaseContext = useContext(DiseaseContext);
@@ -19,6 +20,7 @@ const DiseaseSelectCard = (props) => {
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
+        <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImage}/>
         <View style={styles.headerContainer}>
           <StyledText style={styles.heading}>
             {disease.nameFormatted}
@@ -76,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     paddingBottom: 10,
+  },
+  diseaseImage: {
+    width: 100,
+    height: 100,
   },
 });
 

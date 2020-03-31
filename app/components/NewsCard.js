@@ -13,7 +13,6 @@ const NewsCard = (props) => {
       <TouchableOpacity onPress={() => Linking.openURL(article.url)}>
         <View>
           <StyledText style={styles.heading}>{article.title}</StyledText>
-          {console.log(article.publishedAt)}
           <StyledText color="primary" style={styles.dateText}>{moment(article.publishedAt).fromNow()}</StyledText>
           <Text numberOfLines={3} style={styles.textPreview}>{article.content}</Text>
           <StyledText color="grey" style={styles.articleSource}>{`- ${article.source.name}`}</StyledText>

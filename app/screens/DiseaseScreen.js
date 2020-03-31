@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
@@ -7,14 +7,15 @@ import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
 import { LineChart } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
+import { Picker } from 'react-native';
 
+// temp data
 const data = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   datasets: [
     {
       data: [20, 45, 28, 80, 99, 43 ,20],
       color: () => Colors.secondary, // optional
-      strokeWidth: 2 // optional
     }
   ],
 };
@@ -23,24 +24,48 @@ const chartConfig = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientToOpacity: 0,
   color: () => Colors.primary,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5
+  barPercentage: 0.5,
 };
+
+const timeRanges = [
+  {
+    desc: "week"
+  },
+  {
+    desc: "month"
+  },
+  {
+    desc: "year"
+  },
+];
 
 const ActivityScreen = () => {
   // const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
+  const [timeRangeIndex, setTimeRangeIndex] = useState(0);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>Cases in Australia</StyledText>
-          <Text>
-            <StyledText style={styles.casesCountText}>60</StyledText>
-            <StyledText>{` cases`}</StyledText>
-            <StyledText color="grey">{` in the last 24 hours`}</StyledText>
-          </Text>
+          <View style={styles.casesContainer}>
+            <Text>
+              <StyledText style={styles.casesCountText}>60</StyledText>
+              <StyledText>{` cases`}</StyledText>
+              <StyledText color="grey">{` in the `}</StyledText>
+            </Text>
+            <Picker
+              mode="dropdown"
+              selectedValue={timeRangeIndex}
+              style={styles.rangePicker}
+              onValueChange={(itemValue) => setTimeRangeIndex(itemValue)}
+            >
+              <Picker.Item label="past week" value={0} />
+              <Picker.Item label="past month" value={1} />
+              <Picker.Item label="past year" value={2} />
+            </Picker>
+          </View>
         </View>
         <LineChart
           data={data}
@@ -50,6 +75,7 @@ const ActivityScreen = () => {
             marginLeft: -14,
           }}
           chartConfig={chartConfig}
+          bezier
         />
       </StyledCard>
     </ScrollView>
@@ -64,6 +90,18 @@ const styles = StyleSheet.create({
   detailsContainer: {
     padding: 6,
     marginBottom: 20,
+  },
+  casesContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  rangePicker: { 
+    height: 50, 
+    width: 150, 
+    color: Colors.dull,
+
+    marginTop: -5.5,
+    marginLeft: -8,
   },
   casesHeading: {
     fontWeight: "bold",
