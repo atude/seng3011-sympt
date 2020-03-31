@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, Linking, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
-import StyledText from '../components/StyledText';
+import StyledText from './StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,9 +23,7 @@ const ArticleScreen = ({ route, navigation }) => {
           `${article.main_text}\n`
         }
       </StyledText>
-      <TouchableOpacity onPress={() => Linking.openURL(`${article.url}`)}>
-        <Text style={styles.promedLink}>View full article on ProMed Mail</Text>
-      </TouchableOpacity> 
+      <StyledText link={article.url}>View full article on ProMed Mail</StyledText>
     </ScrollView>
   );
 };
@@ -36,22 +34,16 @@ const styles = StyleSheet.create({
     padding: 24,
   }, 
   headline: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontWeight: 'bold',
     fontSize: 22,
     paddingBottom: 10,
   },
   date: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 16,
     color: "grey",
     paddingBottom: 10,
-  },
-  promedLink: {
-    color: Colors.primary,
-    textAlign: 'center',
-    width: "100%",
-    fontWeight: 'bold',
   },
   backIcon: {
     fontSize: 40,

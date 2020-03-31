@@ -7,6 +7,11 @@ export const UserContext = createContext({
 });
 
 export const DiseaseContext = createContext({
-  diseaseName: "",
+  disease: {
+    nameFormatted: "",
+    name: "",
+    description: "",
+    link: "",
+  },
   setDisease: (diseaseName) => {},
 });

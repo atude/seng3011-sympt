@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   title: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontWeight: "bold",
   }
 });

@@ -1,11 +1,11 @@
 import React from 'react';
 import TopTabFeedNavigator from '../navigation/TopTabFeedNavigator';
-import ArticleScreen from './ArticleScreen';
+import ArticleScreen from '../components/ArticlePage';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const FeedStack = createStackNavigator();
 
-const FeedScreen = (props) => {
+const FeedScreen = () => {
   return (
     <FeedStack.Navigator 
       headerMode="float"

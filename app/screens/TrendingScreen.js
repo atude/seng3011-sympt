@@ -1,21 +1,59 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, ActivityIndicator, RefreshControl, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import StyledCard from '../components/StyledCard';
 import StyledText from '../components/StyledText';
+import getTrendingArticles from '../functions/trendingFunctions';
+import { DiseaseContext } from '../context/context';
+import NewsCard from '../components/NewsCard';
 
 export default function TrendingScreen() {
+  const diseaseContext = useContext(DiseaseContext);
+  const [articles, setArticles] = useState(null);
+  const [isLoadingTrending, setLoadingTrending] = useState(false);
+
+  useEffect(() => {
+    if (!articles) {
+      fetchTrendingArticles();
+    }
+  }, []);
+
+  const fetchTrendingArticles = async () => {
+    setLoadingTrending(true);
+    const articlesResponse = await getTrendingArticles(diseaseContext.diseaseName);
+    setArticles(articlesResponse);
+    setLoadingTrending(false);
+  };
+
   return (
-    <ScrollView style={styles.containerParent} contentContainerStyle={styles.container}>
-      <StyledCard>
-        <StyledText>
-          hello this is some styled text
-        </StyledText>
-      </StyledCard>
+    <ScrollView 
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl 
+          colors={[Colors.primary, Colors.secondary]}
+          refreshing={isLoadingTrending}
+          onRefresh={() => fetchTrendingArticles()}
+        />
+      }
+    >
+      {articles ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
     </ScrollView>
   );
 }
+
+const formatArticles = (articles) => {
+  if(!articles || !articles.length) {
+    return <StyledText nofound>There are no news articles or tweets</StyledText>;
+  }
+  const formattedArticles = articles.map((article, i) => {
+    return (
+      <View key={i}> 
+        <NewsCard article={article}/>
+      </View>
+    );
+  });
+  return formattedArticles;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -26,3 +64,5 @@ const styles = StyleSheet.create({
     height: "100%",
   }
 });
+
+

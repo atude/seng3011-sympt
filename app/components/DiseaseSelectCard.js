@@ -1,16 +1,17 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import StyledText from './StyledText';
 import Layout from '../constants/Layout';
 import { DiseaseContext } from '../context/context';
+import { getDiseaseImage } from '../utils/mapDiseaseImages';
 
 const DiseaseSelectCard = (props) => {
   const diseaseContext = useContext(DiseaseContext);
-  const { last, diseaseNameFormatted, diseaseName, diseaseDescription, setDiseasesOpen } = props;
+  const { last, disease, setDiseasesOpen } = props;
 
   const handleClick = () => {
     setDiseasesOpen(false);
-    diseaseContext.setDisease(diseaseName);
+    diseaseContext.setDisease(disease.name);
   };
 
   return (
@@ -19,13 +20,20 @@ const DiseaseSelectCard = (props) => {
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
-        <StyledText style={styles.heading}>
-          {diseaseNameFormatted}
-        </StyledText>
-        <StyledText style={styles.body}>
-          {diseaseDescription}
+        <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImage}/>
+        <View style={styles.headerContainer}>
+          <StyledText style={styles.heading}>
+            {disease.nameFormatted}
+          </StyledText>
+          <StyledText style={styles.body}>
+            {disease.description}
+          </StyledText>
+        </View>
+        <StyledText link={disease.link}>
+          Find out more
         </StyledText>
       </View>
+
     </TouchableOpacity>
   );
 };
@@ -34,9 +42,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Layout.window.width - 34,
-    height: 220,
+    height: 320,
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 25,
     borderRadius: 16,
     marginLeft: 8,
     marginBottom: 20,
@@ -51,9 +59,14 @@ const styles = StyleSheet.create({
     
     elevation: 8,
   }, 
+  headerContainer: {
+    alignItems: "center",
+  },  
   contentContainer: {
     alignItems: "center",
     flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
     width: "100%",
   },
   heading: {
@@ -62,8 +75,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   body: {
-    fontSize: 16,
-  }
+    fontSize: 14,
+    textAlign: 'center',
+    paddingBottom: 10,
+  },
+  diseaseImage: {
+    width: 100,
+    height: 100,
+  },
 });
 
 export default DiseaseSelectCard;
