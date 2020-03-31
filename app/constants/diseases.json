@@ -3,28 +3,31 @@
     "nameFormatted": "COVID-19",
     "name": "covid-19",
     "description": "Coronavirus disease 2019 (COVID-19) is an infectious disease first identified in 2019 in Wuhan, China, and spreading globally. Common symptoms include fever, cough, and shortness of breath.",
-    "link": "https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2"
+    "link": "https://www.who.int/health-topics/coronavirus"
   },
   {
     "nameFormatted": "Ebola",
     "name": "ebola",
     "description": "Ebola virus disease (EVD) is a viral fever of humans and other primates common in Africa. Symptoms include a fever, sore throat, muscular pain, and headaches, but can escalate to internal organ failure.",
-    "link": "https://en.wikipedia.org/wiki/Ebola_virus_disease"
+    "link": "https://www.who.int/health-topics/ebola"
   },
   {
     "nameFormatted": "Malaria",
     "name": "malaria",
-    "description": "Malaria is a life-threatening disease caused by parasites that are transmitted to people through the bites of infected mosquitoes. It can be the cause of fever, tiredness, vomitting and headaches, but can escalate to death."
+    "description": "Malaria is a life-threatening disease caused by parasites that are transmitted to people through the bites of infected mosquitoes. It can be the cause of fever, tiredness, vomitting and headaches, but can escalate to death.",
+    "link": "https://www.who.int/malaria/en/"
   },
   {
     "nameFormatted": "HIV/AIDS",
     "name": "aids",
-    "description": "AIDS (Acquired immune deficiency syndrome) is a sexually transmitted disease that weakens the immune system. It can cause throat inflammation, rash, headache and sores of the mouth and genitals."
+    "description": "AIDS (Acquired immune deficiency syndrome) is a sexually transmitted disease that weakens the immune system. It can cause throat inflammation, rash, headache and sores of the mouth and genitals.",
+    "link": "https://www.who.int/health-topics/hiv-aids/#tab=tab_10"
   },
   {
-    "nameFormatted": "Measels",
-    "name": "measels",
-    "description": "Measels is a highly contagious infectious disease that causes red rashes on the body, as well as fever, cough, runny nose and inflamed eyes."
+    "nameFormatted": "Measles",
+    "name": "measles",
+    "description": "Measles is a highly contagious infectious disease that causes red rashes on the body, as well as fever, cough, runny nose and inflamed eyes.",
+    "link": "https://www.who.int/immunization/diseases/measles/en/"
   },
   {
     "nameFormatted": "Rabies",
