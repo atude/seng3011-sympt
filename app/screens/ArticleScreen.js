@@ -11,7 +11,6 @@ const ArticleScreen = ({ route, navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-        <StyledButton onPress={() => {navigation.goBack();}} title="Back To Articles"></StyledButton>
         <StyledCard>
           <Text style={styles.headline}>{article.headline}</Text>
           <Text style={styles.date}>{article.date_of_publication}</Text>
@@ -23,6 +22,8 @@ const ArticleScreen = ({ route, navigation }) => {
         <StyledCard>
           <StyledText>Sentiment Analysis section</StyledText>
         </StyledCard>
+        <StyledButton onPress={() => {navigation.goBack();}} title="Back To Articles"></StyledButton>
+        
     </ScrollView>
   );
 };
