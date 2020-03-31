@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Layout.window.width - 34,
-    height: 260,
+    height: 320,
     backgroundColor: "#fff",
     padding: 25,
     borderRadius: 16,

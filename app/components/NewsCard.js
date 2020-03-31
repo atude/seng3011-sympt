@@ -13,9 +13,10 @@ const NewsCard = (props) => {
       <TouchableOpacity onPress={() => Linking.openURL(article.url)}>
         <View>
           <StyledText style={styles.heading}>{article.title}</StyledText>
+          {console.log(article.publishedAt)}
           <StyledText color="primary" style={styles.dateText}>{moment(article.publishedAt).fromNow()}</StyledText>
           <Text numberOfLines={3} style={styles.textPreview}>{article.content}</Text>
-          <Text style={styles.articleSource}>{`Source: ${article.source.name}`}</Text>
+          <StyledText color="grey" style={styles.articleSource}>{`- ${article.source.name}`}</StyledText>
         </View>
       </TouchableOpacity>
     </StyledCard>
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
   textPreview: {
     fontFamily: "sfpro",
     color: 'grey',
+    paddingBottom: 5,
   },
   articleSource: {
-    fontFamily: 'sfpro',
-    color: '#A8A8A8',
     fontStyle: 'italic',
+    fontSize: 14,
   },
 });
 

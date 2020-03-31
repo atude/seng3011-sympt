@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
-import ActivityScreen from '../screens/ActivityScreen';
+import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import { Image, StyleSheet, View, Text } from 'react-native';
@@ -76,7 +76,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         <Overlay 
           isVisible={isDiseasesOpen}
           width={Layout.window.width}
-          height={380}
+          height={450}
           // borderRadius={20}
           overlayStyle={{
             position: "absolute",

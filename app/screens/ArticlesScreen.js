@@ -23,7 +23,9 @@ const ArticlesScreen = (props) => {
   };  
 
   useEffect(() => {
-    fetchFeedArticles();
+    if (!articles) {
+      fetchFeedArticles();
+    }
   }, []);
 
   return (

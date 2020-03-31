@@ -1,6 +1,6 @@
 import React from 'react';
 import TopTabFeedNavigator from '../navigation/TopTabFeedNavigator';
-import ArticleScreen from './ArticleScreen';
+import ArticleScreen from './ArticlePage';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const FeedStack = createStackNavigator();

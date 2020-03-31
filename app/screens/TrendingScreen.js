@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, ActivityIndicator, RefreshControl, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import StyledCard from '../components/StyledCard';
 import StyledText from '../components/StyledText';
 import getTrendingArticles from '../functions/trendingFunctions';
 import { DiseaseContext } from '../context/context';
@@ -17,7 +16,7 @@ export default function TrendingScreen() {
     if (!articles) {
       fetchTrendingArticles();
     }
-  }, [articles]);
+  }, []);
 
   const fetchTrendingArticles = async () => {
     setLoadingTrending(true);
@@ -44,7 +43,7 @@ export default function TrendingScreen() {
 
 const formatArticles = (articles) => {
   if(!articles) {
-    return (<StyledCard><StyledText>There are no news articles or tweets</StyledText></StyledCard>);
+    return <StyledText nofound>There are no news articles or tweets</StyledText>;
   }
   const formattedArticles = articles.map((article, i) => {
     return (
