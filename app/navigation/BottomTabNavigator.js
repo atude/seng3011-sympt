@@ -80,7 +80,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           isVisible={isDiseasesOpen}
           width={Layout.window.width}
           height={450}
-          // borderRadius={20}
           overlayStyle={{
             position: "absolute",
             bottom: 0,
