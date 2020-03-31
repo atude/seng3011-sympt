@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "heroku-postbuild": "npm run build:server",
-    "build": "npm install && npm run build:server && npm run build:web",
+    "build": "npm install && npm run build:server && npm run build:web && cd app && npm install",
     "build:server": "cd server && npm run build",
     "build:web": "cd web && npm run build",
     "start:server": "cd server && npm start",
@@ -12,8 +12,8 @@
     "start": "concurrently npm:start:*",
     "test": "npm run test:server",
     "test:server": "cd server && npm test",
-    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
-    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
+    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s && cd ../app && npm run lint:check -s",
+    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s && cd ../app && npm run lint:fix -s"
   },
   "repository": {
     "type": "git",
