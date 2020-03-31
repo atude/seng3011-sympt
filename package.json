@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "heroku-postbuild": "npm run build:server",
-    "build": "npm install && npm run build:server && npm run build:web",
+    "build": "npm install && npm run build:server && npm run build:web && cd app && npm install",
     "build:server": "cd server && npm run build",
     "build:web": "cd web && npm run build",
     "start:server": "cd server && npm start",
