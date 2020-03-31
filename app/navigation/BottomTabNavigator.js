@@ -40,7 +40,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerTitle: getHeaderTitle(route),
     headerTitleStyle: {
       fontWeight: "bold",
-      fontFamily: "sfpro",
+      fontFamily: "main",
       fontSize: 28,
       marginLeft: 10,
       marginTop: 18,
@@ -172,7 +172,7 @@ export default function BottomTabNavigator({ navigation, route }) {
 const styles = StyleSheet.create({
   selectHeading: {
     fontWeight: "bold",
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 28,
     padding: 24,
   }

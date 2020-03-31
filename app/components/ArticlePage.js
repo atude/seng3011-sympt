@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     padding: 24,
   }, 
   headline: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontWeight: 'bold',
     fontSize: 22,
     paddingBottom: 10,
   },
   date: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 16,
     color: "grey",
     paddingBottom: 10,

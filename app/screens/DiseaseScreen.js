@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     height: 50, 
     width: 150, 
     color: Colors.dull,
+    fontFamily: "main",
 
     marginTop: -5.5,
     marginLeft: -8,

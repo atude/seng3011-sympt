@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   textPreview: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     color: 'grey',
   }, 
 });

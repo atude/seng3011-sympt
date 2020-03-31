@@ -30,7 +30,7 @@ const ArticlesScreen = (props) => {
   };  
 
   const formatArticles = (articles) => {
-    if(!articles) {
+    if(!articles || !articles.length) {
       return <StyledText nofound>No articles found</StyledText>;
     }
     return articles.map((article, i) => (
@@ -51,7 +51,7 @@ const ArticlesScreen = (props) => {
         />
       }
     >
-      {articles ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
+      {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
     </ScrollView>
   );
 
