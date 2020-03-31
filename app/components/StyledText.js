@@ -4,6 +4,19 @@ import mapColors from '../utils/mapColors';
 import Colors from '../constants/Colors';
 
 const StyledText = (props) => {
+  if (props.nofound) {
+    return (
+      <Text
+        {...props}
+        style={[
+          styles.nofound,
+          props.style
+        ]}
+      >
+        {props.children}
+      </Text>
+    );
+  }
   if (props.link) {
     return (
       <TouchableOpacity onPress={() => Linking.openURL(props.link)}>
@@ -47,6 +60,13 @@ const styles = StyleSheet.create({
     width: "100%",
     fontWeight: 'bold',
   },
+  nofound: {
+    color: Colors.dull,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: "100%",
+    textTransform: "uppercase",
+  }
 });
 
 export default StyledText;
