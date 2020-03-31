@@ -11,6 +11,7 @@ import { addLog } from './services/devAccountService';
 
 // delete when no longer testing
 import { dummyNewsData } from './constants/dummyNewsData';
+import hashString from './utils/hashString';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
@@ -84,8 +85,8 @@ app.get('/_news/', async (req, res) => {
   const newsArticles = await newsapi.v2.everything({
     q: searchDiseases,
     domains: 'nytimes.com,wsj.com, washingtonpost.com, bbc.com, economist.com, newyorker.com, 
-      ap.org, reuters.com, bloomberg.com, foreignaffairs.com, theatlantic.com, politico.com, 
-      abc.net, cbsnews.com',
+      ap.org, reuters.com, bloomberg.com, foreignaffairs.com, theatlantic.com, abc.net, 
+      cbsnews.com',
     from: '2020-03-01',
     to: '2020-03-30',
     language: 'en',
@@ -93,7 +94,17 @@ app.get('/_news/', async (req, res) => {
   });
   res.send(newsArticles);
   */
-  res.send(dummyNewsData);
+
+  const articleSet = new Set();
+  const filteredArticles = dummyNewsData.articles.filter((article) => {
+    const hashedArticle = hashString(article.content.slice(0, 100));
+    if (articleSet.has(hashedArticle)) {
+      return false;
+    } 
+    articleSet.add(hashedArticle);
+    return true;
+  });
+  res.send(filteredArticles);
 });
 
 app.get('/_twitter/', async (req, res) => {
