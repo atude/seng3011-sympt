@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
-import ActivityScreen from '../screens/ActivityScreen';
+import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import { Image, StyleSheet, View, Text } from 'react-native';
@@ -40,7 +40,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerTitle: getHeaderTitle(route),
     headerTitleStyle: {
       fontWeight: "bold",
-      fontFamily: "sfpro",
+      fontFamily: "main",
       fontSize: 28,
       marginLeft: 10,
       marginTop: 18,
@@ -76,7 +76,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         <Overlay 
           isVisible={isDiseasesOpen}
           width={Layout.window.width}
-          height={380}
+          height={450}
           // borderRadius={20}
           overlayStyle={{
             position: "absolute",
@@ -172,7 +172,7 @@ export default function BottomTabNavigator({ navigation, route }) {
 const styles = StyleSheet.create({
   selectHeading: {
     fontWeight: "bold",
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 28,
     padding: 24,
   }

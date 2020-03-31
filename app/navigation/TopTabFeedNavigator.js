@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import ArticleFeedScreen from '../screens/ArticleFeedScreen';
+import ArticleFeedScreen from '../screens/ArticlesScreen';
 import TrendingScreen from '../screens/TrendingScreen';
 import Colors from '../constants/Colors';
 

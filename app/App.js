@@ -55,7 +55,7 @@ export default function App(props) {
           'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
           'open-sans-italic': require('./assets/fonts/OpenSans-Italic.ttf'),
           'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-          'sfpro': require('./assets/fonts/SFPro-Regular.ttf'),
+          'main': require('./assets/fonts/SFPro-Regular.ttf'),
         });
 
         // Setup firebase user

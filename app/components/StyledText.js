@@ -51,7 +51,7 @@ const StyledText = (props) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 16,
   }, 
   link: {

@@ -15,7 +15,7 @@ const NewsCard = (props) => {
           <StyledText style={styles.heading}>{article.title}</StyledText>
           <StyledText color="primary" style={styles.dateText}>{moment(article.publishedAt).fromNow()}</StyledText>
           <Text numberOfLines={3} style={styles.textPreview}>{article.content}</Text>
-          <Text style={styles.articleSource}>{`Source: ${article.source.name}`}</Text>
+          <StyledText color="grey" style={styles.articleSource}>{`- ${article.source.name}`}</StyledText>
         </View>
       </TouchableOpacity>
     </StyledCard>
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   textPreview: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     color: 'grey',
+    paddingBottom: 5,
   },
   articleSource: {
-    fontFamily: 'sfpro',
-    color: '#A8A8A8',
     fontStyle: 'italic',
+    fontSize: 14,
   },
 });
 
