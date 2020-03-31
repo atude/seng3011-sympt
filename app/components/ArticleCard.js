@@ -1,38 +1,31 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import StyledCard from './StyledCard';
 import StyledText from './StyledText';
-
-const moment = require('moment');
+import { ListItem } from 'react-native-elements';
 
 const ArticleCard = (props) => {
   const article = props.article;
 
   const goToExpandedArticle = (article) => {
-    props.navigation.navigate("ArticleScreen", { article: article });
+    props.navigation.navigate("ArticleScreen", {article: article});
   };
 
   return (
-    <StyledCard>
-      <TouchableOpacity onPress={() => goToExpandedArticle(article)}>
-        <View>
-          <StyledText style={styles.heading}>{article.headline}</StyledText>
-          <StyledText color="primary" style={styles.dateText}>{moment(article.date_of_publication).fromNow()}</StyledText>
-          <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
-        </View>
-      </TouchableOpacity>
-    </StyledCard>
+    <View>
+      <StyledCard>
+        <ListItem onPress={() => {goToExpandedArticle(article);}} title={article.headline} subtitle={
+          <View>
+            <StyledText>{article.date_of_publication}</StyledText>
+            <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
+          </View>
+        }/>
+      </StyledCard>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  heading: {
-    fontWeight: "bold",
-    paddingBottom: 5,
-  },  
-  dateText: {
-    paddingBottom: 5,
-  },
   textPreview: {
     fontFamily: "sfpro",
     color: 'grey',

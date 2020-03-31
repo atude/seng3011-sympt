@@ -8,7 +8,7 @@ import { UserContext } from '../context/context';
 import StyledButton from '../components/StyledButton';
 import StyledText from '../components/StyledText';
 
-const ProfileScreen = (props) => {
+const ProfileScreen = () => {
   const userContext = useContext(UserContext);
 
   return (

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
-import { UserContext, DiseaseContext } from '../context/context';
+import { DiseaseContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
 import { LineChart } from "react-native-chart-kit";
@@ -27,8 +27,8 @@ const chartConfig = {
   barPercentage: 0.5
 };
 
-const ActivityScreen = (props) => {
-  const userContext = useContext(UserContext);
+const ActivityScreen = () => {
+  // const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
 
   return (
