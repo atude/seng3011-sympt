@@ -3,12 +3,20 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import ArticleFeedScreen from '../screens/ArticleFeedScreen';
 import TrendingScreen from '../screens/TrendingScreen';
+import Colors from '../constants/Colors';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function TopTabFeedNavigator() {
   return (
-    <Tab.Navigator initialRouteName="Trending">
+    <Tab.Navigator 
+      initialRouteName="Trending" 
+      tabBarOptions={{
+        indicatorStyle: {
+          backgroundColor: Colors.primary
+        }
+      }}
+    >
       <Tab.Screen name="Trending" component={TrendingScreen} />
       <Tab.Screen name="Articles" component={ArticleFeedScreen} />
     </Tab.Navigator>

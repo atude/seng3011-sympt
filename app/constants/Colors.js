@@ -11,5 +11,6 @@ export default {
   warning,
   error,
   bg: "#F1F3F5",
+  bgLight: "#f5f5f5",
   dull: '#999',
 };
