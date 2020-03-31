@@ -6,11 +6,11 @@ import { DiseaseContext } from '../context/context';
 
 const DiseaseSelectCard = (props) => {
   const diseaseContext = useContext(DiseaseContext);
-  const { last, diseaseNameFormatted, diseaseName, diseaseDescription, setDiseasesOpen } = props;
+  const { last, disease, setDiseasesOpen } = props;
 
   const handleClick = () => {
     setDiseasesOpen(false);
-    diseaseContext.setDisease(diseaseName);
+    diseaseContext.setDisease(disease.name);
   };
 
   return (
@@ -19,13 +19,19 @@ const DiseaseSelectCard = (props) => {
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
-        <StyledText style={styles.heading}>
-          {diseaseNameFormatted}
-        </StyledText>
-        <StyledText style={styles.body}>
-          {diseaseDescription}
+        <View style={styles.headerContainer}>
+          <StyledText style={styles.heading}>
+            {disease.nameFormatted}
+          </StyledText>
+          <StyledText style={styles.body}>
+            {disease.description}
+          </StyledText>
+        </View>
+        <StyledText link={disease.link}>
+          Find out more
         </StyledText>
       </View>
+
     </TouchableOpacity>
   );
 };
@@ -34,9 +40,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Layout.window.width - 34,
-    height: 220,
+    height: 260,
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 25,
     borderRadius: 16,
     marginLeft: 8,
     marginBottom: 20,
@@ -51,9 +57,14 @@ const styles = StyleSheet.create({
     
     elevation: 8,
   }, 
+  headerContainer: {
+    alignItems: "center",
+  },  
   contentContainer: {
     alignItems: "center",
     flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
     width: "100%",
   },
   heading: {
@@ -62,8 +73,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   body: {
-    fontSize: 16,
-  }
+    fontSize: 14,
+    textAlign: 'center',
+    paddingBottom: 10,
+  },
 });
 
 export default DiseaseSelectCard;

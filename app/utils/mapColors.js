@@ -12,6 +12,8 @@ const mapColors = (variant) => {
     return Colors.warning;
   case "error":
     return Colors.error;
+  case "grey":
+    return Colors.dull;
   default: return Colors.primary;
   }
 };

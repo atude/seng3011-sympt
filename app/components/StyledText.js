@@ -1,8 +1,24 @@
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Linking } from 'react-native';
 import mapColors from '../utils/mapColors';
+import Colors from '../constants/Colors';
 
 const StyledText = (props) => {
+  if (props.link) {
+    return (
+      <TouchableOpacity onPress={() => Linking.openURL(props.link)}>
+        <Text
+          {...props}
+          style={[
+            styles.link,
+            props.style
+          ]}
+        >
+          {props.children}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
   return (
     <Text
       {...props}
@@ -25,6 +41,12 @@ const styles = StyleSheet.create({
     fontFamily: "sfpro",
     fontSize: 16,
   }, 
+  link: {
+    color: Colors.primary,
+    textAlign: 'center',
+    width: "100%",
+    fontWeight: 'bold',
+  },
 });
 
 export default StyledText;

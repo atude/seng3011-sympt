@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
 import ActivityScreen from '../screens/ActivityScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import StyledText from '../components/StyledText';
@@ -14,12 +14,27 @@ import Layout from '../constants/Layout';
 // TODO: In future versions, the diseases file can be fetched from the backend
 import diseases from '../constants/diseases.json';
 import DiseaseSelectCard from '../components/DiseaseSelectCard';
+import { DiseaseContext } from '../context/context';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
 
 export default function BottomTabNavigator({ navigation, route }) {
   const [isDiseasesOpen, setDiseasesOpen] = useState(false);
+  const diseasesContext = useContext(DiseaseContext);
+
+  const getHeaderTitle = (route) => {
+    const routeName = route.state?.routes[route.state.index].name ?? defaultRouteName;
+  
+    switch (routeName) {
+    case 'Activity':
+      return diseasesContext.disease.nameFormatted || "Activity";
+    case 'Feed':
+      return 'Your Feed';
+    case 'Profile':
+      return 'Profile';
+    }
+  };
 
   navigation.setOptions({ 
     headerTitle: getHeaderTitle(route),
@@ -55,12 +70,13 @@ export default function BottomTabNavigator({ navigation, route }) {
           width={0}
           overlayBackgroundColor="transparent"
         >
+          <Text/>
         </Overlay>
 
         <Overlay 
           isVisible={isDiseasesOpen}
           width={Layout.window.width}
-          height={340}
+          height={380}
           // borderRadius={20}
           overlayStyle={{
             position: "absolute",
@@ -87,9 +103,7 @@ export default function BottomTabNavigator({ navigation, route }) {
                   key={i}
                   style={{ width: "100%" }}
                   setDiseasesOpen={setDiseasesOpen}
-                  diseaseName={disease.name}
-                  diseaseNameFormatted={disease.nameFormatted}
-                  diseaseDescription={disease.description}
+                  disease={disease}
                   last={i === diseases.length - 1}
                 />
               ))}
@@ -153,18 +167,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   );
 }
 
-const getHeaderTitle = (route) => {
-  const routeName = route.state?.routes[route.state.index].name ?? defaultRouteName;
 
-  switch (routeName) {
-  case 'Activity':
-    return 'Activity';
-  case 'Feed':
-    return 'Your Feed';
-  case 'Profile':
-    return 'Profile';
-  }
-};
 
 const styles = StyleSheet.create({
   selectHeading: {

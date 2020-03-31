@@ -1,12 +1,14 @@
 [
   {
-    "nameFormatted": "COVID-19 (Coronavirus)",
+    "nameFormatted": "COVID-19",
     "name": "covid-19",
-    "description": "this is a disease yes"
+    "description": "Coronavirus disease 2019 (COVID-19) is an infectious disease first identified in 2019 in Wuhan, China, and spreading globally. Common symptoms include fever, cough, and shortness of breath.",
+    "link": "https://en.wikipedia.org/wiki/Severe_acute_respiratory_syndrome_coronavirus_2"
   },
   {
     "nameFormatted": "Ebola",
     "name": "ebola",
-    "description": "look its ebola lmao"
+    "description": "Ebola virus disease (EVD) is a viral fever of humans and other primates common in Africa. Symptoms include a fever, sore throat, muscular pain, and headaches, but can escalate to internal organ failure.",
+    "link": "https://en.wikipedia.org/wiki/Ebola_virus_disease"
   }
 ]
