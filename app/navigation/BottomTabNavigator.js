@@ -84,6 +84,7 @@ export default function BottomTabNavigator({ navigation, route }) {
             >
               {diseases.map((disease, i) => (
                 <DiseaseSelectCard
+                  key={i}
                   style={{ width: "100%" }}
                   setDiseasesOpen={setDiseasesOpen}
                   diseaseName={disease.name}
@@ -153,15 +154,15 @@ export default function BottomTabNavigator({ navigation, route }) {
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? defaultRouteName;
+  const routeName = route.state.routes[route.state.index].name || defaultRouteName;
 
   switch (routeName) {
-    case 'Activity':
-      return 'Activity';
-    case 'Feed':
-      return 'Your Feed'
-    case 'Profile':
-      return 'Profile';
+  case 'Activity':
+    return 'Activity';
+  case 'Feed':
+    return 'Your Feed';
+  case 'Profile':
+    return 'Profile';
   }
 }
 

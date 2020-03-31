@@ -8,18 +8,18 @@ const ArticleCard = (props) => {
   const article = props.article;
 
   const goToExpandedArticle = (article) => {
-      props.navigation.navigate("ArticleScreen", {article: article});
+    props.navigation.navigate("ArticleScreen", { article: article });
   };
 
   return (
     <View>
       <StyledCard>
-          <ListItem onPress={() => {goToExpandedArticle(article)}} title={article.headline} subtitle={
-              <View>
-                <StyledText>{article.date_of_publication}</StyledText>
-                <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
-              </View>
-              }/>
+        <ListItem onPress={() => {goToExpandedArticle(article);}} title={article.headline} subtitle={
+          <View>
+            <StyledText>{article.date_of_publication}</StyledText>
+            <Text numberOfLines={3} style={styles.textPreview}>{article.main_text}</Text>
+          </View>
+        }/>
       </StyledCard>
     </View>
   );

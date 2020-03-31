@@ -35,7 +35,7 @@ const ArticlesScreen = (props) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-        {articleFeed}
+      {articleFeed}
     </ScrollView>
   );
 

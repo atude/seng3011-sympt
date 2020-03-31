@@ -26,7 +26,7 @@ const FeedScreen = (props) => {
       <FeedStack.Screen name="TopTabFeedNavigator" component={TopTabFeedNavigator} />
       <FeedStack.Screen name="ArticleScreen" component={ArticleScreen} />
     </FeedStack.Navigator>
-  )
+  );
 };
 
 export default FeedScreen;

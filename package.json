@@ -12,8 +12,8 @@
     "start": "concurrently npm:start:*",
     "test": "npm run test:server",
     "test:server": "cd server && npm test",
-    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s",
-    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s"
+    "lint:check": "cd server && npm run lint:check -s && cd ../web && npm run lint:check -s && cd ../app && npm run lint:check -s",
+    "lint:fix": "cd server && npm run lint:fix -s && cd ../web && npm run lint:fix -s && cd ../app && npm run lint:fix -s"
   },
   "repository": {
     "type": "git",

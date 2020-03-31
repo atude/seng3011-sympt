@@ -4,10 +4,10 @@ import firebase from '../firebase/firebaseInit';
 
 export const signInEmail = async (email, password) => {
   return await firebase.auth().signInWithEmailAndPassword(email, password)
-  .catch(error => {
-    console.warn(error.message);
-    return(error);
-  });
+    .catch(error => {
+      console.warn(error.message);
+      return(error);
+    });
 };
 
 export const createAccount = async (email, password) => {
@@ -18,19 +18,19 @@ export const createAccount = async (email, password) => {
 
   //Create auth details
   return await firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then((credentials) => {
+    .then((credentials) => {
     // Create firestore doc for user
     // usersRef.doc(username.toLowerCase()).set({
     //   id: credentials.user.uid,
     //   email: credentials.user.email
     // });
 
-    console.log("Made new user => " + credentials.user.email);
-  })
-  .catch(error => {
-    console.warn(error.message);
-    return(error);
-  });
+      console.log("Made new user => " + credentials.user.email);
+    })
+    .catch(error => {
+      console.warn(error.message);
+      return(error);
+    });
 };
 
 export const signOut = () => {

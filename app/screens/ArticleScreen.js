@@ -11,26 +11,26 @@ const ArticleScreen = ({ route, navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-        <StyledButton onPress={() => {navigation.goBack();}} title="Back To Articles"></StyledButton>
-        <StyledCard>
-          <Text style={styles.headline}>{article.headline}</Text>
-          <StyledText>{article.date_of_publication}</StyledText>
-          <StyledText>{article.main_text}</StyledText>
-        </StyledCard>
+      <StyledButton onPress={() => {navigation.goBack();}} title="Back To Articles"></StyledButton>
+      <StyledCard>
+        <Text style={styles.headline}>{article.headline}</Text>
+        <StyledText>{article.date_of_publication}</StyledText>
+        <StyledText>{article.main_text}</StyledText>
+      </StyledCard>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: Colors.bg,
-      padding: 24,
-    }, 
-    headline: {
-        fontFamily: "sfpro",
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-  });
+  container: {
+    backgroundColor: Colors.bg,
+    padding: 24,
+  }, 
+  headline: {
+    fontFamily: "sfpro",
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+});
 
 export default ArticleScreen;
