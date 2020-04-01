@@ -31,7 +31,7 @@ const ProfileScreen = () => {
       }}>
         <View style={{
           flexDirection: 'row',
-          }}>
+        }}>
           <View style={{paddingRight: 20, width: 150, height: 280}}>
             <StyledCard>
               <TouchableOpacity>
