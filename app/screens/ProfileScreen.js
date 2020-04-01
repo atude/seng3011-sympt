@@ -9,9 +9,14 @@ import { Ionicons } from '@expo/vector-icons';
 import StyledText from '../components/StyledText';
 import StyledCard from '../components/StyledCard';
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
   const userContext = useContext(UserContext);
   const profilePic = require("../assets/images/logo.png");
+
+  // FIXME
+  const goToSymptoms = () => {
+    props.navigation.navigate("SymptomsScreen");
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -48,7 +53,7 @@ const ProfileScreen = () => {
 
           <View style={{width: 130, height: 280}}>
             <StyledCard>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => props.navigation.navigate('SymptomsChecklist')}>
                 <Ionicons name="md-thermometer" size={32} style={styles.icon} />
                 <StyledText style={styles.heading}>{"Update Symptoms"}</StyledText>
               </TouchableOpacity>
