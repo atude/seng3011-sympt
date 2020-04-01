@@ -11,6 +11,7 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import StyledText from '../components/StyledText';
 import Layout from '../constants/Layout';
+import DiseaseStringComparator from '../functions/diseaseStringComparator';
 
 // TODO: In future versions, the diseases file can be fetched from the backend
 import diseases from '../constants/diseases.json';
@@ -100,7 +101,7 @@ export default function BottomTabNavigator({ navigation, route }) {
               snapToAlignment="start"
               snapToInterval={Layout.window.width}
             >
-              {diseases.map((disease, i) => (
+              {diseases.sort(DiseaseStringComparator).map((disease, i) => (
                 <DiseaseSelectCard
                   key={i}
                   style={{ width: "100%" }}
