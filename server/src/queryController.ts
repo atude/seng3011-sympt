@@ -130,7 +130,6 @@ export const getArticles = async (queryUrl: string): (
     .limit(count ? count * ((page ?? 0) + 1) : readHardCap)
     .get();
 
-
   const filteredArticles: PageObject[] = fetchArticles.docs
     .map((document: any) => document.data())
     .map((document: any) => {
