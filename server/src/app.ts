@@ -74,6 +74,7 @@ app.get('/articles/', async (req, res) => {
 // const NewsAPI = require('newsapi');
 
 app.get('/_news/', async (req, res) => {
+  console.log('_news called');
   /*
   const searchQueries = new URLSearchParams(req.query);
   const queryDiseases = searchQueries.get('diseases');
@@ -94,9 +95,8 @@ app.get('/_news/', async (req, res) => {
   });
   res.send(newsArticles);
   */
-
   const articleSet = new Set();
-  const filteredArticles = dummyNewsData.articles.filter((article) => {
+  dummyNewsData.articles = dummyNewsData.articles.filter((article) => {
     const hashedArticle = hashString(article.content.slice(0, 100));
     if (articleSet.has(hashedArticle)) {
       return false;
@@ -104,7 +104,7 @@ app.get('/_news/', async (req, res) => {
     articleSet.add(hashedArticle);
     return true;
   });
-  res.send(filteredArticles);
+  res.send(dummyNewsData);
 });
 
 app.get('/_twitter/', async (req, res) => {
