@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Image } from 'react-native';
 import StyledCard from './StyledCard';
 import StyledText from './StyledText';
 
@@ -12,10 +12,11 @@ const NewsCard = (props) => {
     <StyledCard>
       <TouchableOpacity onPress={() => Linking.openURL(article.url)}>
         <View>
+          {article.urlToImage ? <Image style={styles.articleImage} resizeMethod='resize' resizeMode='cover' source={{uri: article.urlToImage}}/> : <></>}
           <StyledText style={styles.heading}>{article.title}</StyledText>
           <StyledText color="primary" style={styles.dateText}>{moment(article.publishedAt).fromNow()}</StyledText>
           <Text numberOfLines={3} style={styles.textPreview}>{article.content}</Text>
-          <Text style={styles.articleSource}>{`Source: ${article.source.name}`}</Text>
+          <StyledText color="grey" style={styles.articleSource}>{`- ${article.source.name}`}</StyledText>
         </View>
       </TouchableOpacity>
     </StyledCard>
@@ -31,13 +32,22 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   textPreview: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     color: 'grey',
+    paddingBottom: 5,
   },
   articleSource: {
-    fontFamily: 'sfpro',
-    color: '#A8A8A8',
     fontStyle: 'italic',
+    fontSize: 14,
+  },
+  articleImage: {
+    height: 200,
+    marginLeft: -18,
+    marginRight: -18,
+    marginTop: -18,
+    marginBottom: 14,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
-import StyledText from '../components/StyledText';
+import StyledText from './StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     padding: 24,
   }, 
   headline: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontWeight: 'bold',
     fontSize: 22,
     paddingBottom: 10,
   },
   date: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
     fontSize: 16,
     color: "grey",
     paddingBottom: 10,

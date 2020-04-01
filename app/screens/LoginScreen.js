@@ -148,10 +148,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputText: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
   },
   labelText: {
-    fontFamily: "sfpro",
+    fontFamily: "main",
   },  
   toggleSubmitText: {
     textDecorationLine: "underline",
