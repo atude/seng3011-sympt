@@ -30,7 +30,7 @@ app.all('/*', (req, res, next) => {
 });
 
 app.get('/articles/', async (req, res) => {
-  const user: ApiUser = await verifyUser("mLanb4bbUfWeBHqmCBwY476Z7kr1");
+  const user: ApiUser = await verifyUser(req.headers.authorization);
   const timestamp: string = (new Date().getTime() / 1000).toFixed(0).toString();
 
   if (user.authenticated) {
