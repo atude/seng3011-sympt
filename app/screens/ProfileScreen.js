@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { signOut } from '../functions/accountFunctions';
 import Colors from '../constants/Colors';
 import { UserContext } from '../context/context';
 import { Ionicons } from '@expo/vector-icons';
 
-import StyledButton from '../components/StyledButton';
 import StyledText from '../components/StyledText';
 import StyledCard from '../components/StyledCard';
 
