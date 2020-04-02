@@ -6,23 +6,20 @@ import MapView from 'react-native-maps';
 const SelfReportMapScreen = (props) => {
 
   // Dummy data 
-  const infectedSpots = [
-              {latitude: -33.8688, longitude: 151.2093},
-              {latitude: -33.8660, longitude: 151.2093}
-            ]
+  const infectedSpots = [{latitude: -33.8688, longitude: 151.2093}, {latitude: -33.8660, longitude: 151.2093}];
 
   const renderCircles = (infectedSpots) => {
     return infectedSpots.map((spot) => (
       <MapView.Circle
-                key = { (spot.longitude+spot.latitude).toString() }
-                center = { {latitude: spot.latitude, longitude: spot.longitude} }
-                radius = { 500 }
-                strokeWidth = { 1 }
-                strokeColor = { '#1a66ff' }
-                fillColor = { 'rgba(230,238,255,0.5)' }
-        />
+        key = { (spot.longitude+spot.latitude).toString() }
+        center = { {latitude: spot.latitude, longitude: spot.longitude} }
+        radius = { 500 }
+        strokeWidth = { 1 }
+        strokeColor = { '#1a66ff' }
+        fillColor = { 'rgba(230,238,255,0.5)' }
+      />
     ));
-  } 
+  };
 
   return (
     <View contentContainerStyle={styles.container}>
