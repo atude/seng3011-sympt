@@ -87,7 +87,7 @@ const contentScraper = async (
     /* Filter for report diseases */
     const foundDiseases: string[] = [];
     diseaseList.forEach((disease: { name: string }) => {
-      if (filteredMainText.includes(disease.name)) {
+      if (filteredMainText.toLowerCase().includes(disease.name)) {
         foundDiseases.push(disease.name);
       }
     });
