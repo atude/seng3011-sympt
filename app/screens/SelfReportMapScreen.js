@@ -5,6 +5,7 @@ import MapView from 'react-native-maps';
 
 const SelfReportMapScreen = (props) => {
 
+  
   // Dummy data 
   const infectedSpots = [{latitude: -33.8688, longitude: 151.2093}, {latitude: -33.8660, longitude: 151.2093}];
 
