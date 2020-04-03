@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
@@ -13,18 +13,25 @@ import StyledText from '../components/StyledText';
 import Layout from '../constants/Layout';
 import DiseaseStringComparator from '../functions/diseaseStringComparator';
 
-// TODO: In future versions, the diseases file can be fetched from the backend
 import diseases from '../constants/diseases.json';
 import DiseaseSelectCard from '../components/DiseaseSelectCard';
-import { DiseaseContext, InterestedDiseaseMenuContext } from '../context/context';
-import TagsScreen from '../screens/TagsScreen';
+import { DiseaseContext, FeedContext } from '../context/context';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
 
 export default function BottomTabNavigator({ navigation, route }) {
   const [isDiseasesOpen, setDiseasesOpen] = useState(false);
+  const [currRoute, setCurrRoute] = useState(route.state?.routes[route.state.index].name ?? defaultRouteName);
+
   const diseasesContext = useContext(DiseaseContext);
+  const feedContext = useContext(FeedContext);
+
+  useEffect(() => {
+    setCurrRoute(route.state?.routes[route.state.index].name);
+  }, [route.state?.routes[route.state.index].name]);
 
   const getHeaderTitle = (route) => {
     const routeName = route.state?.routes[route.state.index].name ?? defaultRouteName;
@@ -57,20 +64,40 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
-      height: 120,
+      height: 125,
       backgroundColor: "#fff",
     },
     headerRight: () => (
-      <TouchableOpacity
-        onPress={() => setDiseasesOpen(true)}
-        style={{
-          marginTop: 20,
-          marginRight: 14,
-          padding: 10,
-        }}
-      >
-        <TabBarIcon name="filter-outline"/>
-        {/* Dummy overlay for fade bg effect */}
+      <>
+        <View style={styles.headerButtonContainer}>
+          {currRoute === "Feed" && 
+            <TouchableOpacity 
+              onPress={() => 
+                feedContext.setFiltersOpen(!feedContext.isFiltersOpen)
+              }
+              style={styles.headerButton}
+            >
+              <MaterialCommunityIcons 
+                name="filter-outline" 
+                color={Colors.dull} 
+                style={styles.headerIcon}
+              />
+            </TouchableOpacity>
+          }
+          <TouchableOpacity 
+            onPress={() => setDiseasesOpen(true)}
+            style={styles.headerButton}
+          >
+            <MaterialCommunityIcons 
+              name="dna" 
+              color={Colors.dull} 
+              style={styles.headerIcon}
+            />
+          </TouchableOpacity>
+
+          {/* Dummy overlay for fade bg effect */}
+          
+        </View>
         <Overlay
           isVisible={isDiseasesOpen}
           fullScreen
@@ -118,8 +145,8 @@ export default function BottomTabNavigator({ navigation, route }) {
             </ScrollView>
           </View>
         </Overlay>
-      </TouchableOpacity>
-    ),
+      </>
+    )
   });
 
   return (
@@ -140,7 +167,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon 
               focused={focused} 
-              name="dna" 
+              name="chart-gantt" 
             />
           ),
         }}
@@ -172,19 +199,6 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Tags"
-        component={TagsScreen}
-        options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon 
-              focused={focused} 
-              name="tag" 
-            />
-          )
-        }}
-      />
-      <BottomTab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -207,5 +221,19 @@ const styles = StyleSheet.create({
     fontFamily: "main",
     fontSize: 28,
     padding: 24,
-  }
+  },
+  headerButtonContainer: {
+    marginTop: 20,
+    marginRight: 14,
+    padding: 11,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  headerButton: {
+    paddingLeft: 12,
+  },
+  headerIcon: {
+    fontSize: 30,
+  },  
 });

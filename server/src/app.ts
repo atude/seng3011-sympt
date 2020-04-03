@@ -12,6 +12,7 @@ import { addLog } from './services/devAccountService';
 // delete when no longer testing
 import { dummyNewsData } from './constants/dummyNewsData';
 import hashString from './utils/hashString';
+import scrapeDiseasesStats from './services/diseaseCasesScrapeService';
 
 const app = express();
 const port: number = Number(process.env.PORT) || 4000;
@@ -114,8 +115,9 @@ app.get('/_twitter/', async (req, res) => {
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
 
-// Populate db every 12 hrs
+// Populate db every 8 hrs
 setInterval(() => {
   console.log("Start generic scrape from yesterday's posts...");
+  scrapeDiseasesStats(new Date());
   populateDb();
-}, 1000 * 60 * 60 * 12);
+}, 1000 * 60 * 60 * 6);

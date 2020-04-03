@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, Linking } from 'react-native';
 import mapColors from '../utils/mapColors';
 import Colors from '../constants/Colors';
@@ -37,11 +37,11 @@ const StyledText = (props) => {
       {...props}
       style={[
         styles.text,
-        props.style,
         { color: props.color ? 
           mapColors(props.color) : 
           "rgb(28, 28, 30)"
-        }
+        },
+        props.style,
       ]}
     >
       {props.children}
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: "100%",
     textTransform: "uppercase",
+    paddingVertical: 20,
   }
 });
 
