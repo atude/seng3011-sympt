@@ -7,17 +7,12 @@ import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import { StyleSheet, View, Text } from 'react-native';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
-import StyledText from '../components/StyledText';
-import Layout from '../constants/Layout';
-import DiseaseStringComparator from '../functions/diseaseStringComparator';
-
-import diseases from '../constants/diseases.json';
-import DiseaseSelectCard from '../components/DiseaseSelectCard';
 import { DiseaseContext, FeedContext } from '../context/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import DiseaseFilterMenu from '../components/DiseaseFilterMenu';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -45,6 +40,10 @@ export default function BottomTabNavigator({ navigation, route }) {
       return 'Your Feed';
     case 'Profile':
       return 'Profile';
+    case 'Tags':
+      return'Tags';
+    default:
+      return 'Root';
     }
   };
 
@@ -104,43 +103,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         >
           <Text/>
         </Overlay>
-
-        <Overlay 
-          isVisible={isDiseasesOpen}
-          width={Layout.window.width}
-          height={450}
-          overlayStyle={{
-            position: "absolute",
-            bottom: 0,
-            borderTopEndRadius: 20,
-            borderTopStartRadius: 20,
-          }}
-          windowBackgroundColor="transparent"
-          onBackdropPress={() => setDiseasesOpen(false)}
-          animationType="slide"
-        >
-          <View>
-            <StyledText style={styles.selectHeading}>
-              Select Disease
-            </StyledText>
-            <ScrollView
-              horizontal
-              decelerationRate={"fast"}
-              snapToAlignment="start"
-              snapToInterval={Layout.window.width}
-            >
-              {diseases.sort(DiseaseStringComparator).map((disease, i) => (
-                <DiseaseSelectCard
-                  key={i}
-                  style={{ width: "100%" }}
-                  setDiseasesOpen={setDiseasesOpen}
-                  disease={disease}
-                  last={i === diseases.length - 1}
-                />
-              ))}
-            </ScrollView>
-          </View>
-        </Overlay>
+        <DiseaseFilterMenu 
+          isDiseasesOpen={isDiseasesOpen} 
+          setDiseasesOpen={setDiseasesOpen}
+        />
       </>
     )
   });
@@ -231,5 +197,5 @@ const styles = StyleSheet.create({
   },
   headerIcon: {
     fontSize: 30,
-  },  
+  },
 });

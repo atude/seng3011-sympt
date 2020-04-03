@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, RefreshControl } from 'react-native';
+import { StyleSheet, View, RefreshControl, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 import { UserContext, DiseaseContext, FeedContext } from '../context/context';
@@ -45,18 +45,20 @@ const ArticlesScreen = (props) => {
   };
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl 
-          colors={[Colors.primary, Colors.secondary]} 
-          refreshing={isLoadingArticles} 
-          onRefresh={() => fetchFeedArticles()}
-        />
-      }
-    >
-      {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
-    </ScrollView>
+    <View>
+      <ScrollView 
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl 
+            colors={[Colors.primary, Colors.secondary]} 
+            refreshing={isLoadingArticles} 
+            onRefresh={() => fetchFeedArticles()}
+          />
+        }
+      >
+        {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
+      </ScrollView>
+    </View>
   );
 
 };
