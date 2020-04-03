@@ -60,7 +60,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
-      height: Layout.window.height / 6.75,
+      height: 125,
       backgroundColor: "#fff",
     },
     headerRight: () => (
