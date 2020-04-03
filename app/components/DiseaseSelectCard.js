@@ -33,7 +33,6 @@ const DiseaseSelectCard = (props) => {
           Find out more
         </StyledText>
       </View>
-
     </TouchableOpacity>
   );
 };
