@@ -13,5 +13,5 @@ export const DiseaseContext = createContext({
     description: "",
     link: "",
   },
-  setDisease: (diseaseName) => {},
+  setDisease: (diseaseName) => {}
 });
