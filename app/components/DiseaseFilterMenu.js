@@ -22,6 +22,12 @@ const DiseaseFilterMenu = (props) => {
     setSearchTerm('');
     setIsListView(!isListView);
   };
+
+  const handleClickOut = () => {
+    setSearchTerm('');
+    setDiseasesOpen(false);
+  };
+  
   return (
     <Overlay 
       isVisible={isDiseasesOpen}
@@ -34,7 +40,7 @@ const DiseaseFilterMenu = (props) => {
         borderTopStartRadius: 20,
       }}
       windowBackgroundColor="transparent"
-      onBackdropPress={() => setDiseasesOpen(false)}
+      onBackdropPress={() => handleClickOut()}
       animationType="slide"
     >
       <View style={styles.filterMenuContainer}>
