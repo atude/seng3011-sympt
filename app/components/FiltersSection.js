@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import StyledText from './StyledText';
 import Colors from '../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,8 +7,9 @@ import { Input, Divider, ButtonGroup } from 'react-native-elements';
 
 import diseases from '../constants/diseases.json';
 import { FeedContext, DiseaseContext } from '../context/context';
+import Layout from '../constants/Layout';
 
-import Collapsible from 'react-native-collapsible';
+const defYPos = -600;
 
 const FiltersSection = () => {
   const feedContext = useContext(FeedContext);
@@ -16,6 +17,30 @@ const FiltersSection = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [locationIndex, setLocationIndex] = useState(feedContext.feedLocation === "Worldwide" ? 1 : 0);
+
+  const [yPosAnim] = useState(new Animated.Value(defYPos));
+  const [animDone, setAnimDone] = useState(true);
+
+  useEffect(() => {
+    Animated.timing(yPosAnim).stop();
+    setAnimDone(false);
+
+    if (feedContext.isFiltersOpen) {
+      Animated.timing(yPosAnim, {
+        useNativeDriver: true,
+        toValue: 0,
+        duration: 600,
+      }).start();
+    } else {
+      Animated.timing(yPosAnim, {
+        useNativeDriver: true,
+        toValue: defYPos,
+        duration: 400,
+      }).start(() => {
+        setAnimDone(true);
+      });    
+    }
+  }, [feedContext.isFiltersOpen]);
 
   const handleSetLocationIndex = (index) => {
     setLocationIndex(index);
@@ -26,28 +51,29 @@ const FiltersSection = () => {
     const isSelected = feedContext.keyTerms.includes(keyTerm);
 
     return (
-      <View key={keyTerm} 
-        style={[
-          styles.keyTermPill, 
-          isSelected ? 
-            styles.keyTermPillSelected : 
-            styles.keyTermPillUnselected
-        ]}
+      <TouchableOpacity 
+        key={keyTerm} 
+        onPress={() => 
+          isSelected ?
+            feedContext.removeKeyTerm(keyTerm) :
+            feedContext.addKeyTerm(keyTerm)
+        }
       >
-        <StyledText color={isSelected ? "white" : "primary"}>{keyTerm}</StyledText>
-        <TouchableOpacity 
-          onPress={() => 
-            isSelected ?
-              feedContext.removeKeyTerm(keyTerm) :
-              feedContext.addKeyTerm(keyTerm)
-          }
+        <View 
+          style={[
+            styles.keyTermPill, 
+            isSelected ? 
+              styles.keyTermPillSelected : 
+              styles.keyTermPillUnselected
+          ]}
         >
+          <StyledText color={isSelected ? "white" : "primary"}>{keyTerm}</StyledText>
           <MaterialCommunityIcons 
             style={[styles.crossIcon, { color: isSelected ? "#fff" : Colors.primary }]} 
             name={isSelected ? "minus-circle" : "plus-circle"}
           />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -57,62 +83,63 @@ const FiltersSection = () => {
     </View>
   );
 
+  // Save rendering if not shown
+  if (animDone && !feedContext.isFiltersOpen) return null;
+
   return (
-    <Collapsible collapsed={feedContext.isFiltersOpen}>
-      <View style={styles.container}>
-        <StyledText style={styles.heading}>Location</StyledText>
-        <ButtonGroup
-          containerStyle={styles.locationButtonContainer}
-          textStyle={styles.locationButtonText}
-          buttons={["Australia", "Worldwide"]}
-          selectedIndex={locationIndex}
-          selectedButtonStyle={styles.locationSelectedButton}
-          onPress={(newIndex) => handleSetLocationIndex(newIndex)}
-        />
-        <StyledText style={styles.heading}>Search Terms</StyledText>
-        <Input 
-          containerStyle={styles.termInput}
-          // autoFocus
-          onSubmitEditing={() => feedContext.setFiltersOpen(false)}
-          onChangeText={(value) => setSearchTerm(value)}
-          placeholder="Search for diseases"
-          leftIcon={
-            <MaterialCommunityIcons
-              name="magnify-plus-outline"
-              style={styles.inputSearchIcon}
-            />
-          }
-        />
-        <View style={styles.keyTermsContainer}>
-          {renderBasePill(diseaseContext.disease.nameFormatted)}
-          {feedContext.keyTerms.map((keyTerm) => renderKeyTermPill(keyTerm))}
-        </View>
-        <Divider style={styles.keyTermsDivider} />
-        <ScrollView 
-          style={styles.keyTermsParentContainer}
-          contentContainerStyle={styles.keyTermsContainer}
-          scrollEventThrottle={1}
-        >
-          {diseases
+    <Animated.View style={[styles.container, { transform: [{ translateY: yPosAnim }] }]}>
+      <StyledText style={styles.heading}>Location</StyledText>
+      <ButtonGroup
+        containerStyle={styles.locationButtonContainer}
+        textStyle={styles.locationButtonText}
+        buttons={["Australia", "Worldwide"]}
+        selectedIndex={locationIndex}
+        selectedButtonStyle={styles.locationSelectedButton}
+        onPress={(newIndex) => handleSetLocationIndex(newIndex)}
+      />
+      <StyledText style={styles.heading}>Search Terms</StyledText>
+      <Input 
+        containerStyle={styles.termInput}
+        // autoFocus
+        onSubmitEditing={() => feedContext.setFiltersOpen(false)}
+        onChangeText={(value) => setSearchTerm(value)}
+        placeholder="Search for diseases"
+        leftIcon={
+          <MaterialCommunityIcons
+            name="magnify-plus-outline"
+            style={styles.inputSearchIcon}
+          />
+        }
+      />
+      <View style={styles.keyTermsContainer}>
+        {renderBasePill(diseaseContext.disease.nameFormatted)}
+        {feedContext.keyTerms.map((keyTerm) => renderKeyTermPill(keyTerm))}
+      </View>
+      <Divider style={styles.keyTermsDivider} />
+      <ScrollView 
+        style={styles.keyTermsParentContainer}
+        contentContainerStyle={styles.keyTermsContainer}
+        scrollEventThrottle={1}
+      >
+        {diseases
+          .filter((disease) => 
+            disease.name.includes(searchTerm.toLowerCase()) && 
+            !feedContext.keyTerms.includes(disease.nameFormatted) &&
+            diseaseContext.disease.name !== disease.name
+          )
+          .length ? 
+          diseases
             .filter((disease) => 
               disease.name.includes(searchTerm.toLowerCase()) && 
               !feedContext.keyTerms.includes(disease.nameFormatted) &&
               diseaseContext.disease.name !== disease.name
             )
-            .length ? 
-            diseases
-              .filter((disease) => 
-                disease.name.includes(searchTerm.toLowerCase()) && 
-                !feedContext.keyTerms.includes(disease.nameFormatted) &&
-                diseaseContext.disease.name !== disease.name
-              )
-              .map((disease) => renderKeyTermPill(disease.nameFormatted))
-            :
-            <StyledText nofound>No diseases found</StyledText>
-          }
-        </ScrollView>
-      </View>
-    </Collapsible>
+            .map((disease) => renderKeyTermPill(disease.nameFormatted))
+          :
+          <StyledText nofound>No diseases found</StyledText>
+        }
+      </ScrollView>
+    </Animated.View>
   );
 };
 
@@ -120,7 +147,23 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 20,
+    width: Layout.window.width,
+    position: "absolute",
+    zIndex: 10000,
+    borderBottomEndRadius: 20,
+    borderBottomStartRadius: 20,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+
+    elevation: 8,
   },  
   heading: {
     paddingHorizontal: 10,
