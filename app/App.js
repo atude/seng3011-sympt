@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,7 +11,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 
-import { UserContext, DiseaseContext } from './context/context';
+import { UserContext, DiseaseContext} from './context/context';
 import diseases from './constants/diseases.json';
 
 const Stack = createStackNavigator();
@@ -78,6 +78,7 @@ export default function App(props) {
 
     loadResourcesAndDataAsync();
   }, []);
+
 
   if ((!isLoadingComplete || !isUserLoadingComplete) && !props.skipLoadingScreen) {
     return null;
