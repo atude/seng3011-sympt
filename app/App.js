@@ -11,7 +11,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 
-import { UserContext, DiseaseContext } from './context/context';
+import { UserContext, DiseaseContext, FeedContext } from './context/context';
 import diseases from './constants/diseases.json';
 
 const Stack = createStackNavigator();
@@ -20,11 +20,18 @@ export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [isUserLoadingComplete, setUserLoadingComplete] = useState(false);
   const [initialNavigationState, setInitialNavigationState] = useState();
+
   const containerRef = useRef();
+
   const { getInitialState } = useLinking(containerRef);
 
   const [user, setUser] = useState(firebase.auth().currentUser);
   const [disease, setDisease] = useState(diseases[0]);
+  const [keyTerms, setKeyTerms] = useState([]);
+  const [isFiltersOpen, setFiltersOpen] = useState(false);
+  const [feedLocation, setFeedLocation] = useState("Australia");
+
+  //TODO: add initial load from async storage for persistence
 
   // Context definers
   const userContextValue = {
@@ -35,6 +42,21 @@ export default function App(props) {
     disease,
     setDisease: (newDiseaseName) => 
       setDisease(diseases.find((thisDiseases) => thisDiseases.name === newDiseaseName)),
+  };
+
+  const feedContextValue = {
+    keyTerms,
+    removeKeyTerm: (keyTerm) => setKeyTerms(keyTerms.filter((term) => term !== keyTerm)),
+    addKeyTerm: (keyTerm) => {
+      console.log(keyTerms);
+      setKeyTerms([...keyTerms, keyTerm]);
+      setTimeout(() => console.log(keyTerms), 1000);
+    },
+    setKeyTerms: (keyTermArray) => setKeyTerms(keyTermArray),
+    setFiltersOpen: (openState) => setFiltersOpen(openState),
+    isFiltersOpen,
+    feedLocation,
+    setFeedLocation: (location) => setFeedLocation(location),
   };
 
   // Load any resources or data that we need prior to rendering the app
@@ -86,16 +108,18 @@ export default function App(props) {
       <View style={styles.container}>
         <UserContext.Provider value={userContextValue}>
           <DiseaseContext.Provider value={diseaseContextValue}>
-            <StatusBar barStyle="dark-content" />
-            {!user ? (
-              <LoginScreen />
-            ) : (
-              <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                <Stack.Navigator>
-                  <Stack.Screen name="Root" component={BottomTabNavigator} />
-                </Stack.Navigator>
-              </NavigationContainer>
-            )}
+            <FeedContext.Provider value={feedContextValue}>
+              {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
+              {!user ? (
+                <LoginScreen />
+              ) : (
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                  <Stack.Navigator>
+                    <Stack.Screen name="Root" component={BottomTabNavigator} />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              )}
+            </FeedContext.Provider>
           </DiseaseContext.Provider>
         </UserContext.Provider>
       </View>

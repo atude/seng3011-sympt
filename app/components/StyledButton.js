@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import mapColors from '../utils/mapColors';
 import { Button } from 'react-native-elements';

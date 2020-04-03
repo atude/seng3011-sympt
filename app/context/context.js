@@ -4,6 +4,7 @@ import firebase from '../firebase/firebaseInit';
 
 export const UserContext = createContext({
   user: firebase.auth().currentUser,
+  // TODO: location ?
 });
 
 export const DiseaseContext = createContext({
@@ -14,4 +15,15 @@ export const DiseaseContext = createContext({
     link: "",
   },
   setDisease: (diseaseName) => {},
+});
+
+export const FeedContext = createContext({
+  keyTerms: [],
+  removeKeyTerm: (keyTerm) => {},
+  addKeyTerm: (keyTerm) => {},
+  setKeyTerms: (keyTermsArray) => {},
+  setFiltersOpen: (openState) => {},
+  isFiltersOpen: false,
+  feedLocation: "",
+  setFeedLocation: (location) => {},
 });
