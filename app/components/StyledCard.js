@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 const StyledCard = (props) => {
   return (
-    <View style={styles.container}>
+    <View {...props} style={[props.style, styles.container]}>
       {props.children}
     </View>
   );
@@ -11,7 +11,6 @@ const StyledCard = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
     padding: 18,
     borderRadius: 16,

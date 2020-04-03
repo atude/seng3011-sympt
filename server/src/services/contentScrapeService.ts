@@ -1,3 +1,4 @@
+import puppeteer from 'puppeteer';
 import { PageObject, Location, Report } from '../types';
 import diseaseList from '../constants/diseaseList.json';
 import { formatDateToExact, dateRegexWords } from '../utils/formatters';
@@ -14,7 +15,7 @@ const minSentenceLength: number = 75;
 
 const contentScraper = async (
   id: string, 
-  browserInstance: any,
+  browserInstance: puppeteer.Browser,
 ): Promise<PageObject> => {
   const urlData: string = `https://promedmail.org/promed-post/?id=${id}`;
   const page = await browserInstance.newPage();
@@ -87,7 +88,7 @@ const contentScraper = async (
     /* Filter for report diseases */
     const foundDiseases: string[] = [];
     diseaseList.forEach((disease: { name: string }) => {
-      if (filteredMainText.includes(disease.name)) {
+      if (filteredMainText.toLowerCase().includes(disease.name)) {
         foundDiseases.push(disease.name);
       }
     });

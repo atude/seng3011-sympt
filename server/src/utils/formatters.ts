@@ -7,6 +7,8 @@ export const dateRegexNum = /^([0-9]{4})-([0-9]{2})-([0-9]{2}).*/;
 
 export const getNormalisedDate = (dateString: string): Date => new Date(`${dateString} UTC`);
 
+export const getUTCDateBasic = (date: Date) => new Date(`${date} UTC`).toISOString().substr(0, 10);
+
 export const formatDateToExact = (dateString: string) => {
   const dateRaw = getNormalisedDate(dateString);
   return dateRaw.toISOString().split("T")[0];

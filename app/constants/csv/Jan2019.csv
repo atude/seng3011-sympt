@@ -1,0 +1,69 @@
+Jan 2019,ACT,NSW,NT,QLD,SA,TAS,VIC,WA,AUSTRALIA
+Hepatitis (NEC),0,0,0,0,0,0,0,0,0
+Hepatitis B (newly acquired),0,0,0,7,0,0,6,5,18
+Hepatitis B (unspecified),4,191,5,63,16,2,117,36,434
+Hepatitis C (newly acquired),1,4,0,37,3,1,4,8,58
+Hepatitis C (unspecified),10,277,6,131,19,11,152,67,673
+Hepatitis D,0,1,0,1,0,0,2,1,5
+Botulism,0,1,0,0,0,0,0,0,1
+Campylobacteriosis,60,1191,36,958,330,85,713,300,3673
+Cryptosporidiosis,2,108,9,92,17,0,77,13,318
+Haemolytic uraemic syndrome (HUS),0,1,0,0,0,0,2,0,3
+Hepatitis A,0,9,1,0,0,0,18,6,34
+Hepatitis E,0,1,0,1,0,0,0,2,4
+Listeriosis,0,1,0,2,0,0,2,3,8
+Paratyphoid,0,5,0,3,2,0,9,0,19
+STEC,0,12,0,1,28,0,9,10,60
+Salmonellosis,19,479,35,402,113,36,344,180,1608
+Shigellosis,6,79,37,68,38,0,75,61,364
+Typhoid Fever,2,14,0,3,2,0,12,4,37
+Legionellosis,0,17,1,3,1,2,8,2,34
+Leprosy,0,0,0,0,0,0,0,0,0
+Meningococcal disease (invasive),0,3,0,3,2,0,4,3,15
+Tuberculosis,2,36,2,13,5,3,34,8,103
+COVID-19,0,0,0,0,0,0,0,0,0
+Cholera,0,0,0,0,0,0,0,0,0
+Middle East respiratory syndrome coronavirus,0,0,0,0,0,0,0,0,0
+Plague,0,0,0,0,0,0,0,0,0
+Rabies,0,0,0,0,0,0,0,0,0
+Smallpox,0,0,0,0,0,0,0,0,0
+Viral haemorrhagic fever (NEC),0,0,0,0,0,0,0,0,0
+Yellow fever,0,0,0,0,0,0,0,0,0
+Chlamydial infection,157,2887,253,2144,586,140,2404,1161,9732
+Donovanosis,0,0,0,0,0,0,0,0,0
+Gonococcal infection,44,1050,147,551,139,9,841,433,3214
+Syphilis < 2 years,7,146,31,104,15,1,122,57,483
+Syphilis > 2 years or unspecified duration,2,53,5,29,9,0,75,14,187
+Syphilis congenital,0,0,0,0,0,0,0,0,0
+Diphtheria,0,1,0,0,0,0,0,0,1
+Haemophilus influenzae type b,0,1,0,0,0,0,0,0,1
+Influenza,52,2082,126,2027,498,61,1397,585,6828
+Measles,0,9,0,1,2,0,3,10,25
+Mumps,0,7,0,7,0,0,0,3,17
+Pertussis,41,691,4,172,29,124,189,69,1319
+Pneumococcal disease (invasive),2,31,3,17,9,2,22,10,96
+Poliovirus infection,0,0,0,0,0,0,0,0,0
+Rotavirus,3,57,3,61,23,1,26,14,188
+Rubella,0,1,0,1,0,0,1,0,3
+Rubella congenital,0,0,0,0,0,0,0,0,0
+Tetanus,0,0,0,0,0,0,0,0,0
+Chickenpox,27,NN,6,33,45,6,129,39,285
+Shingles,37,NN,29,274,292,37,246,160,1075
+Varicella,9,NN,0,462,6,13,672,128,1290
+Barmah Forest virus infection,0,8,0,10,0,2,2,3,25
+Chikungunya,0,0,0,1,0,1,2,0,4
+Dengue,3,41,6,28,6,2,46,26,158
+Flavivirus infection (unspecified),0,0,0,0,0,0,0,0,0
+Japanese encephalitis virus infection,0,0,0,0,0,0,0,0,0
+Malaria,0,4,1,18,7,0,4,1,35
+Murray Valley encephalitis virus infection,0,0,0,0,0,0,0,0,0
+Ross River virus infection,1,39,16,98,2,1,29,52,238
+west nile virus,0,0,0,0,0,0,0,0,0
+Anthrax,0,0,0,0,0,0,0,0,0
+Australian bat lyssavirus infection,0,0,0,0,0,0,0,0,0
+Brucellosis,0,1,0,0,0,0,0,0,1
+Leptospirosis,0,1,0,2,0,0,1,1,5
+Lyssavirus infection (NEC),0,0,0,0,0,0,0,0,0
+Ornithosis,0,2,0,0,0,0,0,0,2
+Q fever,1,32,1,18,1,0,3,1,57
+Tularaemia,0,0,0,0,0,0,0,0,0

@@ -18,7 +18,7 @@ const minGeneralArticles = 5;
 const chunkSize = 5;
 
 // Max articles to read from the db
-const readHardCap = 100;
+const readHardCap = 75;
 
 // Click the cookies button preliminarily for promed site
 const checkCookieButton = "document.getElementById('CybotCookiebotDialogBodyLevelButtonAccept') !== null";
@@ -86,11 +86,14 @@ export const getArticlesForceScrape = async (queryUrl: string): (
           locationsRaw.filter((strLocation) => strLocation && strLocation !== ""),
         )];
 
-        await articlesRef.doc(pageData.id).set({
-          ...pageData,
-          _search: searchTerms,
-          _timestamp: timestamp,
-          _locations: locations,
+        const pageId = pageData.id;
+
+        locations.forEach(async (location) => {
+          await articlesRef.doc(location).collection("articles").doc(pageId).set({
+            ...pageData,
+            _timestamp: timestamp,
+            _search: searchTerms,
+          });
         });
       }
     });
@@ -116,33 +119,24 @@ export const getArticles = async (queryUrl: string): (
 
   const startDateTimestamp = getNormalisedDate(startDate).getTime() / 1000;
   const endDateTimestamp = getNormalisedDate(endDate).getTime() / 1000;
-  console.log(startDateTimestamp);
-  console.log(endDateTimestamp);
 
   const fetchArticles = await articlesRef
+    .doc(location.toLowerCase())
+    .collection("articles")
     .where("_search", "array-contains-any", keyTerms)
     .where("_timestamp", ">=", startDateTimestamp)
     .where("_timestamp", "<=", endDateTimestamp)
-    .limit(readHardCap)
+    .orderBy("_timestamp", "asc")
+    .limit(count ? count * ((page ?? 0) + 1) : readHardCap)
     .get();
-
-  console.log(location);
 
   const filteredArticles: PageObject[] = fetchArticles.docs
     .map((document: any) => document.data())
-    .filter((document: any) => {
-      if (!location) return true;
-      if (document._locations.includes(location.toLowerCase())) return true;
-      return false;
-    })
     .map((document: any) => {
-      delete document._locations;
-      delete document._searchterms;
       delete document._timestamp;
       return document as PageObject;
-    })
-    .reverse();
-  
+    });
+
   console.log(`${filteredArticles.length} articles fetched.`);
   if (!count && filteredArticles.length < minGeneralArticles) {
     console.log("Failed to find articles in DB. Scraping instead...");
