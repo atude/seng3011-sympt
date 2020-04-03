@@ -100,8 +100,6 @@ const FiltersSection = () => {
       <StyledText style={styles.heading}>Search Terms</StyledText>
       <Input 
         containerStyle={styles.termInput}
-        // autoFocus
-        onSubmitEditing={() => feedContext.setFiltersOpen(false)}
         onChangeText={(value) => setSearchTerm(value)}
         placeholder="Search for diseases"
         leftIcon={
