@@ -6,7 +6,7 @@ import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { Image, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import StyledText from '../components/StyledText';
@@ -16,7 +16,8 @@ import DiseaseStringComparator from '../functions/diseaseStringComparator';
 // TODO: In future versions, the diseases file can be fetched from the backend
 import diseases from '../constants/diseases.json';
 import DiseaseSelectCard from '../components/DiseaseSelectCard';
-import { DiseaseContext } from '../context/context';
+import { DiseaseContext, InterestedDiseaseMenuContext } from '../context/context';
+import TagsScreen from '../screens/TagsScreen';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -37,6 +38,10 @@ export default function BottomTabNavigator({ navigation, route }) {
       return 'Your Feed';
     case 'Profile':
       return 'Profile';
+    case 'Tags':
+      return'Tags';
+    default:
+      return 'Root';
     }
   };
 
@@ -56,7 +61,7 @@ export default function BottomTabNavigator({ navigation, route }) {
       backgroundColor: "#fff",
     },
     headerRight: () => (
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => setDiseasesOpen(true)}
         style={{
           marginTop: 20,
@@ -114,7 +119,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           </View>
         </Overlay>
       </TouchableOpacity>
-    )
+    ),
   });
 
   return (
@@ -162,6 +167,19 @@ export default function BottomTabNavigator({ navigation, route }) {
             <TabBarIcon 
               focused={focused} 
               name="card-bulleted-outline" 
+            />
+          )
+        }}
+      />
+      <BottomTab.Screen
+        name="Tags"
+        component={TagsScreen}
+        options={{
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon 
+              focused={focused} 
+              name="tag" 
             />
           )
         }}
