@@ -4,6 +4,7 @@ import StyledText from './StyledText';
 import Layout from '../constants/Layout';
 import { DiseaseContext } from '../context/context';
 import { getDiseaseImage } from '../utils/mapDiseaseImages';
+import Colors from '../constants/Colors';
 
 const DiseaseSelectCard = (props) => {
   const diseaseContext = useContext(DiseaseContext);
@@ -16,7 +17,7 @@ const DiseaseSelectCard = (props) => {
 
   return (
     <TouchableOpacity 
-      style={[styles.container, { marginRight: last ? 4 : 26 } ]}
+      style={[styles.container, { marginRight: last ? 4 : 26, borderColor: diseaseContext.disease.name === disease.name ? Colors.primary : 'transparent' } ]}
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     width: Layout.window.width - 34,
     height: 320,
     backgroundColor: "#fff",
+    borderWidth: 3,
     padding: 25,
     borderRadius: 16,
     marginLeft: 8,

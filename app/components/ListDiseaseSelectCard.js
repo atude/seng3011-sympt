@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import StyledText from './StyledText';
 import Colors from '../constants/Colors';
-// import { InterestedDiseaseContext } from '../context/context';
+import {DiseaseContext } from '../context/context';
 import { getDiseaseImage } from '../utils/mapDiseaseImages';
 
-const InterestedSelectCard = (props) => {
-  const {disease} = props;
-  const [isSelected, setSelected] = useState(false);
+const ListDiseaseSelectCard = (props) => {
+  const {disease, setDiseaseOpen, setSearchTerm} = props;
+  const diseaseContext = useContext(DiseaseContext);
 
   const handleClick = () => {
-    setSelected(!isSelected);
+    diseaseContext.setDisease(disease.name);
+    setSearchTerm('');
+    setDiseaseOpen(false);
   };
 
   return (
     <TouchableOpacity 
-      style={[styles.container, {borderColor : isSelected ? Colors.primary : '#fff'}]}
+      style={[styles.container, {borderColor : diseaseContext.disease.name === disease.name ? Colors.primary : Colors.dull}]}
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginRight: 8,
     marginBottom: 8,
-    borderWidth: 3
+    borderWidth: 2
   }, 
   contentContainer: {
     alignItems: "center",
@@ -60,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
   
-export default InterestedSelectCard;
+export default ListDiseaseSelectCard;
