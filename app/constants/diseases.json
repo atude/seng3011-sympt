@@ -103,25 +103,25 @@
   },
   {
     "nameFormatted": "Hepatitis-A",
-    "name": "hepatitis a",
+    "name": "hepatitis-a",
     "description": "Hepatitis A is a liver disease caused by the hepatitis A virus (HAV). The virus is primarily spread when an uninfected (and unvaccinated) person ingests food or water that is contaminated with the faeces of an infected person.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-a"
   },
   {
     "nameFormatted": "Hepatitis-C",
-    "name": "hepatitis c",
+    "name": "hepatitis-c",
     "description": "An infection caused by a virus that attacks the liver and leads to inflammation. The virus is spread by contact with contaminated blood; for example, from sharing needles or from unsterile tattoo equipment. Most people have no symptoms.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-c"
   },
   {
     "nameFormatted": "Hepatitis-D",
-    "name": "hepatitis d",
+    "name": "hepatitis-d",
     "description": "A serious liver disease caused by infection with the hepatitis D virus. Transmission requires contact with infectious blood. At-risk populations include intravenous drug abusers and men who have sex with men. Symptoms include abdominal pain, nausea and fatigue.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-d"
   },
   {
-    "nameFormatted": "Hepatitis E",
-    "name": "hepatitis e",
+    "nameFormatted": "Hepatitis-E",
+    "name": "hepatitis-e",
     "description": "A liver disease caused by the hepatitis E virus. The hepatitis E virus is mainly transmitted through drinking water contaminated with faecal matter. Symptoms include jaundice, lack of appetite and nausea. In rare cases, it may progress to acute liver failure.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-e"
   },
