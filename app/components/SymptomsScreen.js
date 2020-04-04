@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlatList, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import { CheckBox } from 'react-native-elements';
@@ -6,7 +6,13 @@ import { CheckBox } from 'react-native-elements';
 import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
 
+import { setSymptoms } from '../functions/selfReportedCasesFunctions';
+
+import { UserContext } from '../context/context';
+
 const SymptomsScreen = ({ navigation }) => {
+
+  const userContext = useContext(UserContext);
 
   const description = "Select the symptoms relevant to your current medical condition. If no symptoms appear, select 'No Symptoms'";
   const symptoms = [
@@ -43,6 +49,12 @@ const SymptomsScreen = ({ navigation }) => {
     onSelect(id);
   };
 
+  const toggleApply = () => {
+    console.log(selected);
+    setSymptoms(userContext, selected);
+    navigation.goBack();
+  };
+
   const onSelect = React.useCallback(
     id => {
       const newSelected = new Map(selected);
@@ -75,7 +87,9 @@ const SymptomsScreen = ({ navigation }) => {
       />
       <StyledButton
         title={"Apply"}
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          toggleApply();
+        }}
       />
     </View>
   );
