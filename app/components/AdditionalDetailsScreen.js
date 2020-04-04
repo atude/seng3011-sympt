@@ -6,7 +6,7 @@ import { CheckBox } from 'react-native-elements';
 import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
 
-const AdditionalDetailsScreen = () => {
+const AdditionalDetailsScreen = ({ navigation }) => {
 
   const description = "Select the following statements that are applicable to you:";
   const questions = [
@@ -32,7 +32,7 @@ const AdditionalDetailsScreen = () => {
         { backgroundColor: selected ? Colors.primary : Colors.bg },
       ]}
     >
-      <StyledText style={styles.title}>{title}</StyledText>
+      <StyledText style={styles.option}>{title}</StyledText>
     </TouchableOpacity>
   );
 
@@ -67,6 +67,7 @@ const AdditionalDetailsScreen = () => {
       <StyledButton
         color={"primary"}
         title={"Apply"}
+        onPress={() => navigation.goBack()}
       />
     </View>
   );
@@ -82,10 +83,15 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 8,
     marginHorizontal: 16,
+    borderRadius: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
+    paddingBottom: 15,
   },
+  option: {
+    fontSize: 18,
+  }
 });
 
 export default AdditionalDetailsScreen;
