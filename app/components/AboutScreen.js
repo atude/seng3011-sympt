@@ -16,19 +16,19 @@ const AboutScreen = ({ navigation }) => {
   const disclaimerBody = "Please note that all cases represented in our heat map have been voluntarily self reported by individual Sympt app users. Sympt is not responsible and cannot guarantee the accuracy of this data nor are we making any recommendations for your personal health. Please see a registered medical professional for an official diagnosis or advice regarding your health concerns.";
 
   return (
-  <ScrollView contentContainerStyle={styles.container}>
-    <StyledCard>
-      <View style={styles.cardContainer}>
-        <StyledText style={styles.heading}>{disclaimer}</StyledText>
-        <StyledText style={styles.bodyText}>{disclaimerBody}</StyledText>
-      </View>
-    </StyledCard>
-    <StyledButton
-      color={"primary"}
-      title={"Go Back"}
-      onPress={() => navigation.goBack()}
-    />
-  </ScrollView>
+    <ScrollView contentContainerStyle={styles.container}>
+      <StyledCard>
+        <View style={styles.cardContainer}>
+          <StyledText style={styles.heading}>{disclaimer}</StyledText>
+          <StyledText style={styles.bodyText}>{disclaimerBody}</StyledText>
+        </View>
+      </StyledCard>
+      <StyledButton
+        color={"primary"}
+        title={"Go Back"}
+        onPress={() => navigation.goBack()}
+      />
+    </ScrollView>
   );
 };
 
