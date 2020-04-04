@@ -90,6 +90,7 @@ const ArticlesScreen = (props) => {
           }
         }}
       >
+        {/* <StyledText nofound>Showing articles for {diseaseContext.disease.name} in {feedContext.feedLocation}</StyledText> */}
         {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
       </ScrollView>
     </View>
