@@ -5,7 +5,7 @@ import contentScraper from './services/contentScrapeService';
 import {
   ScrapeResults, PageObject, GenError, URLFormattedTerms, Location, 
 } from './types';
-import { articlesRef } from './firebase/collectionReferences';
+import { articlesRef, casesRef } from './firebase/collectionReferences';
 import { formatQueryUrl, getNormalisedDate } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
@@ -126,7 +126,7 @@ export const getArticles = async (queryUrl: string): (
     .where("_search", "array-contains-any", keyTerms)
     .where("_timestamp", ">=", startDateTimestamp)
     .where("_timestamp", "<=", endDateTimestamp)
-    .orderBy("_timestamp", "asc")
+    .orderBy("_timestamp", "desc")
     .limit(count ? count * ((page ?? 0) + 1) : readHardCap)
     .get();
 
@@ -151,4 +151,25 @@ export const getArticles = async (queryUrl: string): (
   return count ? 
     filteredArticles.splice(page ? count * page : 0, count) : 
     filteredArticles;
+};
+
+export const getDiseaseCases = async (queryUrl: { disease: string, location: string }) => {
+  console.log(queryUrl);
+  const { disease, location } = queryUrl;
+  
+  try {
+    const fetchCases = await casesRef
+      .doc(disease)
+      .collection("cases")
+      .doc(location.toUpperCase())
+      .get();
+
+    const mappedCases = fetchCases.data();
+    return mappedCases;
+  } catch (error) {
+    console.log(error);
+    return {
+      error,
+    };
+  }
 };

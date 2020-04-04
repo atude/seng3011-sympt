@@ -11,6 +11,7 @@ export const DiseaseContext = createContext({
   disease: {
     nameFormatted: "",
     name: "",
+    nameDb: "",
     description: "",
     link: "",
   },

@@ -1,18 +1,21 @@
 [
   {
     "nameFormatted": "COVID-19",
+    "nameDb": "covid-19",
     "name": "covid-19",
     "description": "Coronavirus disease 2019 (COVID-19) is an infectious disease first identified in 2019 in Wuhan, China, and spreading globally. Common symptoms include fever, cough, and shortness of breath, and can take 2 weeks to develop.",
     "link": "https://www.who.int/health-topics/coronavirus"
   },
   {
     "nameFormatted": "Malaria",
+    "nameDb": "malaria",
     "name": "malaria",
     "description": "Malaria is a life-threatening disease caused by parasites that are transmitted to people through the bites of infected mosquitoes. It can be the cause of fever, tiredness, vomitting and headaches, but can escalate to death.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/malaria"
   },
   {
     "nameFormatted": "Measles",
+    "nameDb": "measles",
     "name": "measles",
     "description": "Measles is a highly contagious infectious disease that causes red rashes on the body, as well as fever, cough, runny nose and inflamed eyes.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/measles"
@@ -25,132 +28,154 @@
   // },
   {
     "nameFormatted": "Influenza",
+    "nameDb": "influenza-(laboratory-confirmed)",
     "name": "influenza",
     "description": "Influenza consists of a family of infectious diseases that are transmitted through the air with a range of symptoms. In severe cases, it may cause high fever, runny nose, sore throat, muscle pains and coughing.",
     "link": "https://www.who.int/en/news-room/fact-sheets/detail/influenza-(seasonal)"
   },
   {
     "nameFormatted": "Hepatitis-B",
+    "nameDb": "hepatitis-b-(unspecified)",
     "name": "hepatitis-b",
     "description": "Transmitted through direct contact with the blood of other body fluids of an infected person, causes loss of appetite, nausea, vomiting and dark urine.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-b"
   },
   {
     "nameFormatted": "Chickenpox",
+    "nameDb": "varicella-zoster-(chickenpox)",
     "name": "chickenpox",
     "description": "A highly contagious viral infection causing an itchy, blister-like rash on the skin. Chickenpox is highly contagious to those who haven't had the disease or been vaccinated against it.",
     "link": "https://www.who.int/immunization/diseases/varicella/en/"
   },
   {
     "nameFormatted": "Syphilis",
+    "nameDb": "syphilis->-2-years-or-unspecified-duration",
     "name": "syphilis",
     "description": "A sexually transmitted disease that develops in stages with varying symptoms. The first stage involves a painless sore on the genitals, rectum or mouth. The second stage is characterised by a rash. The final stage may occur years later.",
     "link": "https://www.who.int/tdr/publications/disease_watch/syphilis/en/"
   },
   {
     "nameFormatted": "Brucellosis",
+    "nameDb": "brucellosis",
     "name": "brucellosis",
     "description": "An infection spread from animals to people, mostly by unpasteurised dairy products. It affects thousands of people worldwide with symptoms including joint and muscle pain, fever, weight loss and fatigue.",
     "link": "https://www.who.int/ith/diseases/brucellosis/en/"
   },
   {
     "nameFormatted": "Chikungunya",
+    "nameDb": "chikungunya-virus-infection",
     "name": "chikungunya",
     "description": "A viral infection transmitted by mosquitoes, found particularly in Africa, Asia and India. Fever and joint pain may come on suddenly, while muscle pain, headache, fatigue and rash may occur within a week.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/chikungunya"
   },
   {
     "nameFormatted": "Cryptosporidiosis",
+    "nameDb": "cryptosporidiosis",
     "name": "cryptosporidiosis",
     "description": "Cryptosporidiosis is a diarrhoeal disease caused by the parasite, Cryptosporidium, which infects the intestine. The most common symptom of cryptosporidiosis are watery diarrhoea and stomach cramps.",
     "link": "https://www.who.int/bulletin/volumes/91/4/13-119990/en/"
   },
   {
     "nameFormatted": "Dengue",
+    "nameDb": "dengue-virus-infection",
     "name": "dengue",
     "description": "A mosquito-borne viral disease occurring in tropical and subtropical areas. Those who become infected a second time are at a greater risk of developing severe symptoms. Symptoms include high fever, rash and muscle and joint pain.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue"
   },
   {
     "nameFormatted": "Diphteria",
+    "nameDb": "diphteria",
     "name": "diphteria",
     "description": "A serious infection of the nose and throat that's easily preventable by a vaccine. A sheet of thick, grey matter covers the back of the throat, making breathing hard. Symptoms include sore throat, fever, swollen lymph nodes and weakness.",
     "link": "https://www.who.int/immunization/diseases/diphtheria/en/"
   },
   {
     "nameFormatted": "Hepatitis-A",
+    "nameDb": "hepatitis-a",
     "name": "hepatitis-a",
     "description": "A liver disease caused by the Hepatitis A virus (HAV). The virus is primarily spread when an uninfected (and unvaccinated) person ingests food or water that is contaminated with the faeces of an infected person.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-a"
   },
   {
     "nameFormatted": "Hepatitis-C",
+    "nameDb": "hepatitis-c-(unspecified)",
     "name": "hepatitis-c",
     "description": "An infection caused by a virus that attacks the liver and leads to inflammation. The virus is spread by contact with contaminated blood; for example, from sharing needles or from unsterile tattoo equipment. Most people have no symptoms.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-c"
   },
   {
     "nameFormatted": "Hepatitis-D",
+    "nameDb": "hepatitis-d",
     "name": "hepatitis-d",
     "description": "A serious liver disease caused by infection. Transmission requires contact with infectious blood. At-risk populations include drug abusers and men who have sex with men. Symptoms include abdominal pain, nausea and fatigue.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-d"
   },
   {
     "nameFormatted": "Hepatitis-E",
+    "nameDb": "hepatitis-e",
     "name": "hepatitis-e",
     "description": "A liver disease mainly transmitted through drinking water contaminated with faecal matter. Symptoms include jaundice, lack of appetite and nausea. In rare cases, it may progress to acute liver failure.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-e"
   },
   {
     "nameFormatted": "Mumps",
+    "nameDb": "mumps",
     "name": "mumps",
     "description": "A viral infection that affects the salivary glands that's preventable by a vaccine. Mumps affects the parotid glands, salivary glands below and in front of the ears. The disease spreads through infected saliva. Some people experience no symptoms.",
     "link": "https://www.who.int/immunization/diseases/mumps/en/"
   },
   {
     "nameFormatted": "Pertussis",
+    "nameDb": "pertussis",
     "name": "pertussis",
     "description": "A highly contagious respiratory tract infection that is easily preventable by vaccine. Whooping cough is particularly dangerous for infants. Besides a cough, symptoms include a runny nose, nasal congestion and sneezing.",
     "link": "https://www.who.int/immunization/diseases/pertussis/en/"
   },
   {
     "nameFormatted": "Q Fever",
+    "nameDb": "q-fever",
     "name": "q fever",
     "description": "An infection caused by the bacterium Coxiella burnetii. Q fever is spread to humans by animals, most commonly sheep, goats and cattle. It's caused by inhaling dust particles contaminated by infected animals.",
     "link": "https://www.health.nsw.gov.au/Infectious/factsheets/Pages/q-fever.aspx"
   },
   {
     "nameFormatted": "Rotavirus",
+    "nameDb": "rotavirus",
     "name": "rotavirus",
     "description": "Rotaviruses are the most common cause of diarrhoeal disease among infants and young children. Nearly every child in the world is infected with a rotavirus at least once by the age of five.",
     "link": "https://www.who.int/immunization/diseases/rotavirus/en/"
   },
   {
     "nameFormatted": "Salmonellosis",
+    "nameDb": "salmonellosis",
     "name": "salmonellosis",
     "description": "An infection commonly caused by contaminated food or water, common among children. People with compromised immune systems are more likely to have severe cases. Symptoms include diarrhoea, fever, chills and abdominal pain.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/salmonella-(non-typhoidal)"
   },
   {
     "nameFormatted": "Tuberculosis",
+    "nameDb": "tuberculosis",
     "name": "tuberculosis",
     "description": "A potentially serious infectious bacterial disease that mainly affects the lungs. The bacteria that cause TB are spread when an infected person coughs or sneezes.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/tuberculosis"
   },
   {
     "nameFormatted": "Tularaemia",
+    "nameDb": "tularaemia",
     "name": "tularaemia",
     "description": "Tularemia is a rare infectious disease that can attack your skin, lungs, eyes, and lymph nodes. Sometimes it’s called rabbit fever or deer fly fever.",
     "link": "https://www.who.int/csr/delibepidemics/tularaemia/en/"
   },
   {
     "nameFormatted": "Listeriosis",
+    "nameDb": "listeriosis",
     "name": "listeriosis",
     "description": "Foodborne listeriosis is one of the most serious and severe foodborne diseases. It may cause headaches, a stiff neck, or confusion if the infection spreads to the nervous system.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/listeriosis"
   },
   {
     "nameFormatted": "Rubella",
+    "nameDb": "rubella",
     "name": "rubella",
     "description": "An acute, contagious viral infection. While rubella usually causes a mild fever and rash, infection during pregnancy, especially during the first trimester, can result in miscarriage, fetal death, stillbirth, or infants with malformations.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/rubella"

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
@@ -8,6 +8,7 @@ import StyledButton from '../components/StyledButton';
 import { LineChart } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
 import { Picker } from 'react-native';
+import { getDiseaseCases } from '../functions/diseaseFunctions';
 
 // temp data
 const data = {
@@ -27,22 +28,23 @@ const chartConfig = {
   barPercentage: 0.5,
 };
 
-const timeRanges = [
-  {
-    desc: "week"
-  },
-  {
-    desc: "month"
-  },
-  {
-    desc: "year"
-  },
-];
-
 const ActivityScreen = () => {
-  // const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
+  const [loading, setLoading] = useState(true);
+  const [diseasesAu, setDiseasesAu] =  useState([]);
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
+
+
+  const fetchDiseases = async () => {
+    setLoading(true);
+    const diseaseCount = await getDiseaseCases(diseaseContext.disease.name, "AUSYTD");
+    setLoading(false);
+    console.log(diseaseCount);
+  };
+
+  useEffect(() => {
+    fetchDiseases();
+  }, [diseaseContext.disease]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -61,9 +63,11 @@ const ActivityScreen = () => {
               style={styles.rangePicker}
               onValueChange={(itemValue) => setTimeRangeIndex(itemValue)}
             >
-              <Picker.Item label="past week" value={0} />
-              <Picker.Item label="past month" value={1} />
-              <Picker.Item label="past year" value={2} />
+              <Picker.Item label="past day" value={0} />
+              <Picker.Item label="past week" value={1} />
+              <Picker.Item label="past month" value={2} />
+              <Picker.Item label="past year" value={3} />
+              <Picker.Item label="past decade" value={4} />
             </Picker>
           </View>
         </View>

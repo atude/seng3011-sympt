@@ -15,27 +15,53 @@ const ArticlesScreen = (props) => {
   const diseaseContext = useContext(DiseaseContext);
   const feedContext = useContext(FeedContext);
 
+  let [page, setPage] = useState(0);
+
   useEffect(() => {
     if (!articles) {
-      fetchFeedArticles();
+      fetchFeedArticles(page);
     }
   }, []);
 
-  const fetchFeedArticles = async () => {
+  const fetchFeedArticles = async (page) => {
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
       userContext.user.uid, 
       feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation, 
       //add current disease + extra terms
-      [diseaseContext.disease.name, ...feedContext.keyTerms]
+      [diseaseContext.disease.name, ...feedContext.keyTerms], 
+      page
     );
     setArticles(articlesResponse.articles || []);
     setLoadingArticles(false);
   };  
 
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+  };
+
+  const onEndReached = async () => {
+    if (isLoadingArticles) {
+      return;
+    }
+    setPage(page += 1);
+    setLoadingArticles(true);
+    const articlesResponse = await getFeedArticles(
+      userContext.user.uid, 
+      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation,
+      [diseaseContext.disease.name, ...feedContext.keyTerms], 
+      page
+    );
+    if (!articlesResponse.articles) {
+      setLoadingArticles(false);
+    }
+    setArticles(articles.concat(articlesResponse.articles || []));
+    setLoadingArticles(false);
+  };
+
   const formatArticles = (articles) => {
     if(!articles || !articles.length) {
-      return <StyledText nofound>No articles found</StyledText>;
+      return <StyledText nofound>No articles found for {diseaseContext.disease.name}</StyledText>;
     }
     return articles.map((article, i) => (
       <View key={i}> 
@@ -52,10 +78,19 @@ const ArticlesScreen = (props) => {
           <RefreshControl 
             colors={[Colors.primary, Colors.secondary]} 
             refreshing={isLoadingArticles} 
-            onRefresh={() => fetchFeedArticles()}
+            onRefresh={() => {
+              setPage(0);
+              fetchFeedArticles(page);
+            }}
           />
         }
+        onScroll = {({nativeEvent}) => {
+          if (isCloseToBottom(nativeEvent)) {
+            onEndReached();
+          }
+        }}
       >
+        {/* <StyledText nofound>Showing articles for {diseaseContext.disease.name} in {feedContext.feedLocation}</StyledText> */}
         {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
       </ScrollView>
     </View>
