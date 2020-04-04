@@ -32,7 +32,7 @@ const ArticlesScreen = (props) => {
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
     );
-    setArticles(articlesResponse.articles || []);
+    setArticles(articlesResponse.articles ? articlesResponse.articles : []);
     setLoadingArticles(false);
   };  
 

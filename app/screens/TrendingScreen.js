@@ -44,7 +44,7 @@ export default function TrendingScreen() {
 
 const formatArticles = (articles) => {
   if(!articles || !articles.length) {
-    return <StyledText nofound>There no news articles or tweets found</StyledText>;
+    return <StyledText nofound>No news articles or tweets found</StyledText>;
   }
   const formattedArticles = articles.map((article, i) => {
     return (
