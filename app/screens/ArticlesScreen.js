@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, RefreshControl } from 'react-native';
+import { StyleSheet, View, RefreshControl, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import { UserContext, DiseaseContext } from '../context/context';
+import { UserContext, DiseaseContext, FeedContext } from '../context/context';
 import { getFeedArticles } from '../functions/articleFunctions';
 import ArticleCard from '../components/ArticleCard';
 import StyledText from '../components/StyledText';
 import { ActivityIndicator } from 'react-native';
-
-const location = "china";
 
 const ArticlesScreen = (props) => {
   const [articles, setArticles] = useState(null);
   const [isLoadingArticles, setLoadingArticles] = useState(false);
   const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
+  const feedContext = useContext(FeedContext);
 
   useEffect(() => {
     if (!articles) {
@@ -24,7 +23,12 @@ const ArticlesScreen = (props) => {
 
   const fetchFeedArticles = async () => {
     setLoadingArticles(true);
-    const articlesResponse = await getFeedArticles(userContext.user.uid, location, [diseaseContext.disease.name]);
+    const articlesResponse = await getFeedArticles(
+      userContext.user.uid, 
+      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation, 
+      //add current disease + extra terms
+      [diseaseContext.disease.name, ...feedContext.keyTerms]
+    );
     setArticles(articlesResponse.articles || []);
     setLoadingArticles(false);
   };  
@@ -41,18 +45,20 @@ const ArticlesScreen = (props) => {
   };
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl 
-          colors={[Colors.primary, Colors.secondary]} 
-          refreshing={isLoadingArticles} 
-          onRefresh={() => fetchFeedArticles()}
-        />
-      }
-    >
-      {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
-    </ScrollView>
+    <View>
+      <ScrollView 
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl 
+            colors={[Colors.primary, Colors.secondary]} 
+            refreshing={isLoadingArticles} 
+            onRefresh={() => fetchFeedArticles()}
+          />
+        }
+      >
+        {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
+      </ScrollView>
+    </View>
   );
 
 };
