@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import StyledText from '../components/StyledText';
 import StyledCard from '../components/StyledCard';
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
   const userContext = useContext(UserContext);
   const profilePic = require("../assets/images/logo.png");
 
@@ -33,6 +33,7 @@ const ProfileScreen = () => {
         {getCard("Update Email", null, "md-mail-open")}
         {getCard("Update Details", null, "md-medkit")}
         {getCard("Update Symptoms", null, "md-thermometer")}
+        {getCard("About This App", null, "md-information-circle-outline")}
         {getCard("Sign Out", signOut, "md-log-out")}
       </View>
     </ScrollView>
