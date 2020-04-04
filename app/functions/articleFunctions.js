@@ -14,7 +14,7 @@ export const getFeedArticles = async (key, location, keyterms, page) => {
   } catch (error) {
     console.warn(error);
   }
-  
+
   return null;
 };
   
