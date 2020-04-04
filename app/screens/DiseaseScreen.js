@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
 import { DiseaseContext } from '../context/context';
@@ -9,10 +9,11 @@ import { LineChart } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
 import { Picker } from 'react-native';
 import { getDiseaseCases } from '../functions/diseaseFunctions';
+import { getLastWeekArray, getLastMonthQuarterSplitArray, getLastYearArray, getLastDecadeArray } from '../utils/dateFunctions';
 
 // temp data
 const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  labels: ["Jan", "Apr", "Jul", "Oct"],
   datasets: [
     {
       data: [20, 45, 28, 80, 99, 43 ,20],
@@ -31,13 +32,31 @@ const chartConfig = {
 const ActivityScreen = () => {
   const diseaseContext = useContext(DiseaseContext);
   const [loading, setLoading] = useState(true);
-  const [diseasesAu, setDiseasesAu] =  useState([]);
+  const [diseasesCount, setDiseasesCount] = useState([]);
+  
+  const [dataWeek, setDataWeek] = useState([]);
+  const [dataMonth, setDataMonth] = useState([]);
+  const [dataYear, setDataYear] = useState([]);
+  const [dataDecade, setDataDecade] = useState([]);
+
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
 
 
   const fetchDiseases = async () => {
     setLoading(true);
-    const diseaseCount = await getDiseaseCases(diseaseContext.disease.name, "AUSYTD");
+
+    const currDate = new Date().toUTCString();
+
+    const diseaseCount = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
+    setDiseasesCount(diseaseCount);
+    console.log(getLastWeekArray(currDate));
+    console.log(getLastMonthQuarterSplitArray(currDate));
+    console.log(getLastYearArray(currDate));
+    console.log(getLastDecadeArray(currDate));
+
+
+    // process to day, week, month, year etc
+
     setLoading(false);
     console.log(diseaseCount);
   };
@@ -45,6 +64,8 @@ const ActivityScreen = () => {
   useEffect(() => {
     fetchDiseases();
   }, [diseaseContext.disease]);
+
+  if (loading) return <ActivityIndicator />;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -63,11 +84,10 @@ const ActivityScreen = () => {
               style={styles.rangePicker}
               onValueChange={(itemValue) => setTimeRangeIndex(itemValue)}
             >
-              <Picker.Item label="past day" value={0} />
-              <Picker.Item label="past week" value={1} />
-              <Picker.Item label="past month" value={2} />
-              <Picker.Item label="past year" value={3} />
-              <Picker.Item label="past decade" value={4} />
+              <Picker.Item label="past week" value={0} />
+              <Picker.Item label="past month" value={1} />
+              <Picker.Item label="past year" value={2} />
+              <Picker.Item label="past decade" value={3} />
             </Picker>
           </View>
         </View>
@@ -79,7 +99,7 @@ const ActivityScreen = () => {
             marginLeft: -14,
           }}
           chartConfig={chartConfig}
-          bezier
+          // bezier
         />
       </StyledCard>
     </ScrollView>
