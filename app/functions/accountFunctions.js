@@ -1,6 +1,6 @@
 import firebase from '../firebase/firebaseInit';
 
-// const usersRef = firebase.firestore().collection("users");
+const usersRef = firebase.firestore().collection("users");
 
 export const signInEmail = async (email, password) => {
   return await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -20,10 +20,12 @@ export const createAccount = async (email, password) => {
   return await firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((credentials) => {
     // Create firestore doc for user
-    // usersRef.doc(username.toLowerCase()).set({
-    //   id: credentials.user.uid,
-    //   email: credentials.user.email
-    // });
+      usersRef.doc(credentials.user.email).set({
+        symptoms: [],
+        details: [],
+        severity: "",
+        location: {},
+      });
 
       console.log("Made new user => " + credentials.user.email);
     })
