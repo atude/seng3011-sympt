@@ -27,6 +27,7 @@ export default function App(props) {
 
   const [user, setUser] = useState(firebase.auth().currentUser);
   const [userLocation, setUserLocation] = useState({});
+  // const [userSymptoms, setUserSymptoms] = useState([]);
   const [disease, setDisease] = useState(diseases[0]);
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -39,6 +40,14 @@ export default function App(props) {
     user: user || null,
     userLocation, 
     setUserLocation: (location) => setUserLocation(location),
+    // userSymptoms,
+    // removeUserSymptom: (symptom) => setUserSymptoms(userSymptoms.filter((sympt) => sympt !== symptom)),
+    // addUserSymptom: (symptom) => {
+    //   console.log(userSymptoms);
+    //   setUserSymptoms([...userSymptoms, symptom]);
+    //   setTimeout(() => console.log(userSymptoms), 1000);
+    // }, 
+    // setUserSymptoms: (userSymptomsArray) => setUserSymptoms(userSymptomsArray),
   };
 
   const diseaseContextValue = {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FlatList, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import { CheckBox } from 'react-native-elements';
@@ -8,7 +8,7 @@ import StyledButton from '../components/StyledButton';
 
 const SymptomsScreen = ({ navigation }) => {
 
-  const description = "Select the symptoms relevant to your current medical condition.";
+  const description = "Select the symptoms relevant to your current medical condition. If no symptoms appear, select 'No Symptoms'";
   const symptoms = [
     {id: '1', key: 'No symptoms'},
     {id: '2', key: 'Cough'},
@@ -21,19 +21,27 @@ const SymptomsScreen = ({ navigation }) => {
     {id: '9', key: 'Headache'},
   ];
 
-  const Item = ({ id, title, selected, onSelect }) => (
-    <TouchableOpacity
-      onPress={() => onSelect(id)}
-      style={[
-        styles.item,
-        { backgroundColor: selected ? Colors.primary : Colors.bg },
-      ]}
-    >
-      <StyledText style={styles.title}>{title}</StyledText>
-    </TouchableOpacity>
-  );
+  // const Item = ({ id, title, selected, onSelect }) => (
+  //   <TouchableOpacity
+  //     onPress={() => {
+  //       onSelect(id);
+  //       userContext.setUserSymptoms(id)
+  //     }}
+  //     style={[
+  //       styles.item,
+  //       { backgroundColor: selected ? Colors.primary : Colors.bg },
+  //     ]}
+  //   >
+  //     <StyledText style={styles.title}>{title}</StyledText>
+  //   </TouchableOpacity>
+  // );
+
 
   const [selected, setSelected] = React.useState(new Map());
+
+  const toggleSelection = (id) => {
+    onSelect(id);
+  };
 
   const onSelect = React.useCallback(
     id => {
@@ -56,14 +64,16 @@ const SymptomsScreen = ({ navigation }) => {
             iconType='material'
             checkedIcon='check'
             uncheckedIcon='add'
-            onPress={() => onSelect(item.id)}
+            onPress={() => {
+              toggleSelection(item.id);
+            }}
+            checked={selected.get(item.id)}
           />
         )}
         keyExtractor={item => item.id}
         extraData={selected}
       />
       <StyledButton
-        color={"primary"}
         title={"Apply"}
         onPress={() => navigation.goBack()}
       />

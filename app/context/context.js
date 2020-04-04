@@ -6,8 +6,11 @@ export const UserContext = createContext({
   user: firebase.auth().currentUser,
   userLocation: {},
   setUserLocation: (location) => {},
-  symptoms: [],
-  details: [],
+  // userSymptoms: [],
+  // removeUserSymptom: (symptom) => {},
+  // addUserSymptom: (symptom) => {},
+  // setUserSymptoms: (userSymptomsArray) => {},
+  // details: [],
 }, 
 );
 
