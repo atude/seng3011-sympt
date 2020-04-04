@@ -1,6 +1,6 @@
 import express from 'express';
 import admin from './firebase/firebaseInit';
-import { getArticles } from './queryController';
+import { getArticles, getDiseaseCases } from './queryController';
 import populateDb from './services/dbPopulationService';
 import { verifyUser } from './services/firebaseService';
 import generateError from './utils/generateError';
@@ -74,6 +74,7 @@ app.get('/articles/', async (req, res) => {
 
 // const NewsAPI = require('newsapi');
 
+// TODO: move logic into queryController, possibly add auth
 app.get('/_news/', async (req, res) => {
   console.log('_news called');
   /*
@@ -109,9 +110,12 @@ app.get('/_news/', async (req, res) => {
 });
 
 app.get('/_twitter/', async (req, res) => {
-// todo
+  // todo
 });
 
+app.get('/_cases/', async (req, res) => {
+  res.send(await getDiseaseCases(req.query));
+});
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
 
