@@ -4,13 +4,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 import StyledText from '../components/StyledText';
 import getTrendingArticles from '../functions/trendingFunctions';
-import { DiseaseContext } from '../context/context';
 import NewsCard from '../components/NewsCard';
+import { DiseaseContext, FeedContext } from '../context/context';
 
 export default function TrendingScreen() {
-  const diseaseContext = useContext(DiseaseContext);
   const [articles, setArticles] = useState(null);
   const [isLoadingTrending, setLoadingTrending] = useState(false);
+  const diseaseContext = useContext(DiseaseContext);
+  const feedContext = useContext(FeedContext);
 
   useEffect(() => {
     if (!articles) {
@@ -20,7 +21,7 @@ export default function TrendingScreen() {
 
   const fetchTrendingArticles = async () => {
     setLoadingTrending(true);
-    const articlesResponse = await getTrendingArticles(diseaseContext.diseaseName);
+    const articlesResponse = await getTrendingArticles(feedContext.keyTerms, diseaseContext.disease, feedContext.feedLocation);
     setArticles(articlesResponse);
     setLoadingTrending(false);
   };
