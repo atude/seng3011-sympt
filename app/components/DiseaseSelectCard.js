@@ -17,7 +17,12 @@ const DiseaseSelectCard = (props) => {
 
   return (
     <TouchableOpacity 
-      style={[styles.container, { marginRight: last ? 4 : 26, borderColor: diseaseContext.disease.name === disease.name ? Colors.primary : 'transparent' } ]}
+      style={[styles.container, { 
+        marginRight: last ? 4 : 26, 
+        borderColor: diseaseContext.disease.name === disease.name ? 
+          Colors.primary : 
+          'transparent' 
+      }]}
       onPress={() => handleClick()}
     >
       <View style={styles.contentContainer}>
@@ -79,6 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     paddingBottom: 10,
+    height: 100,
   },
   diseaseImage: {
     width: 100,

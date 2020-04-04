@@ -2,7 +2,7 @@
   {
     "nameFormatted": "COVID-19",
     "name": "covid-19",
-    "description": "Coronavirus disease 2019 (COVID-19) is an infectious disease first identified in 2019 in Wuhan, China, and spreading globally. Common symptoms include fever, cough, and shortness of breath.",
+    "description": "Coronavirus disease 2019 (COVID-19) is an infectious disease first identified in 2019 in Wuhan, China, and spreading globally. Common symptoms include fever, cough, and shortness of breath, and can take 2 weeks to develop.",
     "link": "https://www.who.int/health-topics/coronavirus"
   },
   {
@@ -17,23 +17,17 @@
     "description": "Measles is a highly contagious infectious disease that causes red rashes on the body, as well as fever, cough, runny nose and inflamed eyes.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/measles"
   },
-  {
-    "nameFormatted": "Rabies",
-    "name": "rabies",
-    "description": "Transmitted through exposure to infected mammals, causes inflammation of the brain in humands and other mammals, followed by uncontrolled excitement and an inabillity to move parts of the body.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/rabies"
-  },
+  // {
+  //   "nameFormatted": "Rabies",
+  //   "name": "rabies",
+  //   "description": "Transmitted through exposure to infected mammals, causes inflammation of the brain in humands and other mammals, followed by uncontrolled excitement and an inabillity to move parts of the body.",
+  //   "link": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+  // },
   {
     "nameFormatted": "Influenza",
     "name": "influenza",
     "description": "Influenza consists of a family of infectious diseases that are transmitted through the air with a range of symptoms. In severe cases, it may cause high fever, runny nose, sore throat, muscle pains and coughing.",
     "link": "https://www.who.int/en/news-room/fact-sheets/detail/influenza-(seasonal)"
-  },
-  {
-    "nameFormatted": "Smallpox",
-    "name": "smallpox",
-    "description": "Transmitted through inhalation of airborne Variola virus, causes common cold and fever, muscle pain, malaise, headache and fatigue",
-    "link": "https://www.who.int/biologicals/vaccines/smallpox/en/"
   },
   {
     "nameFormatted": "Hepatitis-B",
@@ -44,44 +38,26 @@
   {
     "nameFormatted": "Chickenpox",
     "name": "chickenpox",
-    "description": "A highly contagious viral infection causing an itchy, blister-like rash on the skin. Chickenpox is highly contagious to those who haven't had the disease or been vaccinated against it. The most characteristic symptom is an itchy, blister-like rash on the skin.",
+    "description": "A highly contagious viral infection causing an itchy, blister-like rash on the skin. Chickenpox is highly contagious to those who haven't had the disease or been vaccinated against it.",
     "link": "https://www.who.int/immunization/diseases/varicella/en/"
   },
   {
     "nameFormatted": "Syphilis",
     "name": "syphilis",
-    "description": "Syphilis develops in stages and symptoms vary with each stage. The first stage involves a painless sore on the genitals, rectum or mouth. After the initial sore heals, the second stage is characterised by a rash. Then, there are no symptoms until the final stage which may occur years later.",
+    "description": "A sexually transmitted disease that develops in stages with varying symptoms. The first stage involves a painless sore on the genitals, rectum or mouth. The second stage is characterised by a rash. The final stage may occur years later.",
     "link": "https://www.who.int/tdr/publications/disease_watch/syphilis/en/"
-  },
-  {
-    "nameFormatted": "Anthrax",
-    "name": "anthrax",
-    "description": "Anthrax is caused by a spore-forming bacterium. It mainly affects animals. Humans can become infected through contact with an infected animal or by inhaling spores. Symptoms depend on the route of infection. They can range from a skin ulcer with a dark scab to difficulty breathing.",
-    "link": "https://www.who.int/ith/diseases/anthrax/en/"
-  },
-  {
-    "nameFormatted": "Botulism",
-    "name": "botulism",
-    "description": "A rare poisoning caused by toxins produced by Clostridium botulinum bacteria. Botulism can be fatal and requires emergency medical care. It can occur in infants, be spread in food or infect a wound. Symptoms include difficulty swallowing or speaking, facial weakness and paralysis.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/botulism"
   },
   {
     "nameFormatted": "Brucellosis",
     "name": "brucellosis",
-    "description": "An infection spread from animals to people, mostly by unpasteurised dairy products. Brucellosis is a bacterial infection that affects thousands of people worldwide. Symptoms may include joint and muscle pain, fever, weight loss and fatigue. Some people develop stomach pain and cough.",
+    "description": "An infection spread from animals to people, mostly by unpasteurised dairy products. It affects thousands of people worldwide with symptoms including joint and muscle pain, fever, weight loss and fatigue.",
     "link": "https://www.who.int/ith/diseases/brucellosis/en/"
   },
   {
     "nameFormatted": "Chikungunya",
     "name": "chikungunya",
-    "description": "A viral infection transmitted by mosquitoes. Chikungunya is found worldwide, particularly in Africa, Asia and India. Symptoms usually appear within a week of infection. Fever and joint pain come on suddenly. Muscle pain, headache, fatigue and rash may also occur.",
+    "description": "A viral infection transmitted by mosquitoes, found particularly in Africa, Asia and India. Fever and joint pain may come on suddenly, while muscle pain, headache, fatigue and rash may occur within a week.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/chikungunya"
-  },
-  {
-    "nameFormatted": "Cholera",
-    "name": "cholera",
-    "description": "A bacterial disease causing severe diarrhoea and dehydration, usually spread in water. Cholera is fatal if not treated right away. Key symptoms are diarrhoea and dehydration. Rarely, shock and seizures may occur in severe cases.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/cholera"
   },
   {
     "nameFormatted": "Cryptosporidiosis",
@@ -92,7 +68,7 @@
   {
     "nameFormatted": "Dengue",
     "name": "dengue",
-    "description": "A mosquito-borne viral disease occurring in tropical and subtropical areas. Those who become infected with the virus a second time are at a significantly greater risk of developing severe disease. Symptoms are high fever, rash and muscle and joint pain.",
+    "description": "A mosquito-borne viral disease occurring in tropical and subtropical areas. Those who become infected a second time are at a greater risk of developing severe symptoms. Symptoms include high fever, rash and muscle and joint pain.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue"
   },
   {
@@ -104,7 +80,7 @@
   {
     "nameFormatted": "Hepatitis-A",
     "name": "hepatitis-a",
-    "description": "Hepatitis A is a liver disease caused by the hepatitis A virus (HAV). The virus is primarily spread when an uninfected (and unvaccinated) person ingests food or water that is contaminated with the faeces of an infected person.",
+    "description": "A liver disease caused by the Hepatitis A virus (HAV). The virus is primarily spread when an uninfected (and unvaccinated) person ingests food or water that is contaminated with the faeces of an infected person.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-a"
   },
   {
@@ -116,19 +92,19 @@
   {
     "nameFormatted": "Hepatitis-D",
     "name": "hepatitis-d",
-    "description": "A serious liver disease caused by infection with the hepatitis D virus. Transmission requires contact with infectious blood. At-risk populations include intravenous drug abusers and men who have sex with men. Symptoms include abdominal pain, nausea and fatigue.",
+    "description": "A serious liver disease caused by infection. Transmission requires contact with infectious blood. At-risk populations include drug abusers and men who have sex with men. Symptoms include abdominal pain, nausea and fatigue.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-d"
   },
   {
     "nameFormatted": "Hepatitis-E",
     "name": "hepatitis-e",
-    "description": "A liver disease caused by the hepatitis E virus. The hepatitis E virus is mainly transmitted through drinking water contaminated with faecal matter. Symptoms include jaundice, lack of appetite and nausea. In rare cases, it may progress to acute liver failure.",
+    "description": "A liver disease mainly transmitted through drinking water contaminated with faecal matter. Symptoms include jaundice, lack of appetite and nausea. In rare cases, it may progress to acute liver failure.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/hepatitis-e"
   },
   {
     "nameFormatted": "Mumps",
     "name": "mumps",
-    "description": "A viral infection that affects the salivary glands that's easily preventable by a vaccine. Mumps affects the parotid glands, salivary glands below and in front of the ears. The disease spreads through infected saliva. Some people experience no symptoms. ",
+    "description": "A viral infection that affects the salivary glands that's preventable by a vaccine. Mumps affects the parotid glands, salivary glands below and in front of the ears. The disease spreads through infected saliva. Some people experience no symptoms.",
     "link": "https://www.who.int/immunization/diseases/mumps/en/"
   },
   {
@@ -136,12 +112,6 @@
     "name": "pertussis",
     "description": "A highly contagious respiratory tract infection that is easily preventable by vaccine. Whooping cough is particularly dangerous for infants. Besides a cough, symptoms include a runny nose, nasal congestion and sneezing.",
     "link": "https://www.who.int/immunization/diseases/pertussis/en/"
-  },
-  {
-    "nameFormatted": "Plague",
-    "name": "plague",
-    "description": "Plague is an infectious disease caused by the bacteria Yersinia pestis, usually found in small mammals and their fleas. The disease is transmitted between animals via their fleas and, as it is a zoonotic bacteriuma, it can also transmit from animals to humans.",
-    "link": "https://www.who.int/health-topics/plague#tab=tab_1"
   },
   {
     "nameFormatted": "Q Fever",
@@ -156,15 +126,9 @@
     "link": "https://www.who.int/immunization/diseases/rotavirus/en/"
   },
   {
-    "nameFormatted": "Rubella",
-    "name": "rubella",
-    "description": "Rubella is an acute, contagious viral infection. While rubella virus infection usually causes a mild fever and rash in children and adults, infection during pregnancy, especially during the first trimester, can result in miscarriage, fetal death, stillbirth, or infants with congenital malformations.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/rubella"
-  },
-  {
     "nameFormatted": "Salmonellosis",
     "name": "salmonellosis",
-    "description": "An infection with salmonella bacteria, commonly caused by contaminated food or water. Salmonella is most common among children. People with compromised immune systems, such as older adults, babies and people with AIDS, are more likely to have severe cases. Symptoms include diarrhoea, fever, chills and abdominal pain.",
+    "description": "An infection commonly caused by contaminated food or water, common among children. People with compromised immune systems are more likely to have severe cases. Symptoms include diarrhoea, fever, chills and abdominal pain.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/salmonella-(non-typhoidal)"
   },
   {
@@ -180,21 +144,9 @@
     "link": "https://www.who.int/csr/delibepidemics/tularaemia/en/"
   },
   {
-    "nameFormatted": "West Nile Virus",
-    "name": "west nile virus",
-    "description": "West Nile virus (WNV) is the leading cause of mosquito-borne disease in the continental United States. It is most commonly spread to people by the bite of an infected mosquito.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/west-nile-virus"
-  },
-  {
-    "nameFormatted": "Yellow Fever",
-    "name": "yellow fever",
-    "description": "A viral infection spread by a particular species of mosquito. Yellow fever is spread by a species of mosquito common to areas of Africa and South America.",
-    "link": "https://www.who.int/news-room/fact-sheets/detail/yellow-fever"
-  },
-  {
     "nameFormatted": "Listeriosis",
     "name": "listeriosis",
-    "description": "Foodborne listeriosis is one of the most serious and severe foodborne diseases. It is caused by the bacteria Listeria monocytogenes.",
+    "description": "Foodborne listeriosis is one of the most serious and severe foodborne diseases. It may cause headaches, a stiff neck, or confusion if the infection spreads to the nervous system.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/listeriosis"
   }
 ]

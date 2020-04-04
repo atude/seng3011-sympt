@@ -32,7 +32,7 @@ const DiseaseFilterMenu = (props) => {
     <Overlay 
       isVisible={isDiseasesOpen}
       width={Layout.window.width}
-      height={450}
+      height={500}
       overlayStyle={{
         position: "absolute",
         bottom: 0,
@@ -45,23 +45,31 @@ const DiseaseFilterMenu = (props) => {
     >
       <View style={styles.filterMenuContainer}>
         <Text style={styles.selectHeading}>
-              Select Disease
+          Select Disease
         </Text>
         <TouchableOpacity
           onPress={() => handleSetListView()}
-          style={isListView ? styles.listButtonActive : styles.listButtonInactive}
+          style={[styles.listButton, { backgroundColor: isListView ? Colors.primary : Colors.secondary }]}
         >
-          <Text style={[styles.listButtonText, {color: isListView ? '#2988ab' : '#808080'}]}>
-                List View
-          </Text>
+          {!isListView ? 
+            <View style={styles.listButtonContent}>
+              <StyledText color="white">List View</StyledText>
+              <MaterialCommunityIcons name="format-list-bulleted" style={styles.listSwitchIcon}/>
+            </View>
+            :
+            <View style={styles.listButtonContent}>
+              <StyledText color="white">Card View</StyledText>
+              <MaterialCommunityIcons name="cards-variant" style={styles.listSwitchIcon}/>
+            </View>
+          }
         </TouchableOpacity>
       </View>
       {isListView ? 
-        <ScrollView>
+        <>
           <Input 
             containerStyle={styles.termInput}
             onChangeText={(value) => setSearchTerm(value)}
-            placeholder="Search for diseases"
+            placeholder="Search for a disease"
             leftIcon={
               <MaterialCommunityIcons
                 name="magnify-plus-outline"
@@ -69,30 +77,32 @@ const DiseaseFilterMenu = (props) => {
               />
             }
           />
-          <View style={styles.resultsWrapper}>
-            <ScrollView
-              decelerationRate={"normal"}
-            >
-              {diseases
-                .filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
-                .length ? 
-                diseases.filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
-                  .map((disease, i) => {
-                    return (
-                      <ListDiseaseSelectCard
-                        key={i}
-                        setDiseaseOpen={setDiseasesOpen}
-                        disease={disease}
-                        setSearchTerm={setSearchTerm}
-                      />
-                    );
-                  })
-                :
-                <StyledText nofound>No diseases found</StyledText>
-              }
-            </ScrollView>
-          </View>
-        </ScrollView>
+          <ScrollView>
+            <View style={styles.resultsWrapper}>
+              <ScrollView
+                decelerationRate={"normal"}
+              >
+                {diseases
+                  .filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
+                  .length ? 
+                  diseases.filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
+                    .map((disease, i) => {
+                      return (
+                        <ListDiseaseSelectCard
+                          key={i}
+                          setDiseaseOpen={setDiseasesOpen}
+                          disease={disease}
+                          setSearchTerm={setSearchTerm}
+                        />
+                      );
+                    })
+                  :
+                  <StyledText nofound>No diseases found</StyledText>
+                }
+              </ScrollView>
+            </View>
+          </ScrollView>
+        </>
         : 
         <ScrollView
           horizontal
@@ -111,7 +121,6 @@ const DiseaseFilterMenu = (props) => {
           ))}
         </ScrollView>
       }
-      
     </Overlay>
   );
 };
@@ -124,41 +133,34 @@ const styles = StyleSheet.create({
     fontFamily: "main",
     fontSize: 28,
   },
+  listSwitchIcon: {
+    fontSize: 20,
+    marginLeft: 7,
+    marginTop: 1,
+    color: "#fff",
+  },  
   filterMenuContainer: {
-    flex: 1,
     flexDirection: 'row',
-    marginBottom: 60,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 5,
+    marginBottom: 10,
+    padding: 10,
   },
   headingContainer: {
     flex: 1,
     flexDirection: 'row',
   },
-  listButtonActive: {
-    height: 34,
-    width: 80,
-    backgroundColor: '#b0e2ff',
-    borderColor: Colors.primary,
+  listButton: {
     borderRadius: 16,
-    borderWidth: 2,
-    marginTop: 4,
-    marginLeft: 80
+    padding: 8,
+    marginTop: -7,
+    paddingHorizontal: 14,
+    width: 130,
   },
-  listButtonInactive: {
-    height: 34,
-    width: 80,
-    borderColor: '#a8a8a8',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 16,
-    borderWidth: 2,
-    marginTop: 4,
-    marginLeft: 80
-
-  },
-  listButtonText: {
-    padding: 5,
-    fontFamily: "main",
-    fontWeight: "bold",
-    textAlign: "center"
+  listButtonContent: {
+    flexDirection: "row", 
+    justifyContent: "space-between",
   },
   termInput: {
     marginBottom: 10,
@@ -170,24 +172,10 @@ const styles = StyleSheet.create({
     color: Colors.dull
   },
   resultsWrapper: {
-    flex: 1,
-    width: Layout.window.width - 34,
-    height: 295,
     backgroundColor: "#fff",
-    padding: 25,
+    padding: 10,
     borderRadius: 16,
-    marginLeft: 8,
-    marginBottom: 20,
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    
-    elevation: 8,
+    marginBottom: 5,
   }
 });
 

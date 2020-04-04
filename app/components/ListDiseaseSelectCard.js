@@ -38,11 +38,11 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 16,
+    borderRadius: 10,
     marginLeft: 8,
     marginRight: 8,
-    marginBottom: 8,
-    borderWidth: 2
+    marginBottom: 5,
+    borderWidth: 1
   }, 
   contentContainer: {
     alignItems: "center",
@@ -57,8 +57,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   diseaseImage: {
-    width: 20,
-    height: 20,
+    width: 28,
+    height: 28,
+    marginLeft: -5,
   },
 });
   
