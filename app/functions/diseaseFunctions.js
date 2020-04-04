@@ -1,12 +1,11 @@
 export const getDiseaseCases = async (diseaseDbName, location) => {
   try {
-    let response = await fetch(`https://sympt-server.herokuapp.com/_cases/?disease=${diseaseDbName}&location=${location}`);
-    response = await response.json();
-    return response;
+    const response = await fetch(`https://sympt-server.herokuapp.com/_cases/?disease=${diseaseDbName}&location=${location}`);
+    const jsonRes = await response.json();
+    return jsonRes;
   } catch (error) {
     console.warn(error);
+    return { error };
   }
-
-  return null;
 };
   

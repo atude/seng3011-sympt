@@ -9,63 +9,103 @@ import { LineChart } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
 import { Picker } from 'react-native';
 import { getDiseaseCases } from '../functions/diseaseFunctions';
-import { getLastWeekArray, getLastMonthQuarterSplitArray, getLastYearArray, getLastDecadeArray } from '../utils/dateFunctions';
+import { 
+  getLastWeekArray, 
+  getLastMonthQuarterSplitArray, 
+  getLastYearArray, 
+  getLastDecadeArray, 
+  formatDateToDayMonth,
+  formatDateToMonthDay,
+  formatDateToMonth,
+  formatDateToYear,
+} from '../utils/dateFunctions';
+import { formatDataWeek, chartConfig, getHiddenPoints } from '../utils/graphDataTemplates';
 
-// temp data
-const data = {
-  labels: ["Jan", "Apr", "Jul", "Oct"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43 ,20],
-      color: () => Colors.secondary, // optional
-    }
-  ],
-};
-
-const chartConfig = {
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientToOpacity: 0,
-  color: () => Colors.primary,
-  barPercentage: 0.5,
-};
+const defDataObj = { data: [], dates: [] };
 
 const ActivityScreen = () => {
   const diseaseContext = useContext(DiseaseContext);
   const [loading, setLoading] = useState(true);
-  const [diseasesCount, setDiseasesCount] = useState([]);
   
-  const [dataWeek, setDataWeek] = useState([]);
-  const [dataMonth, setDataMonth] = useState([]);
-  const [dataYear, setDataYear] = useState([]);
-  const [dataDecade, setDataDecade] = useState([]);
+  const [dataWeek, setDataWeek] = useState(defDataObj);
+  const [dataMonth, setDataMonth] = useState(defDataObj);
+  const [dataYear, setDataYear] = useState(defDataObj);
+  const [dataDecade, setDataDecade] = useState(defDataObj);
+  const [casesDelta, setCasesDelta] = useState([0, 0, 0, 0]);
 
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
 
+  useEffect(() => {
+    // Fetch on disease change
+    fetchDiseases();
+  }, [diseaseContext.disease.nameDb]);
+
+  const getCurrentGraph = () => {
+    switch (timeRangeIndex) {
+    case 0: return formatDataWeek(dataWeek);
+    case 1: return formatDataWeek(dataMonth);
+    case 2: return formatDataWeek(dataYear);
+    case 3: return formatDataWeek(dataDecade);
+    default: return formatDataWeek(dataWeek);
+    }
+  };
 
   const fetchDiseases = async () => {
     setLoading(true);
 
+    const diseaseTotals = await getDiseaseCases(diseaseContext.disease.nameDb, "AUS");
+
+    if (!diseaseTotals || diseaseTotals.error) {
+      setLoading(false);
+      return { data: [null], dates: [] };
+    }
+
     const currDate = new Date().toUTCString();
+    const lastWeekArray = getLastWeekArray(currDate);
+    const lastMonthArray = getLastMonthQuarterSplitArray(currDate);
+    const lastYearArray = getLastYearArray(currDate);
+    const lastDecadeArray = getLastDecadeArray(currDate);
 
-    const diseaseCount = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
-    setDiseasesCount(diseaseCount);
-    console.log(getLastWeekArray(currDate));
-    console.log(getLastMonthQuarterSplitArray(currDate));
-    console.log(getLastYearArray(currDate));
-    console.log(getLastDecadeArray(currDate));
+    setDataWeek({
+      data: lastWeekArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      dates: lastWeekArray.map((date) => formatDateToDayMonth(date)),
+    });
 
+    setDataMonth({
+      data: lastMonthArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      dates: lastMonthArray.map((date) => formatDateToMonthDay(date)),
+    });
 
-    // process to day, week, month, year etc
+    setDataYear({
+      data: lastYearArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      dates: lastYearArray.map((date) => formatDateToMonth(date)),
+    });
 
+    setDataDecade({
+      data: lastDecadeArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      dates: lastDecadeArray.map((date) => formatDateToYear(date)),
+    });
+
+    setCasesDelta([
+      (diseaseTotals[lastWeekArray[lastWeekArray.length - 1]] ?? 0) - 
+        (diseaseTotals[lastWeekArray[0]] ?? 0),
+      (diseaseTotals[lastMonthArray[lastMonthArray.length - 1]] ?? 0) - 
+        (diseaseTotals[lastMonthArray[0]] ?? 0),
+      (diseaseTotals[lastYearArray[lastYearArray.length - 1]] ?? 0) - 
+        (diseaseTotals[lastYearArray[0]] ?? 0),
+      (diseaseTotals[lastDecadeArray[lastDecadeArray.length - 1]] ?? 0) - 
+        (diseaseTotals[lastDecadeArray[0]] ?? 0),
+    ]);
     setLoading(false);
-    console.log(diseaseCount);
   };
 
-  useEffect(() => {
-    fetchDiseases();
-  }, [diseaseContext.disease]);
-
-  if (loading) return <ActivityIndicator />;
+  if (loading) return (
+    <ActivityIndicator 
+      size={60}
+      style={styles.loading} 
+      color={[Colors.primary, Colors.secondary]}
+    />
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -74,8 +114,25 @@ const ActivityScreen = () => {
           <StyledText color="secondary" style={styles.casesHeading}>Cases in Australia</StyledText>
           <View style={styles.casesContainer}>
             <Text>
-              <StyledText style={styles.casesCountText}>60</StyledText>
-              <StyledText>{` cases`}</StyledText>
+              <StyledText 
+                style={styles.casesCountText} 
+                color={casesDelta[timeRangeIndex] > 0 ? 
+                  (casesDelta[timeRangeIndex] >= 100 ? "error" : "warning") : 
+                  "secondary"
+                }
+              >
+                {casesDelta[timeRangeIndex] > 0 ? 
+                  `+${casesDelta[timeRangeIndex]}` : 
+                  `${casesDelta[timeRangeIndex]}`
+                }
+              </StyledText>
+              <StyledText 
+                color={casesDelta[timeRangeIndex] > 0 ? 
+                  (casesDelta[timeRangeIndex] >= 100 ? "error" : "warning") : 
+                  "secondary"
+                }>
+                {` cases`}
+              </StyledText>
               <StyledText color="grey">{` in the `}</StyledText>
             </Text>
             <Picker
@@ -91,16 +148,25 @@ const ActivityScreen = () => {
             </Picker>
           </View>
         </View>
+        {/* Enable this to disable datasets with incomplete data */}
+        {/* ---------------------------------------------------- */}
+        {/* {!getCurrentGraph().datasets[0].data.includes(null) ?  */}
         <LineChart
-          data={data}
+          data={getCurrentGraph()}
           width={Layout.window.width - 60}
           height={260}
           style={{
-            marginLeft: -14,
+            marginLeft: -18,
           }}
           chartConfig={chartConfig}
-          // bezier
+          verticalLabelRotation={timeRangeIndex >= 2 ? 40 : 0}
+          xLabelsOffset={timeRangeIndex >= 2 ? -8 : 0}
+          hidePointsAtIndex={getHiddenPoints(dataWeek.data)}
+          bezier
         />
+        {/* :
+          <StyledText nofound>Not enough data in this range</StyledText>
+        } */}
       </StyledCard>
     </ScrollView>
   );
@@ -111,6 +177,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bg,
     padding: 24,
   }, 
+  loading: {
+    alignSelf: "center",
+    height: "100%",
+  },
   detailsContainer: {
     padding: 6,
     marginBottom: 20,
@@ -121,7 +191,7 @@ const styles = StyleSheet.create({
   },
   rangePicker: { 
     height: 50, 
-    width: 150, 
+    width: 160, 
     color: Colors.dull,
     fontFamily: "main",
 

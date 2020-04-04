@@ -7,6 +7,11 @@ const moment = require('moment');
 
 const formatToString = (date) => date.toISOString().substr(0, 10);
 
+export const formatDateToDayMonth = (date) => moment.utc(date).format("DD/MM");
+export const formatDateToMonthDay = (date) => moment.utc(date).format("MMM DD");
+export const formatDateToMonth = (date) => moment.utc(date).format("MMM");
+export const formatDateToYear = (date) => moment.utc(date).format("YYYY");
+
 export const getLastWeekArray = (date) => {
   let dates = [];
 
