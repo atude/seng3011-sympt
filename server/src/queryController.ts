@@ -126,7 +126,7 @@ export const getArticles = async (queryUrl: string): (
     .where("_search", "array-contains-any", keyTerms)
     .where("_timestamp", ">=", startDateTimestamp)
     .where("_timestamp", "<=", endDateTimestamp)
-    .orderBy("_timestamp", "asc")
+    .orderBy("_timestamp", "desc")
     .limit(count ? count * ((page ?? 0) + 1) : readHardCap)
     .get();
 
