@@ -35,7 +35,7 @@ const ArticlesScreen = (props) => {
 
   const formatArticles = (articles) => {
     if(!articles || !articles.length) {
-      return <StyledText nofound>No articles found</StyledText>;
+      return <StyledText nofound>No articles found for {diseaseContext.disease.name}</StyledText>;
     }
     return articles.map((article, i) => (
       <View key={i}> 
