@@ -44,12 +44,11 @@ const ArticlesScreen = (props) => {
     if (isLoadingArticles) {
       return;
     }
-    setLoadingArticles(true);
     setPage(page += 1);
+    setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
       userContext.user.uid, 
-      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation, 
-      //add current disease + extra terms
+      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation,
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
     );
