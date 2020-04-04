@@ -1,19 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { signOut } from '../functions/accountFunctions';
 import Colors from '../constants/Colors';
 import { UserContext } from '../context/context';
 import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+
+import findCoords from '../functions/locationFunctions';
 
 import StyledText from '../components/StyledText';
 import StyledCard from '../components/StyledCard';
 
+
 const ProfileScreen = ({ navigation }) => {
   const userContext = useContext(UserContext);
   const profilePic = require("../assets/images/logo.png");
+  
+  useEffect(() => {
+    if (!userContext.userLocation) {
+      setLocation();
+    }
+  }, []);
+
+  const setLocation = async () => {
+    const coords = await findCoords();
+    console.log(coords);
+    userContext.setUserLocation(coords || {});
+  };
+
+  console.log(userContext.userLocation);
 
   const getCard = (desc, action, iconName) => (
     <TouchableOpacity onPress={action}>

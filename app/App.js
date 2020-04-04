@@ -26,6 +26,7 @@ export default function App(props) {
   const { getInitialState } = useLinking(containerRef);
 
   const [user, setUser] = useState(firebase.auth().currentUser);
+  const [userLocation, setUserLocation] = useState({});
   const [disease, setDisease] = useState(diseases[0]);
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -36,6 +37,8 @@ export default function App(props) {
   // Context definers
   const userContextValue = {
     user: user || null,
+    userLocation, 
+    setUserLocation: (location) => setUserLocation(location),
   };
 
   const diseaseContextValue = {

@@ -33,43 +33,43 @@ const SymptomsScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-    const [selected, setSelected] = React.useState(new Map());
+  const [selected, setSelected] = React.useState(new Map());
 
-    const onSelect = React.useCallback(
-      id => {
-        const newSelected = new Map(selected);
-        newSelected.set(id, !selected.get(id));
+  const onSelect = React.useCallback(
+    id => {
+      const newSelected = new Map(selected);
+      newSelected.set(id, !selected.get(id));
 
-        setSelected(newSelected);
-      },
-      [selected],
-    );
+      setSelected(newSelected);
+    },
+    [selected],
+  );
 
-    return (
-      <View style={styles.container}>
-        <StyledText style={styles.desc}>{description}</StyledText>
-        <FlatList
-          data={symptoms}
-          renderItem={({ item }) => (
-            <CheckBox style={styles.checklist}
-              title={item.key}
-              iconType='material'
-              checkedIcon='check'
-              uncheckedIcon='add'
-              onPress={() => onSelect(item.id)}
-            />
-          )}
-          keyExtractor={item => item.id}
-          extraData={selected}
-        />
-        <StyledButton
-          color={"primary"}
-          title={"Apply"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-    );
-  };
+  return (
+    <View style={styles.container}>
+      <StyledText style={styles.desc}>{description}</StyledText>
+      <FlatList
+        data={symptoms}
+        renderItem={({ item }) => (
+          <CheckBox style={styles.checklist}
+            title={item.key}
+            iconType='material'
+            checkedIcon='check'
+            uncheckedIcon='add'
+            onPress={() => onSelect(item.id)}
+          />
+        )}
+        keyExtractor={item => item.id}
+        extraData={selected}
+      />
+      <StyledButton
+        color={"primary"}
+        title={"Apply"}
+        onPress={() => navigation.goBack()}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
