@@ -13,12 +13,6 @@ const ProfileScreen = (props) => {
   const userContext = useContext(UserContext);
   const profilePic = require("../assets/images/logo.png");
 
-<<<<<<< HEAD
-  // FIXME
-  const goToSymptoms = () => {
-    props.navigation.navigate("SymptomsScreen");
-  };
-
   const getCard = (desc, action, iconName) => (
     <TouchableOpacity onPress={action}>
       <StyledCard style={styles.card}>
@@ -35,49 +29,11 @@ const ProfileScreen = (props) => {
         <StyledText style={styles.email}>{userContext.user.email}</StyledText>
       </View>
 
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <View style={{
-          flexDirection: 'row',
-        }}>
-          <View style={{paddingRight: 20, width: 150, height: 280}}>
-            <StyledCard>
-              <TouchableOpacity>
-                <Ionicons name="md-mail-open" size={32} style={styles.icon} />
-                <StyledText style={styles.heading}>{"Update\nEmail"}</StyledText>
-              </TouchableOpacity>
-            </StyledCard>
-            <StyledCard>
-              <TouchableOpacity>
-                <Ionicons name="md-medkit" size={32} style={styles.icon} />
-                <StyledText style={styles.heading}>{"Update Additional Details"}</StyledText>
-              </TouchableOpacity>
-            </StyledCard>
-          </View>
-
-          <View style={{width: 130, height: 280}}>
-            <StyledCard>
-              <TouchableOpacity onPress={() => props.navigation.navigate('SymptomsChecklist')}>
-                <Ionicons name="md-thermometer" size={32} style={styles.icon} />
-                <StyledText style={styles.heading}>{"Update Symptoms"}</StyledText>
-              </TouchableOpacity>
-            </StyledCard>
-            <StyledCard>
-              <TouchableOpacity onPress={() => signOut()}>
-                <Ionicons name="md-contact" size={32} style={styles.icon} />
-                <StyledText style={styles.heading}>{"\nSign Out"}</StyledText>
-              </TouchableOpacity>
-            </StyledCard>
-          </View>
-
-        </View>
       <View style={styles.cardContainer}>
         {getCard("Update Email", null, "md-mail-open")}
         {getCard("Update Details", null, "md-medkit")}
         {getCard("Update Symptoms", null, "md-thermometer")}
+        {getCard("About This App", null, "md-information-circle-outline")}
         {getCard("Sign Out", signOut, "md-log-out")}
       </View>
     </ScrollView>
