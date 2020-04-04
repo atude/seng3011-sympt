@@ -73,7 +73,7 @@ export default function BottomTabNavigator({ navigation, route }) {
               style={styles.headerButton}
             >
               <MaterialCommunityIcons 
-                name="filter-outline" 
+                name={feedContext.isFiltersOpen ? "close-circle-outline" : "filter-outline"}
                 color={Colors.dull} 
                 style={styles.headerIcon}
               />

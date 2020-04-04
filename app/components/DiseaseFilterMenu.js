@@ -16,7 +16,7 @@ import ListDiseaseSelectCard from './ListDiseaseSelectCard';
 const DiseaseFilterMenu = (props) => {
   const [isListView, setIsListView] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const {isDiseasesOpen, setDiseasesOpen} = props;
+  const { isDiseasesOpen, setDiseasesOpen } = props;
 
   const handleSetListView = () => {
     setSearchTerm('');
@@ -43,84 +43,86 @@ const DiseaseFilterMenu = (props) => {
       onBackdropPress={() => handleClickOut()}
       animationType="slide"
     >
-      <View style={styles.filterMenuContainer}>
-        <Text style={styles.selectHeading}>
-          Select Disease
-        </Text>
-        <TouchableOpacity
-          onPress={() => handleSetListView()}
-          style={[styles.listButton, { backgroundColor: isListView ? Colors.primary : Colors.secondary }]}
-        >
-          {!isListView ? 
-            <View style={styles.listButtonContent}>
-              <StyledText color="white">List View</StyledText>
-              <MaterialCommunityIcons name="format-list-bulleted" style={styles.listSwitchIcon}/>
-            </View>
-            :
-            <View style={styles.listButtonContent}>
-              <StyledText color="white">Card View</StyledText>
-              <MaterialCommunityIcons name="cards-variant" style={styles.listSwitchIcon}/>
-            </View>
-          }
-        </TouchableOpacity>
-      </View>
-      {isListView ? 
-        <>
-          <Input 
-            containerStyle={styles.termInput}
-            onChangeText={(value) => setSearchTerm(value)}
-            placeholder="Search for a disease"
-            leftIcon={
-              <MaterialCommunityIcons
-                name="magnify-plus-outline"
-                style={styles.inputSearchIcon}
-              />
+      <>
+        <View style={styles.filterMenuContainer}>
+          <Text style={styles.selectHeading}>
+            Select Disease
+          </Text>
+          <TouchableOpacity
+            onPress={() => handleSetListView()}
+            style={[styles.listButton, { backgroundColor: isListView ? Colors.primary : Colors.secondary }]}
+          >
+            {!isListView ? 
+              <View style={styles.listButtonContent}>
+                <StyledText color="white">List View</StyledText>
+                <MaterialCommunityIcons name="format-list-bulleted" style={styles.listSwitchIcon}/>
+              </View>
+              :
+              <View style={styles.listButtonContent}>
+                <StyledText color="white">Card View</StyledText>
+                <MaterialCommunityIcons name="cards-variant" style={styles.listSwitchIcon}/>
+              </View>
             }
-          />
-          <ScrollView>
-            <View style={styles.resultsWrapper}>
-              <ScrollView
-                decelerationRate={"normal"}
-              >
-                {diseases
-                  .filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
-                  .length ? 
-                  diseases.filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
-                    .map((disease, i) => {
-                      return (
-                        <ListDiseaseSelectCard
-                          key={i}
-                          setDiseaseOpen={setDiseasesOpen}
-                          disease={disease}
-                          setSearchTerm={setSearchTerm}
-                        />
-                      );
-                    })
-                  :
-                  <StyledText nofound>No diseases found</StyledText>
-                }
-              </ScrollView>
-            </View>
-          </ScrollView>
-        </>
-        : 
-        <ScrollView
-          horizontal
-          decelerationRate={"fast"}
-          snapToAlignment="start"
-          snapToInterval={Layout.window.width}
-        >
-          {diseases.sort(DiseaseStringComparator).map((disease, i) => (
-            <DiseaseSelectCard
-              key={i}
-              style={{ width: "100%" }}
-              setDiseasesOpen={setDiseasesOpen}
-              disease={disease}
-              last={i === diseases.length - 1}
+          </TouchableOpacity>
+        </View>
+        {isListView ? 
+          <>
+            <Input 
+              containerStyle={styles.termInput}
+              onChangeText={(value) => setSearchTerm(value)}
+              placeholder="Search for a disease"
+              leftIcon={
+                <MaterialCommunityIcons
+                  name="magnify-plus-outline"
+                  style={styles.inputSearchIcon}
+                />
+              }
             />
-          ))}
-        </ScrollView>
-      }
+            <ScrollView>
+              <View style={styles.resultsWrapper}>
+                <ScrollView
+                  decelerationRate={"normal"}
+                >
+                  {diseases
+                    .filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
+                    .length ? 
+                    diseases.filter((disease) => disease.name.includes(searchTerm.toLowerCase()))
+                      .map((disease, i) => {
+                        return (
+                          <ListDiseaseSelectCard
+                            key={i}
+                            setDiseaseOpen={setDiseasesOpen}
+                            disease={disease}
+                            setSearchTerm={setSearchTerm}
+                          />
+                        );
+                      })
+                    :
+                    <StyledText nofound>No diseases found</StyledText>
+                  }
+                </ScrollView>
+              </View>
+            </ScrollView>
+          </>
+          : 
+          <ScrollView
+            horizontal
+            decelerationRate={"fast"}
+            snapToAlignment="start"
+            snapToInterval={Layout.window.width}
+          >
+            {diseases.sort(DiseaseStringComparator).map((disease, i) => (
+              <DiseaseSelectCard
+                key={i}
+                style={{ width: "100%" }}
+                setDiseasesOpen={setDiseasesOpen}
+                disease={disease}
+                last={i === diseases.length - 1}
+              />
+            ))}
+          </ScrollView>
+        }
+      </>
     </Overlay>
   );
 };

@@ -148,5 +148,11 @@
     "name": "listeriosis",
     "description": "Foodborne listeriosis is one of the most serious and severe foodborne diseases. It may cause headaches, a stiff neck, or confusion if the infection spreads to the nervous system.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/listeriosis"
-  }
+  },
+  {
+    "nameFormatted": "Rubella",
+    "name": "rubella",
+    "description": "An acute, contagious viral infection. While rubella usually causes a mild fever and rash, infection during pregnancy, especially during the first trimester, can result in miscarriage, fetal death, stillbirth, or infants with malformations.",
+    "link": "https://www.who.int/news-room/fact-sheets/detail/rubella"
+  },
 ]

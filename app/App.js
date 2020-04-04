@@ -47,11 +47,7 @@ export default function App(props) {
   const feedContextValue = {
     keyTerms,
     removeKeyTerm: (keyTerm) => setKeyTerms(keyTerms.filter((term) => term !== keyTerm)),
-    addKeyTerm: (keyTerm) => {
-      console.log(keyTerms);
-      setKeyTerms([...keyTerms, keyTerm]);
-      setTimeout(() => console.log(keyTerms), 1000);
-    },
+    addKeyTerm: (keyTerm) =>  setKeyTerms([...keyTerms, keyTerm]),
     setKeyTerms: (keyTermArray) => setKeyTerms(keyTermArray),
     setFiltersOpen: (openState) => setFiltersOpen(openState),
     isFiltersOpen,

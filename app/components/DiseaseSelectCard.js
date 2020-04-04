@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Layout.window.width - 34,
-    height: 320,
+    height: 350,
     backgroundColor: "#fff",
     borderWidth: 3,
     padding: 25,

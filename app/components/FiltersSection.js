@@ -38,6 +38,7 @@ const FiltersSection = () => {
         duration: 400,
       }).start(() => {
         setAnimDone(true);
+        setSearchTerm("");
       });    
     }
   }, [feedContext.isFiltersOpen]);
