@@ -26,10 +26,13 @@ import {
   formatDataWeek, 
   getHiddenPoints, 
   chartConfig, 
-  freqChartConfig 
+  freqChartConfig,
+  getStateColor,
 } from '../utils/graphDataTemplates';
-import Svg, { Path, G } from 'react-native-svg';
-import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath } from '../constants/AuMapPaths';
+import Svg, { Path, G, Text as SvgText } from 'react-native-svg';
+import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath, 
+  getStateCoordX, getStateCoordY, getStateTextColor 
+} from '../constants/AuMapFunctions';
 
 const moment = require('moment');
 
@@ -52,6 +55,8 @@ const ActivityScreen = () => {
   const [dataYear, setDataYear] = useState(defDataObj);
   const [dataDecade, setDataDecade] = useState(defDataObj);
   const [casesDelta, setCasesDelta] = useState([0, 0, 0, 0]);
+  const [cumulativeStateCases, setCumulativeStateCases] = useState();
+  const [cumulativeStateTotal, setCumulativeStateTotal] = useState(0);
 
   const [selectedYtd, setSelectedYtd] = useState({ date: "", count: 0 });
   const [frequencyYtd, setFrequencyYtd] = useState([]);
@@ -85,6 +90,26 @@ const ActivityScreen = () => {
     const diseaseYtd = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
     const diseaseMonthly = await getDiseaseCases(diseaseContext.disease.nameDb, "AUS");
 
+    const diseaseNsw = await getDiseaseCases(diseaseContext.disease.nameDb, "NSW");
+    const diseaseAct = await getDiseaseCases(diseaseContext.disease.nameDb, "ACT");
+    const diseaseVic = await getDiseaseCases(diseaseContext.disease.nameDb, "VIC");
+    const diseaseWa = await getDiseaseCases(diseaseContext.disease.nameDb, "WA");
+    const diseaseSa = await getDiseaseCases(diseaseContext.disease.nameDb, "SA");
+    const diseaseNt = await getDiseaseCases(diseaseContext.disease.nameDb, "NT");
+    const diseaseTas = await getDiseaseCases(diseaseContext.disease.nameDb, "TAS");
+    const diseaseQld = await getDiseaseCases(diseaseContext.disease.nameDb, "QLD");
+
+    let diseasesByState = {
+      "NSW": diseaseNsw, 
+      "ACT": diseaseAct, 
+      "VIC": diseaseVic, 
+      "WA": diseaseWa,
+      "SA": diseaseSa,
+      "NT": diseaseNt, 
+      "TAS": diseaseTas,
+      "QLD": diseaseQld,
+    };
+
     if (!diseaseYtd || diseaseYtd.error) {
       setLoading(false);
       return { data: [null], dates: [] };
@@ -97,6 +122,22 @@ const ActivityScreen = () => {
       currDate = getYesterday(new Date()).toDate().toUTCString();
       setTodaysDateFallbacked(currDate);
     }
+
+
+    Object.keys(diseasesByState).forEach((key) => {
+      const stateLastYearArray = getLastYearArray(diseasesByState[key], currDate);
+
+      diseasesByState[key] = {
+        data: stateLastYearArray.map((thisDate) => diseasesByState[key][thisDate] ?? 0),
+        dates: stateLastYearArray.map((date) => formatDateToMonth(date)),
+      };
+    });
+
+    setCumulativeStateCases(diseasesByState);
+    setCumulativeStateTotal(Object.values(diseasesByState).reduce((a, b) => 
+      a + b.data.reduce((c, d) => c + d, 0), 0
+    ));
+
     const lastWeekArray = getLastWeekArray(currDate);
     const lastMonthArray = getLastMonthQuarterSplitArray(currDate);
     const lastYearArray = getLastYearArray(diseaseMonthly, currDate);
@@ -205,7 +246,6 @@ const ActivityScreen = () => {
                 {` new cases per ${timeRangeMap[timeRangeIndex]} `}
               </StyledText>
             </Text>
-            {/* <StyledText color="grey">{`\nsince the `}</StyledText> */}
             <Picker
               mode="dropdown"
               selectedValue={timeRangeIndex}
@@ -238,7 +278,7 @@ const ActivityScreen = () => {
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
-            Cases within states
+            Cases within states this year
           </StyledText>
         </View>
         <View style={styles.auMapContainer}>
@@ -248,19 +288,27 @@ const ActivityScreen = () => {
             viewBox={`0 0 200 200`}
             preserveAspectRatio="xMinYMin slice" 
           >
-            <G fill={Colors.secondary} stroke="#fff" strokeWidth="2.5">
-              <Path d={nswPath} />
+            <G stroke="#fff" strokeWidth="2.5">
+              <Path d={nswPath} fill={getStateColor(cumulativeStateCases["NSW"], cumulativeStateTotal)}/>
               <Path d={actPath} />
-              <Path d={vicPath} />
-              <Path d={saPath} />
-              <Path d={ntPath} />
-              <Path d={qldPath} />
-              <Path d={tasPath} />
-              <Path d={waPath} />
+              <Path d={vicPath} fill={getStateColor(cumulativeStateCases["VIC"], cumulativeStateTotal)}/>
+              <Path d={saPath} fill={getStateColor(cumulativeStateCases["SA"], cumulativeStateTotal)}/>
+              <Path d={ntPath} fill={getStateColor(cumulativeStateCases["NT"], cumulativeStateTotal)}/>
+              <Path d={qldPath} fill={getStateColor(cumulativeStateCases["QLD"], cumulativeStateTotal)}/>
+              <Path d={tasPath} fill={getStateColor(cumulativeStateCases["TAS"], cumulativeStateTotal)}/>
+              <Path d={waPath} fill={getStateColor(cumulativeStateCases["WA"], cumulativeStateTotal)}/>
+              {Object.keys(cumulativeStateCases).map((state) => (
+                <SvgText zIndex={100} fill={getStateTextColor[state]} key={state}
+                  strokeWidth="0" textAnchor="middle" fontSize="13"
+                  x={getStateCoordX[state]} y={getStateCoordY[state]}
+                >
+                  {cumulativeStateCases[state].data.reduce((a, b) => a + b, 0)}
+                </SvgText>
+              ))}
             </G>
           </Svg>
         </View>
-
+        
       </StyledCard>
       
       <StyledCard>
