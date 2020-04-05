@@ -6,13 +6,14 @@ import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 import ActivityScreen from '../screens/DiseaseScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import { DiseaseContext, FeedContext } from '../context/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import DiseaseFilterMenu from '../components/DiseaseFilterMenu';
+import { getDiseaseImage } from '../utils/mapDiseaseImages';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -49,17 +50,31 @@ export default function BottomTabNavigator({ navigation, route }) {
 
   navigation.setOptions({ 
     headerTitle: getHeaderTitle(route),
+    headerLeft: () => (
+      currRoute === "Activity" ?
+        <Image
+          source={getDiseaseImage(diseasesContext.disease.name)} 
+          style={{ 
+            width: 36, 
+            height: 36, 
+            marginLeft: 20,
+            marginTop: 15,
+          }}
+        />
+        : 
+        null
+    ),
     headerTitleStyle: {
       fontWeight: "bold",
       fontFamily: "main",
       fontSize: 28,
-      marginLeft: 10,
+      marginLeft: 6,
       marginTop: 18,
     },
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
-      height: 125,
+      height: 130,
       backgroundColor: "#fff",
     },
     headerRight: () => (
