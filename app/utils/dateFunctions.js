@@ -5,7 +5,9 @@ const moment = require('moment');
 // console.log(moment(date).subtract(1, 'year').toISOString().substr(0, 10));
 // console.log(moment(date).subtract(10, 'years').toISOString().substr(0, 10));
 
-const formatToString = (date) => date.toISOString().substr(0, 10);
+export const formatToString = (date) => date.toISOString().substr(0, 10);
+
+export const getYesterday = (date) => moment(date).subtract(1, 'day');
 
 export const formatDateToDayMonth = (date) => moment.utc(date).format("DD/MM");
 export const formatDateToMonthDay = (date) => moment.utc(date).format("MMM DD");
@@ -32,7 +34,7 @@ export const getLastMonthQuarterSplitArray = (date) => {
   return dates.reverse();
 };
 
-export const getLastYearArray = (date) => {
+export const getLastYearArray = (diseaseMonthly, date) => {
   let dates = [];
 
   [...Array(13).keys()].map((i) => {
@@ -40,13 +42,21 @@ export const getLastYearArray = (date) => {
       dates.push(formatToString(moment.utc(date)));
       return;
     }
-    dates.push(formatToString(moment.utc(date).subtract(i, 'months').startOf('month')));
+    // Fallback to start of month if end of month data not available
+    const startOfMonthDate = formatToString(moment.utc(date).subtract(i, 'months').startOf('month'));
+    const endOfMonthDate = formatToString(moment.utc(date).subtract(i, 'months').endOf('month'));
+
+    if (!diseaseMonthly[endOfMonthDate]) {
+      dates.push(startOfMonthDate);
+      return;
+    }
+    dates.push(endOfMonthDate);
   });
 
   return dates.reverse();
 };
 
-export const getLastDecadeArray = (date) => {
+export const getLastDecadeArray = (diseaseYtd, date) => {
   let dates = [];
 
   [...Array(10).keys()].map((i) => {
@@ -54,7 +64,15 @@ export const getLastDecadeArray = (date) => {
       dates.push(formatToString(moment.utc(date)));
       return;
     }
-    dates.push(formatToString(moment.utc(date).subtract(i, 'years').startOf('year')));
+    // Fallback to start of month at end of year if end of year data not available
+    const startOfLastMonthDate = formatToString(moment.utc(date).subtract(i, 'years').endOf('year').startOf('month'));
+    const endOfLastMonthDate = formatToString(moment.utc(date).subtract(i, 'years').endOf('year').endOf('month'));
+
+    if (!diseaseYtd[endOfLastMonthDate]) {
+      dates.push(startOfLastMonthDate);
+      return;
+    }
+    dates.push(endOfLastMonthDate);
   });
 
   return dates.reverse();

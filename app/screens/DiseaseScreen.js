@@ -18,10 +18,19 @@ import {
   formatDateToMonthDay,
   formatDateToMonth,
   formatDateToYear,
+  formatToString,
+  getYesterday,
 } from '../utils/dateFunctions';
 import { formatDataWeek, chartConfig, getHiddenPoints } from '../utils/graphDataTemplates';
 
 const defDataObj = { data: [], dates: [] };
+
+const timeRangeMap = {
+  0: "day",
+  1: "week",
+  2: "month",
+  3: "year",
+};
 
 const ActivityScreen = () => {
   const diseaseContext = useContext(DiseaseContext);
@@ -53,48 +62,53 @@ const ActivityScreen = () => {
   const fetchDiseases = async () => {
     setLoading(true);
 
-    const diseaseTotals = await getDiseaseCases(diseaseContext.disease.nameDb, "AUS");
+    const diseaseYtd = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
+    const diseaseMonthly = await getDiseaseCases(diseaseContext.disease.nameDb, "AUS");
 
-    if (!diseaseTotals || diseaseTotals.error) {
+    if (!diseaseYtd || diseaseYtd.error) {
       setLoading(false);
       return { data: [null], dates: [] };
     }
 
-    const currDate = new Date().toUTCString();
+    let currDate = new Date().toUTCString();
+    // Fallback to yesterday if todays data not in db yet
+    if (!(formatToString(new Date()) in diseaseYtd)) {
+      currDate = getYesterday(new Date()).toDate().toUTCString();
+    }
     const lastWeekArray = getLastWeekArray(currDate);
     const lastMonthArray = getLastMonthQuarterSplitArray(currDate);
-    const lastYearArray = getLastYearArray(currDate);
-    const lastDecadeArray = getLastDecadeArray(currDate);
+    const lastYearArray = getLastYearArray(diseaseMonthly, currDate);
+    const lastDecadeArray = getLastDecadeArray(diseaseYtd, currDate);
 
     setDataWeek({
-      data: lastWeekArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      data: lastWeekArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
       dates: lastWeekArray.map((date) => formatDateToDayMonth(date)),
     });
 
     setDataMonth({
-      data: lastMonthArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      data: lastMonthArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
       dates: lastMonthArray.map((date) => formatDateToMonthDay(date)),
     });
 
     setDataYear({
-      data: lastYearArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      data: lastYearArray.map((thisDate) => diseaseMonthly[thisDate] ?? 0),
       dates: lastYearArray.map((date) => formatDateToMonth(date)),
     });
 
     setDataDecade({
-      data: lastDecadeArray.map((thisDate) => diseaseTotals[thisDate] ?? 0),
+      data: lastDecadeArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
       dates: lastDecadeArray.map((date) => formatDateToYear(date)),
     });
 
     setCasesDelta([
-      (diseaseTotals[lastWeekArray[lastWeekArray.length - 1]] ?? 0) - 
-        (diseaseTotals[lastWeekArray[0]] ?? 0),
-      (diseaseTotals[lastMonthArray[lastMonthArray.length - 1]] ?? 0) - 
-        (diseaseTotals[lastMonthArray[0]] ?? 0),
-      (diseaseTotals[lastYearArray[lastYearArray.length - 1]] ?? 0) - 
-        (diseaseTotals[lastYearArray[0]] ?? 0),
-      (diseaseTotals[lastDecadeArray[lastDecadeArray.length - 1]] ?? 0) - 
-        (diseaseTotals[lastDecadeArray[0]] ?? 0),
+      (diseaseYtd[lastWeekArray[lastWeekArray.length - 1]] ?? 0) - 
+        (diseaseYtd[lastWeekArray[0]] ?? 0),
+      (diseaseYtd[lastMonthArray[lastMonthArray.length - 1]] ?? 0) - 
+        (diseaseYtd[lastMonthArray[0]] ?? 0),
+      (diseaseMonthly[lastYearArray[lastYearArray.length - 1]] ?? 0) - 
+        (diseaseMonthly[lastYearArray[0]] ?? 0),
+      (diseaseYtd[lastDecadeArray[lastDecadeArray.length - 1]] ?? 0) - 
+        (diseaseYtd[lastDecadeArray[0]] ?? 0),
     ]);
     setLoading(false);
   };
@@ -111,7 +125,9 @@ const ActivityScreen = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <StyledCard>
         <View style={styles.detailsContainer}>
-          <StyledText color="secondary" style={styles.casesHeading}>Cases in Australia</StyledText>
+          <StyledText color="secondary" style={styles.casesHeading}>
+            New cases in Australia
+          </StyledText>
           <View style={styles.casesContainer}>
             <Text>
               <StyledText 
@@ -131,7 +147,7 @@ const ActivityScreen = () => {
                   (casesDelta[timeRangeIndex] >= 100 ? "error" : "warning") : 
                   "secondary"
                 }>
-                {` cases`}
+                {` new cases per ${timeRangeMap[timeRangeIndex]}`}
               </StyledText>
               <StyledText color="grey">{` in the `}</StyledText>
             </Text>
@@ -161,8 +177,8 @@ const ActivityScreen = () => {
           chartConfig={chartConfig}
           verticalLabelRotation={timeRangeIndex >= 2 ? 40 : 0}
           xLabelsOffset={timeRangeIndex >= 2 ? -8 : 0}
-          hidePointsAtIndex={getHiddenPoints(dataWeek.data)}
-          bezier
+          hidePointsAtIndex={getHiddenPoints(getCurrentGraph().datasets[0].data)}
+          bezier={timeRangeIndex < 2}
         />
         {/* :
           <StyledText nofound>Not enough data in this range</StyledText>
@@ -188,6 +204,7 @@ const styles = StyleSheet.create({
   casesContainer: {
     flex: 1,
     flexDirection: "row",
+    flexWrap: "wrap",
   },
   rangePicker: { 
     height: 50, 
