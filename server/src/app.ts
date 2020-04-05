@@ -84,9 +84,10 @@ app.get('/_twitter/', async (req, res) => {
 app.get('/_cases/', async (req, res) => {
   res.send(await getDiseaseCases(req.query));
 });
-app.get('/_userDetails', async (req, res) => {
+app.get('/_userDetails/', async (req, res) => {
   // const user: ApiUser = await verifyUser(req.headers.authorization);
   // if (user.authenticated) {
+    console.log("in app");
     addUserDetails(req.query);
   // }
 });
