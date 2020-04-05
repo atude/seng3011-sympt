@@ -2,7 +2,7 @@ import express from 'express';
 import admin from './firebase/firebaseInit';
 import { getArticles } from './queryController';
 import populateDb from './services/dbPopulationService';
-import { verifyUser } from './services/firebaseService';
+import { verifyUser, addUserDetails } from './services/firebaseService';
 import generateError from './utils/generateError';
 import getMetadata from './utils/getMetadata';
 import { isError } from './utils/checkFunctions';
@@ -112,6 +112,12 @@ app.get('/_twitter/', async (req, res) => {
 // todo
 });
 
+app.get('/_userDetails', async (req, res) => {
+  const user: ApiUser = await verifyUser(req.headers.authorization);
+  if (user.authenticated) {
+    addUserDetails(req.query);
+  }
+});
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));
 

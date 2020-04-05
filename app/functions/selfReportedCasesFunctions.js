@@ -1,22 +1,23 @@
 import firebase from '../firebase/firebaseInit';
-const usersRef = firebase.firestore().collection("users");
+import { getFetchMeta } from "../utils/fetchTools";
 
 
-export const setSymptoms = (userContext, selectedMap) => {
-  const selectedSymptoms = [...selectedMap.keys()];
 
-  usersRef.doc(userContext.user.email).set({
-    symptoms: selectedSymptoms,
-  });
+export const setSymptoms = async (userContext, selectedMap) => {
+  const selectedSymptoms = [...selectedMap.keys()].toString();
+  const selectedDetails = [];
+
+  try {
+    let response = await fetch(`https://sympt-server.herokuapp.com/_userDetails/?symptoms=${selectedSymptoms}&details=${selectedDetails}`, 
+      getFetchMeta(userContext.user.uid));
+    response = await response.json();
+    return response;
+  } catch (error) {
+    console.warn(error);
+  }
+
+  return null;
 };
-
-// export const getSymptoms = (userContext) => {
-//     usersRef.doc(userContext.user.email).get(
-        
-//     )
-// }
-
-
 
 // export const getSelfReportedCases = () => { // Should return array of coordinates of sick people... 
 
