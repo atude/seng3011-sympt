@@ -5,7 +5,7 @@ import StyledCard from '../components/StyledCard';
 import { DiseaseContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import StyledButton from '../components/StyledButton';
-import { LineChart } from "react-native-chart-kit";
+import { LineChart, ContributionGraph } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
 import { Picker } from 'react-native';
 import { getDiseaseCases } from '../functions/diseaseFunctions';
@@ -22,7 +22,14 @@ import {
   getYesterday,
   getLastWeek,
 } from '../utils/dateFunctions';
-import { formatDataWeek, chartConfig, getHiddenPoints } from '../utils/graphDataTemplates';
+import { 
+  formatDataWeek, 
+  getHiddenPoints, 
+  chartConfig, 
+  freqChartConfig 
+} from '../utils/graphDataTemplates';
+
+const moment = require('moment');
 
 const defDataObj = { data: [], dates: [] };
 
@@ -36,6 +43,7 @@ const timeRangeMap = {
 const ActivityScreen = () => {
   const diseaseContext = useContext(DiseaseContext);
   const [loading, setLoading] = useState(true);
+  const [dbName, setDbName] = useState("");
   
   const [dataWeek, setDataWeek] = useState(defDataObj);
   const [dataMonth, setDataMonth] = useState(defDataObj);
@@ -43,12 +51,21 @@ const ActivityScreen = () => {
   const [dataDecade, setDataDecade] = useState(defDataObj);
   const [casesDelta, setCasesDelta] = useState([0, 0, 0, 0]);
 
+  const [selectedYtd, setSelectedYtd] = useState({ date: "", count: 0 });
+  const [frequencyYtd, setFrequencyYtd] = useState([]);
+
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
+  const todaysDate = new Date();
 
   useEffect(() => {
     // Fetch on disease change
-    fetchDiseases();
-  }, [diseaseContext.disease.nameDb]);
+    if (diseaseContext.disease.nameDb !== dbName) {
+      fetchDiseases();
+      setDbName(diseaseContext.disease.nameDb);
+    }
+  }, [
+    diseaseContext.disease.nameDb
+  ]);
 
   const getCurrentGraph = () => {
     switch (timeRangeIndex) {
@@ -118,6 +135,19 @@ const ActivityScreen = () => {
       dates: lastDecadeArray.map((date) => formatDateToYear(date)),
     };
 
+    const currYear = new Date(currDate).getUTCFullYear();
+    const frequencyData = Object.keys(diseaseYtd).map((key) => {
+      return {
+        date: key,
+        count: diseaseYtd[key],
+      };
+    }).filter((countObj) =>  countObj.date.substr(0, 4) == currYear);
+
+    setFrequencyYtd(frequencyData);
+    setSelectedYtd(frequencyData.sort(
+      (a, b) => Date.parse(b.date) - Date.parse(a.date))[0]
+    );
+
     setDataWeek(thisDataWeek);
     setDataMonth(thisDataMonth);
     setDataYear(thisDataYear);
@@ -147,7 +177,7 @@ const ActivityScreen = () => {
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
-            New cases in Australia
+            Rate of new cases in Australia
           </StyledText>
           <View style={styles.casesContainer}>
             <Text>
@@ -185,9 +215,6 @@ const ActivityScreen = () => {
             </Picker>
           </View>
         </View>
-        {/* Enable this to disable datasets with incomplete data */}
-        {/* ---------------------------------------------------- */}
-        {/* {!getCurrentGraph().datasets[0].data.includes(null) ?  */}
         <LineChart
           data={getCurrentGraph()}
           width={Layout.window.width - 60}
@@ -201,9 +228,43 @@ const ActivityScreen = () => {
           hidePointsAtIndex={getHiddenPoints(getCurrentGraph().datasets[0].data)}
           bezier={timeRangeIndex < 2}
         />
-        {/* :
-          <StyledText nofound>Not enough data in this range</StyledText>
-        } */}
+      </StyledCard>
+      
+      <StyledCard>
+        <View style={styles.detailsContainer}>
+          <StyledText style={styles.casesHeading}>
+            Total cases in Australia
+          </StyledText>
+          <Text>
+            <StyledText 
+              style={styles.casesCountText} 
+            >
+              {selectedYtd.count}
+            </StyledText>
+            <StyledText>
+              {` cases this year up to `}
+            </StyledText>
+            <StyledText>
+              {moment(selectedYtd.date).isSame(todaysDate, 'd') ?
+                `today`:
+                moment(selectedYtd.date).format("MMMM Do")
+              } 
+            </StyledText>
+          </Text>
+          <ContributionGraph
+            squareSize={Layout.window.width / 20}
+            values={frequencyYtd}
+            endDate={new Date()}
+            numDays={90}
+            width={Layout.window.width - 60}
+            height={200}
+            style={{
+              marginLeft: -18,
+            }}
+            chartConfig={freqChartConfig}
+            onDayPress={(currSquare) => currSquare.count && setSelectedYtd(currSquare)}
+          />
+        </View>
       </StyledCard>
     </ScrollView>
   );
