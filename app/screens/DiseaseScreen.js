@@ -232,7 +232,7 @@ const ActivityScreen = () => {
       
       <StyledCard>
         <View style={styles.detailsContainer}>
-          <StyledText style={styles.casesHeading}>
+          <StyledText style={styles.casesHeading} color="primary">
             Total cases in Australia
           </StyledText>
           <Text>
@@ -244,7 +244,7 @@ const ActivityScreen = () => {
             <StyledText>
               {` cases this year up to `}
             </StyledText>
-            <StyledText>
+            <StyledText color="primary">
               {moment(selectedYtd.date).isSame(todaysDate, 'd') ?
                 `today`:
                 moment(selectedYtd.date).format("MMMM Do")

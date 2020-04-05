@@ -1,7 +1,7 @@
 const primary = "#2FA0C8";
 const secondary = "#7CA982";
 const success = "#43C93A";
-const warning = "#FFAD16";
+const warning = "#ff9616";
 const error = "#FF4753";
 
 export default {

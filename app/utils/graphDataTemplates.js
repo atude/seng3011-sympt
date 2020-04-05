@@ -13,9 +13,9 @@ export const freqChartConfig = {
   backgroundGradientToOpacity: 0,
   color: (opacity) => {
     if (isNaN(opacity)) {
-      return `rgba(47, 160, 200, 0.15)`;
+      return `rgba(255, 120, 22, 0.15)`;
     }
-    return `rgba(47, 160, 200, ${opacity})`;
+    return `rgba(255, 120, 22, ${opacity})`;
   },
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5
