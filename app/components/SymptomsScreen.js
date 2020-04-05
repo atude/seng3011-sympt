@@ -50,7 +50,6 @@ const SymptomsScreen = ({ navigation }) => {
   };
 
   const toggleApply = () => {
-    console.log(selected);
     setSymptoms(userContext, selected);
     navigation.goBack();
   };
