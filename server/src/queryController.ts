@@ -5,7 +5,8 @@ import contentScraper from './services/contentScrapeService';
 import {
   ScrapeResults, PageObject, GenError, URLFormattedTerms, Location, 
 } from './types';
-import { articlesRef, casesRef, userInfoRef } from './firebase/collectionReferences';
+import { articlesRef, casesRef } from './firebase/collectionReferences';
+// , userInfoRef 
 import { formatQueryUrl, getNormalisedDate } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';
