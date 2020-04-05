@@ -1,7 +1,11 @@
-const getTrendingArticles = async (diseases) => {
+const getTrendingArticles = async (feedDiseases, selectDisease, location) => {
+
+  let diseases = feedDiseases.map(disease => disease.toLowerCase());
+  diseases.push(selectDisease.name);
+  diseases = diseases.join(',');
   const getNewsArticles = async () => {
     try {
-      const newsArticles = await fetch(`https://sympt-server.herokuapp.com/_news/?diseases=${diseases}`);
+      const newsArticles = await fetch(`https://sympt-server.herokuapp.com/_news/?diseases=${diseases}&location=${location}`);
       const response = await newsArticles.json();
       return response.articles;
     } catch (error) {
