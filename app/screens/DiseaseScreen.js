@@ -28,11 +28,13 @@ import {
   chartConfig, 
   freqChartConfig 
 } from '../utils/graphDataTemplates';
+import Svg, { Path, G } from 'react-native-svg';
+import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath } from '../constants/AuMapPaths';
 
 const moment = require('moment');
 
 const defDataObj = { data: [], dates: [] };
-
+const graphMarginOffset = Layout.window.width / 8;
 const timeRangeMap = {
   0: "day",
   1: "week",
@@ -55,7 +57,7 @@ const ActivityScreen = () => {
   const [frequencyYtd, setFrequencyYtd] = useState([]);
 
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
-  const todaysDate = new Date();
+  const [todaysDateFallbacked, setTodaysDateFallbacked] = useState(new Date());
 
   useEffect(() => {
     // Fetch on disease change
@@ -89,9 +91,11 @@ const ActivityScreen = () => {
     }
 
     let currDate = new Date().toUTCString();
+    setTodaysDateFallbacked(currDate);
     // Fallback to yesterday if todays data not in db yet
     if (!(formatToString(new Date()) in diseaseYtd)) {
       currDate = getYesterday(new Date()).toDate().toUTCString();
+      setTodaysDateFallbacked(currDate);
     }
     const lastWeekArray = getLastWeekArray(currDate);
     const lastMonthArray = getLastMonthQuarterSplitArray(currDate);
@@ -215,20 +219,48 @@ const ActivityScreen = () => {
             </Picker>
           </View>
         </View>
-        <LineChart
-          data={getCurrentGraph()}
-          width={Layout.window.width - 60}
-          height={260}
-          style={{
-            marginLeft: -18,
-          }}
-          chartConfig={chartConfig}
-          verticalLabelRotation={timeRangeIndex >= 2 ? 40 : 0}
-          xLabelsOffset={timeRangeIndex >= 2 ? -8 : 0}
-          hidePointsAtIndex={getHiddenPoints(getCurrentGraph().datasets[0].data)}
-          bezier={timeRangeIndex < 2}
-          fromZero
-        />
+        <View style={styles.graphContainer}>
+          <LineChart
+            data={getCurrentGraph()}
+            width={Layout.window.width - graphMarginOffset}
+            height={260}
+            chartConfig={chartConfig}
+            verticalLabelRotation={timeRangeIndex >= 2 ? 40 : 0}
+            xLabelsOffset={timeRangeIndex >= 2 ? -8 : 0}
+            hidePointsAtIndex={getHiddenPoints(getCurrentGraph().datasets[0].data)}
+            bezier={timeRangeIndex < 2}
+            style={{ marginLeft: -10, }}
+            fromZero
+          />
+        </View>
+      </StyledCard>
+
+      <StyledCard>
+        <View style={styles.detailsContainer}>
+          <StyledText color="secondary" style={styles.casesHeading}>
+            Cases within states
+          </StyledText>
+        </View>
+        <View style={styles.auMapContainer}>
+          <Svg 
+            height="100%" 
+            width="100%"
+            viewBox={`0 0 200 200`}
+            preserveAspectRatio="xMinYMin slice" 
+          >
+            <G fill={Colors.secondary} stroke="#fff" strokeWidth="2.5">
+              <Path d={nswPath} />
+              <Path d={actPath} />
+              <Path d={vicPath} />
+              <Path d={saPath} />
+              <Path d={ntPath} />
+              <Path d={qldPath} />
+              <Path d={tasPath} />
+              <Path d={waPath} />
+            </G>
+          </Svg>
+        </View>
+
       </StyledCard>
       
       <StyledCard>
@@ -246,25 +278,24 @@ const ActivityScreen = () => {
               {` cases this year up to `}
             </StyledText>
             <StyledText color="primary">
-              {moment(selectedYtd.date).isSame(todaysDate, 'd') ?
+              {moment(selectedYtd.date).isSame(todaysDateFallbacked, 'd') ?
                 `today`:
                 moment(selectedYtd.date).format("MMMM Do")
               } 
             </StyledText>
           </Text>
-          <ContributionGraph
-            squareSize={Layout.window.width / 20}
-            values={frequencyYtd}
-            endDate={new Date()}
-            numDays={90}
-            width={Layout.window.width - 60}
-            height={200}
-            style={{
-              marginLeft: -18,
-            }}
-            chartConfig={freqChartConfig}
-            onDayPress={(currSquare) => currSquare.count && setSelectedYtd(currSquare)}
-          />
+          <View style={styles.graphContainer}>
+            <ContributionGraph
+              squareSize={Layout.window.width / 19.5}
+              values={frequencyYtd}
+              endDate={todaysDateFallbacked}
+              numDays={90}
+              width={Layout.window.width - graphMarginOffset}
+              height={200}
+              chartConfig={freqChartConfig}
+              onDayPress={(currSquare) => currSquare.count && setSelectedYtd(currSquare)}
+            />
+          </View>
         </View>
       </StyledCard>
     </ScrollView>
@@ -279,6 +310,18 @@ const styles = StyleSheet.create({
   loading: {
     alignSelf: "center",
     height: "100%",
+  },
+  graphContainer: {
+    alignSelf: "center",
+    width: Layout.window.width - graphMarginOffset,
+    alignItems: "center",
+    marginLeft: -12,
+  },  
+  auMapContainer: {
+    alignContent: "center",
+    width: "100%",
+    aspectRatio: 1,
+    padding: 10,
   },
   detailsContainer: {
     padding: 6,
