@@ -7,9 +7,18 @@ export const setSymptoms = async (userContext, selectedMap) => {
   const selectedSymptoms = [...selectedMap.keys()].toString();
   const selectedDetails = [];
 
+  const data = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  };
+
   try {
+    // let response = await fetch(`https://sympt-server.herokuapp.com/_userDetails/?symptoms=${selectedSymptoms}&details=${selectedDetails}`, 
+    //   getFetchMeta(userContext.user.uid));
     let response = await fetch(`https://sympt-server.herokuapp.com/_userDetails/?symptoms=${selectedSymptoms}&details=${selectedDetails}`, 
-      getFetchMeta(userContext.user.uid));
+      data);
     response = await response.json();
     return response;
   } catch (error) {
