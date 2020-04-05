@@ -90,6 +90,7 @@ app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port
 // Populate db every 8 hrs
 setInterval(() => {
   console.log("Start generic scrape from yesterday's posts...");
-  scrapeDiseasesStats(new Date());
+  const auDate = new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" });
+  scrapeDiseasesStats(new Date(auDate));
   populateDb();
 }, 1000 * 60 * 60 * 6);
