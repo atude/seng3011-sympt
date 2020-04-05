@@ -29,7 +29,7 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   
-  setTimeout(() => console.log(userContext.userLocation), 5000);
+  // setTimeout(() => console.log(userContext.userLocation), 5000);
 
   const getCard = (desc, action, iconName) => (
     <TouchableOpacity onPress={action}>

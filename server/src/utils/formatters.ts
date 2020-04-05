@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import generateError from "./generateError";
-import { GenError, URLFormattedTerms } from "../types";
+import { GenError, URLFormattedTerms, UserDetailsTerms } from "../types";
 
 export const dateRegexWords = /\d{1,2} [a-zA-Z]{3} \d{4}/gi;
 export const dateRegexNum = /^([0-9]{4})-([0-9]{2})-([0-9]{2}).*/;
@@ -67,4 +67,15 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
     count,
     page,
   } as URLFormattedTerms;
+};
+
+export const formatUserDetails = (queryUrl: string): UserDetailsTerms => {
+  const urlParams = new URLSearchParams(queryUrl);
+  const symptoms = urlParams.get('syndromes');
+  const details = urlParams.get('details');
+
+  return {
+    symptoms: symptoms?.split(',').filter((symptom) => symptom !== ""),
+    details: details?.split(',').filter((detail) => detail !== ""),
+  } as UserDetailsTerms;
 };
