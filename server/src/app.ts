@@ -87,8 +87,7 @@ app.get('/_cases/', async (req, res) => {
 app.get('/_userDetails/', async (req, res) => {
   // const user: ApiUser = await verifyUser(req.headers.authorization);
   // if (user.authenticated) {
-    console.log("in app");
-    addUserDetails(req.query);
+  res.send(addUserDetails(req.query));
   // }
 });
 
