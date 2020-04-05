@@ -43,7 +43,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     case 'Tags':
       return'Tags';
     default:
-      return 'Root';
+      return diseasesContext.disease.nameFormatted;
     }
   };
 

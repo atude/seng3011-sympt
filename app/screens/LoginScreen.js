@@ -109,7 +109,7 @@ const LoginScreen = () => {
           size={50} 
           style={styles.spinner} 
           animating={loadingSubmit}
-          color={Colors.info}
+          color={Colors.primary}
         />
       </View>
       <StyledText 
