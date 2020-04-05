@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import { ApiUser } from '../types';
 import { formatUserDetails } from '../utils/formatters';
+import { userInfoRef } from '../firebase/collectionReferences';
 
 export const verifyUser = async (uid: string | undefined): Promise<ApiUser> => {
   try {
@@ -20,9 +21,24 @@ export const verifyUser = async (uid: string | undefined): Promise<ApiUser> => {
   }
 };
 
-export const addUserDetails = async (queryUrl: string) => {
+export const addUserDetails = async (queryUrl: string, userEmail: string) => {
   const { symptoms, details } = formatUserDetails(queryUrl);
 
-  console.log("symptoms and details", symptoms, details);
-  // Weird firebase stuff goes here 
+  const userDetails = {
+    symptoms,
+    details,
+  };
+
+  try {
+    const fetchCases = await userInfoRef
+      .doc(userEmail)
+      .set({ ...userDetails });
+      
+    return fetchCases;
+  } catch (error) {
+    console.log(error);
+    return {
+      error,
+    };
+  }
 };
