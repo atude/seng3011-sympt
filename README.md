@@ -42,6 +42,7 @@ From the dashboard, you can refresh your API token, track your API call log and 
 1. Make a copy of `.env.example` in `./app` and rename it to `.env`.
 1. Make a copy of `app.json.example` in `./app` and rename it to `app.json`.
 1. Add the necessary keys to the `.env` and `app.json` files.
+1. `cd ./app`
 1. Run `expo install` to setup necessary dependencies.
 1. Run `expo start` to start the development server.
 1. Open AVD and run the Expo app on a virtual device using `Local` mode, and copy the connection address to the Expo app.
