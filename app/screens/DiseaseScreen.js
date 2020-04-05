@@ -20,6 +20,7 @@ import {
   formatDateToYear,
   formatToString,
   getYesterday,
+  getLastWeek,
 } from '../utils/dateFunctions';
 import { formatDataWeek, chartConfig, getHiddenPoints } from '../utils/graphDataTemplates';
 
@@ -95,7 +96,15 @@ const ActivityScreen = () => {
     };
 
     const thisDataMonth = {
-      data: lastMonthArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
+      data: lastMonthArray.map((thisDate) => {
+        const dataWeek = diseaseYtd[thisDate];
+        const dataWeekBefore = diseaseYtd[formatToString(getLastWeek(thisDate))];
+
+        if (dataWeekBefore !== undefined && dataWeek !== undefined) {
+          return dataWeek - dataWeekBefore;
+        }
+        return 0;
+      }),
       dates: lastMonthArray.map((date) => formatDateToMonthDay(date)),
     };
 
@@ -120,8 +129,6 @@ const ActivityScreen = () => {
       thisDataYear.data[thisDataYear.data.length - 1] - thisDataYear.data[0],
       thisDataDecade.data[thisDataDecade.data.length - 1] - thisDataDecade.data[0],
     ];
-
-    console.log(thisCasesDelta);
 
     setCasesDelta(thisCasesDelta);
     setLoading(false);
@@ -161,20 +168,20 @@ const ActivityScreen = () => {
                   (casesDelta[timeRangeIndex] >= 100 ? "error" : "warning") : 
                   "secondary"
                 }>
-                {` new cases per ${timeRangeMap[timeRangeIndex]}`}
+                {` new cases per ${timeRangeMap[timeRangeIndex]} `}
               </StyledText>
-              <StyledText color="grey">{` since the `}</StyledText>
             </Text>
+            {/* <StyledText color="grey">{`\nsince the `}</StyledText> */}
             <Picker
               mode="dropdown"
               selectedValue={timeRangeIndex}
               style={styles.rangePicker}
               onValueChange={(itemValue) => setTimeRangeIndex(itemValue)}
             >
-              <Picker.Item label="past week" value={0} />
-              <Picker.Item label="past month" value={1} />
-              <Picker.Item label="past year" value={2} />
-              <Picker.Item label="past decade" value={3} />
+              <Picker.Item label="since the past week" value={0} />
+              <Picker.Item label="since the past month" value={1} />
+              <Picker.Item label="since the past year" value={2} />
+              <Picker.Item label="since the past decade" value={3} />
             </Picker>
           </View>
         </View>
@@ -222,7 +229,7 @@ const styles = StyleSheet.create({
   },
   rangePicker: { 
     height: 50, 
-    width: 160, 
+    width: 220, 
     color: Colors.dull,
     fontFamily: "main",
 

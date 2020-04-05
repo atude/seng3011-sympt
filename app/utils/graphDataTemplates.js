@@ -10,7 +10,6 @@ export const chartConfig = {
 
 export const getHiddenPoints = (data) => {
   return data.map((point, i) => {
-    console.log(point);
     if (point === 0.0001) return i;
     return null;
   });

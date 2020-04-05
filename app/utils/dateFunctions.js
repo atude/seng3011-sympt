@@ -8,6 +8,7 @@ const moment = require('moment');
 export const formatToString = (date) => date.toISOString().substr(0, 10);
 
 export const getYesterday = (date) => moment.utc(date).subtract(1, 'day');
+export const getLastWeek = (date) => moment.utc(date).subtract(1, 'week');
 
 export const formatDateToDayMonth = (date) => moment.utc(date).format("DD/MM");
 export const formatDateToMonthDay = (date) => moment.utc(date).format("MMM DD");
