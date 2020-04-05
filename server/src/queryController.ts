@@ -6,6 +6,7 @@ import {
   ScrapeResults, PageObject, GenError, URLFormattedTerms, Location, 
 } from './types';
 import { articlesRef, casesRef } from './firebase/collectionReferences';
+// , userInfoRef 
 import { formatQueryUrl, getNormalisedDate } from './utils/formatters';
 import puppeteerConfig from './constants/puppeteerConfig';
 import { isError } from './utils/checkFunctions';

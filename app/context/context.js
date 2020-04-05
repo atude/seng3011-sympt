@@ -4,8 +4,15 @@ import firebase from '../firebase/firebaseInit';
 
 export const UserContext = createContext({
   user: firebase.auth().currentUser,
-  // TODO: location ?
-});
+  userLocation: {},
+  setUserLocation: (location) => {},
+  // userSymptoms: [],
+  // removeUserSymptom: (symptom) => {},
+  // addUserSymptom: (symptom) => {},
+  // setUserSymptoms: (userSymptomsArray) => {},
+  // details: [],
+}, 
+);
 
 export const DiseaseContext = createContext({
   disease: {

@@ -53,3 +53,8 @@ export type ApiUser = {
   authenticated: boolean;
   email: string;
 }
+
+export type UserDetailsTerms = {
+  symptoms: string[];
+  details: string[];
+}

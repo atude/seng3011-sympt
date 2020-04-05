@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import { ApiUser } from '../types';
+import { formatUserDetails } from '../utils/formatters';
 
 export const verifyUser = async (uid: string | undefined): Promise<ApiUser> => {
   try {
@@ -17,4 +18,11 @@ export const verifyUser = async (uid: string | undefined): Promise<ApiUser> => {
       email: "null",
     } as ApiUser;
   }
+};
+
+export const addUserDetails = async (queryUrl: string) => {
+  const { symptoms, details } = formatUserDetails(queryUrl);
+
+  console.log("symptoms and details", symptoms, details);
+  // Weird firebase stuff goes here 
 };
