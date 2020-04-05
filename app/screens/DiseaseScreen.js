@@ -80,36 +80,50 @@ const ActivityScreen = () => {
     const lastYearArray = getLastYearArray(diseaseMonthly, currDate);
     const lastDecadeArray = getLastDecadeArray(diseaseYtd, currDate);
 
-    setDataWeek({
-      data: lastWeekArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
-      dates: lastWeekArray.map((date) => formatDateToDayMonth(date)),
-    });
+    const thisDataWeek = {
+      data: lastWeekArray.map((thisDate) => {
+        // Get change between each day
+        const dataDay = diseaseYtd[thisDate];
+        const dataDayBefore = diseaseYtd[formatToString(getYesterday(thisDate))];
 
-    setDataMonth({
+        if (dataDayBefore !== undefined && dataDay !== undefined) {
+          return dataDay - dataDayBefore;
+        }
+        return 0;
+      }),
+      dates: lastWeekArray.map((date) => formatDateToDayMonth(date)),
+    };
+
+    const thisDataMonth = {
       data: lastMonthArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
       dates: lastMonthArray.map((date) => formatDateToMonthDay(date)),
-    });
+    };
 
-    setDataYear({
+    const thisDataYear = {
       data: lastYearArray.map((thisDate) => diseaseMonthly[thisDate] ?? 0),
       dates: lastYearArray.map((date) => formatDateToMonth(date)),
-    });
+    };
 
-    setDataDecade({
+    const thisDataDecade = {
       data: lastDecadeArray.map((thisDate) => diseaseYtd[thisDate] ?? 0),
       dates: lastDecadeArray.map((date) => formatDateToYear(date)),
-    });
+    };
 
-    setCasesDelta([
-      (diseaseYtd[lastWeekArray[lastWeekArray.length - 1]] ?? 0) - 
-        (diseaseYtd[lastWeekArray[0]] ?? 0),
-      (diseaseYtd[lastMonthArray[lastMonthArray.length - 1]] ?? 0) - 
-        (diseaseYtd[lastMonthArray[0]] ?? 0),
-      (diseaseMonthly[lastYearArray[lastYearArray.length - 1]] ?? 0) - 
-        (diseaseMonthly[lastYearArray[0]] ?? 0),
-      (diseaseYtd[lastDecadeArray[lastDecadeArray.length - 1]] ?? 0) - 
-        (diseaseYtd[lastDecadeArray[0]] ?? 0),
-    ]);
+    setDataWeek(thisDataWeek);
+    setDataMonth(thisDataMonth);
+    setDataYear(thisDataYear);
+    setDataDecade(thisDataDecade);
+
+    const thisCasesDelta = [
+      thisDataWeek.data[thisDataWeek.data.length - 1] - thisDataWeek.data[0],
+      thisDataMonth.data[thisDataMonth.data.length - 1] - thisDataMonth.data[0],
+      thisDataYear.data[thisDataYear.data.length - 1] - thisDataYear.data[0],
+      thisDataDecade.data[thisDataDecade.data.length - 1] - thisDataDecade.data[0],
+    ];
+
+    console.log(thisCasesDelta);
+
+    setCasesDelta(thisCasesDelta);
     setLoading(false);
   };
 
@@ -117,7 +131,7 @@ const ActivityScreen = () => {
     <ActivityIndicator 
       size={60}
       style={styles.loading} 
-      color={[Colors.primary, Colors.secondary]}
+      colors={[Colors.primary, Colors.secondary]}
     />
   );
 
@@ -149,7 +163,7 @@ const ActivityScreen = () => {
                 }>
                 {` new cases per ${timeRangeMap[timeRangeIndex]}`}
               </StyledText>
-              <StyledText color="grey">{` in the `}</StyledText>
+              <StyledText color="grey">{` since the `}</StyledText>
             </Text>
             <Picker
               mode="dropdown"
