@@ -227,6 +227,7 @@ const ActivityScreen = () => {
           xLabelsOffset={timeRangeIndex >= 2 ? -8 : 0}
           hidePointsAtIndex={getHiddenPoints(getCurrentGraph().datasets[0].data)}
           bezier={timeRangeIndex < 2}
+          fromZero
         />
       </StyledCard>
       
