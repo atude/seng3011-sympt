@@ -85,8 +85,7 @@ app.get('/_cases/', async (req, res) => {
   res.send(await getDiseaseCases(req.query));
 });
 app.get('/_userDetails/', async (req, res) => {
-  // const user: ApiUser = await verifyUser(req.headers.authorization);
-  const user: ApiUser = await verifyUser("yBo4ubiVCwdTqeNSlGCLpbXSGer1");
+  const user: ApiUser = await verifyUser(req.headers.authorization);
 
   console.log(user);
   if (user.authenticated) {
