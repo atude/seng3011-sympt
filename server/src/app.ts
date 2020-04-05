@@ -85,10 +85,12 @@ app.get('/_cases/', async (req, res) => {
   res.send(await getDiseaseCases(req.query));
 });
 app.get('/_userDetails/', async (req, res) => {
-  // const user: ApiUser = await verifyUser(req.headers.authorization);
-  // if (user.authenticated) {
-  res.send(addUserDetails(req.query));
-  // }
+  const user: ApiUser = await verifyUser(req.headers.authorization);
+
+  console.log(user);
+  if (user.authenticated) {
+    res.send(addUserDetails(req.query, user.email));
+  }
 });
 
 app.listen(port, '0.0.0.0', () => console.log(`--> Server is listening on ${port}`));

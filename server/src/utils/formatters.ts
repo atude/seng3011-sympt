@@ -71,11 +71,11 @@ export const formatQueryUrl = (queryUrl: string): GenError | URLFormattedTerms =
 
 export const formatUserDetails = (queryUrl: string): UserDetailsTerms => {
   const urlParams = new URLSearchParams(queryUrl);
-  const symptoms = urlParams.get('syndromes');
+  const symptoms = urlParams.get('symptoms');
   const details = urlParams.get('details');
 
   return {
-    symptoms: symptoms?.split(',').filter((symptom) => symptom !== ""),
-    details: details?.split(',').filter((detail) => detail !== ""),
+    symptoms: symptoms?.split(',').filter((symptom) => symptom !== "") || [],
+    details: details?.split(',').filter((detail) => detail !== "") || [],
   } as UserDetailsTerms;
 };
