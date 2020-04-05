@@ -4,13 +4,13 @@ const getTrendingArticles = async (feedDiseases, selectDisease, location) => {
   diseases.push(selectDisease.name);
   diseases = diseases.join(',');
   const getNewsArticles = async () => {
-    try {
-      const newsArticles = await fetch(`https://sympt-server.herokuapp.com/_news/?diseases=${diseases}&location=${location}`);
-      const response = await newsArticles.json();
-      return response.articles;
-    } catch (error) {
-      console.warn(error);
-    }
+    // try {
+    //   const newsArticles = await fetch(`https://sympt-server.herokuapp.com/_news/?diseases=${diseases}&location=${location}`);
+    //   const response = await newsArticles.json();
+    //   return response.articles;
+    // } catch (error) {
+    //   console.warn(error);
+    // }
     return null;
   };
   
