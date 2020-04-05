@@ -30,11 +30,3 @@ export const getSentiment = (text: string) => {
         sentiment: analyzer.getSentiment(nonNeutral)
     };
 };
-
-
-export const getSentimentFile = (texts: JSONArray) => {
-    var sentiments: JSONArray = [];
-    for(let i = 0; i < texts.length; i++)
-        sentiments.push(getSentiment(texts[i].main_text));
-    return sentiments;
-}
