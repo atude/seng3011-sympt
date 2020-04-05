@@ -5,82 +5,29 @@ import { signOut } from '../functions/accountFunctions';
 import Colors from '../constants/Colors';
 import { UserContext } from '../context/context';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import StyledText from '../components/StyledText';
-import StyledCard from '../components/StyledCard';
+import ProfilePage from '../components/ProfilePage';
+import SymptomsScreen from '../components/SymptomsScreen';
+import AdditionalDetailsScreen from '../components/AdditionalDetailsScreen';
+import AboutScreen from '../components/AboutScreen';
 
-const ProfileScreen = (props) => {
-  const userContext = useContext(UserContext);
-  const profilePic = require("../assets/images/logo.png");
+const ProfileStack = createStackNavigator();
 
-  const getCard = (desc, action, iconName) => (
-    <TouchableOpacity onPress={action}>
-      <StyledCard style={styles.card}>
-        <Ionicons name={iconName} size={32} style={styles.icon} />
-        <StyledText style={styles.heading}>{desc}</StyledText>
-      </StyledCard>
-    </TouchableOpacity>
-  );
-
+const ProfileScreen = ({ navigation }) => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.profile}>
-        <Image source={profilePic} style={styles.img} />
-        <StyledText style={styles.email}>{userContext.user.email}</StyledText>
-      </View>
-
-      <View style={styles.cardContainer}>
-        {getCard("Update Email", null, "md-mail-open")}
-        {getCard("Update Details", null, "md-medkit")}
-        {getCard("Update Symptoms", null, "md-thermometer")}
-        {getCard("About This App", null, "md-information-circle-outline")}
-        {getCard("Sign Out", signOut, "md-log-out")}
-      </View>
-    </ScrollView>
+    <ProfileStack.Navigator
+      headerMode="float"
+      screenOptions={{
+        headerShown: false
+      }}>
+      <ProfileStack.Screen name="ProfileScreen" component={ProfilePage} />
+      <ProfileStack.Screen name="SymptomsScreen" component={SymptomsScreen} />
+      <ProfileStack.Screen name="AboutScreen" component={AboutScreen} />
+      <ProfileStack.Screen name="AdditionalDetailsScreen" component={AdditionalDetailsScreen} />
+    </ProfileStack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.bg,
-    padding: 30,
-  },
-  cardContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  card: {
-    width: 140,
-    height: 140,
-    margin: 5,
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-  },  
-  profile: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img: {
-    width: 120,
-    height: 120,
-  },
-  heading: {
-    textAlign: 'center',
-    flexWrap: "wrap",
-  },
-  email: {
-    fontSize: 22,
-    padding: 22,
-  },
-  icon: {
-    textAlign: 'center',
-    color: Colors.primary,
-    marginBottom: 10,
-  }
-});
 
 export default ProfileScreen;
