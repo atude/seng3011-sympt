@@ -27,8 +27,7 @@ const ArticlesScreen = (props) => {
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
       userContext.user.uid, 
-      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation, 
-      //add current disease + extra terms
+      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
     );
@@ -44,18 +43,18 @@ const ArticlesScreen = (props) => {
     if (isLoadingArticles) {
       return;
     }
-    setPage(page += 1);
+    setPage(page + 1);
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
       userContext.user.uid, 
-      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation,
+      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
     );
     if (!articlesResponse.articles) {
       setLoadingArticles(false);
     }
-    setArticles(articles.concat(articlesResponse.articles || []));
+    setArticles([...articles].concat(articlesResponse.articles || []));
     setLoadingArticles(false);
   };
 
