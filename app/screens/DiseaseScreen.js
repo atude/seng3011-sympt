@@ -4,7 +4,6 @@ import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
 import { DiseaseContext } from '../context/context';
 import StyledText from '../components/StyledText';
-import StyledButton from '../components/StyledButton';
 import { LineChart, ContributionGraph } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
 import { Picker } from 'react-native';
@@ -33,6 +32,7 @@ import Svg, { Path, G, Text as SvgText } from 'react-native-svg';
 import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath, 
   getStateCoordX, getStateCoordY, getStateTextColor 
 } from '../constants/AuMapFunctions';
+import { Slider } from 'react-native-elements';
 
 const moment = require('moment');
 
@@ -57,7 +57,8 @@ const ActivityScreen = () => {
   const [casesDelta, setCasesDelta] = useState([0, 0, 0, 0]);
   const [cumulativeStateCases, setCumulativeStateCases] = useState();
   const [cumulativeStateTotal, setCumulativeStateTotal] = useState(0);
-
+  const [cumulativeDateIndex, setCumulativeDateIndex] = useState(0);
+ 
   const [selectedYtd, setSelectedYtd] = useState({ date: "", count: 0 });
   const [frequencyYtd, setFrequencyYtd] = useState([]);
 
@@ -278,7 +279,7 @@ const ActivityScreen = () => {
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
-            Cases within states this year
+            Cases within states in the past year
           </StyledText>
         </View>
         <View style={styles.auMapContainer}>
@@ -308,7 +309,35 @@ const ActivityScreen = () => {
             </G>
           </Svg>
         </View>
-        
+        <StyledText 
+          style={{
+            marginLeft: cumulativeDateIndex * 28.5,
+            width: "100%",
+          }}
+          color="primary"
+        >
+          {cumulativeStateCases["NSW"].dates[cumulativeDateIndex]}
+        </StyledText>
+        <Slider
+          style={{
+            marginHorizontal: 20,
+          }}
+          step={1}
+          maximumValue={cumulativeStateCases["NSW"].dates.length - 1}
+          onValueChange={(value) => setCumulativeDateIndex(value)}
+          thumbTintColor={Colors.primary}
+        />
+        <View 
+          style={{ 
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Use NSW as random date section */}
+          <StyledText>{cumulativeStateCases["NSW"].dates[0]}</StyledText>
+          <StyledText>{cumulativeStateCases["NSW"].dates[cumulativeStateCases["NSW"].dates.length - 1]}</StyledText>
+        </View>
       </StyledCard>
       
       <StyledCard>

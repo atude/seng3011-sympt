@@ -12,7 +12,7 @@ export const getLastWeek = (date) => moment.utc(date).subtract(1, 'week');
 
 export const formatDateToDayMonth = (date) => moment.utc(date).format("DD/MM");
 export const formatDateToMonthDay = (date) => moment.utc(date).format("MMM DD");
-export const formatDateToMonth = (date) => moment.utc(date).format("MMM");
+export const formatDateToMonth = (date) => moment.utc(date).format("MMM YYYY");
 export const formatDateToYear = (date) => moment.utc(date).format("YYYY");
 
 export const getLastWeekArray = (date) => {
