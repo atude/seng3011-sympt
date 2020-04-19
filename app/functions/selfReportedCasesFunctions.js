@@ -6,7 +6,7 @@ export const setSymptoms = async (userContext, selectedMap) => {
 
   try {
     let response = await fetch(`https://sympt-server.herokuapp.com/_userDetails/?symptoms=${selectedSymptoms}&details=${selectedDetails}`, 
-      getFetchMeta(userContext.user.uid));
+      getFetchMeta(userContext.apiKey));
     response = await response.json();
     return response;
   } catch (error) {

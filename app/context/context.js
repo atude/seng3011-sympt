@@ -1,18 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { createContext } from "react";
-import firebase from '../firebase/firebaseInit';
+import { REACT_APP_API_KEY } from 'react-native-dotenv';
 
 export const UserContext = createContext({
-  user: firebase.auth().currentUser,
+  apiKey: REACT_APP_API_KEY,
   userLocation: {},
   setUserLocation: (location) => {},
-  // userSymptoms: [],
-  // removeUserSymptom: (symptom) => {},
-  // addUserSymptom: (symptom) => {},
-  // setUserSymptoms: (userSymptomsArray) => {},
-  // details: [],
-}, 
-);
+});
 
 export const DiseaseContext = createContext({
   disease: {

@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { signOut } from '../functions/accountFunctions';
-import Colors from '../constants/Colors';
-import { UserContext } from '../context/context';
 
 import StyledText from '../components/StyledText';
 import StyledCard from '../components/StyledCard';
 import StyledButton from '../components/StyledButton';
-import ProfilePage from '../components/ProfilePage';
 
 const AboutScreen = ({ navigation }) => {
 

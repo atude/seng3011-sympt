@@ -5,11 +5,9 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import firebase from './firebase/firebaseInit';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
-import LoginScreen from './screens/LoginScreen';
 
 import { UserContext, DiseaseContext, FeedContext } from './context/context';
 import diseases from './constants/diseases.json';
@@ -18,16 +16,13 @@ const Stack = createStackNavigator();
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const [isUserLoadingComplete, setUserLoadingComplete] = useState(false);
   const [initialNavigationState, setInitialNavigationState] = useState();
 
   const containerRef = useRef();
 
   const { getInitialState } = useLinking(containerRef);
 
-  const [user, setUser] = useState(firebase.auth().currentUser);
   const [userLocation, setUserLocation] = useState({});
-  // const [userSymptoms, setUserSymptoms] = useState([]);
   const [disease, setDisease] = useState(diseases[0]);
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -37,17 +32,8 @@ export default function App(props) {
 
   // Context definers
   const userContextValue = {
-    user: user || null,
     userLocation, 
     setUserLocation: (location) => setUserLocation(location),
-    // userSymptoms,
-    // removeUserSymptom: (symptom) => setUserSymptoms(userSymptoms.filter((sympt) => sympt !== symptom)),
-    // addUserSymptom: (symptom) => {
-    //   console.log(userSymptoms);
-    //   setUserSymptoms([...userSymptoms, symptom]);
-    //   setTimeout(() => console.log(userSymptoms), 1000);
-    // }, 
-    // setUserSymptoms: (userSymptomsArray) => setUserSymptoms(userSymptomsArray),
   };
 
   const diseaseContextValue = {
@@ -87,17 +73,6 @@ export default function App(props) {
           'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
           'main': require('./assets/fonts/SFPro-Regular.ttf'),
         });
-
-        // Setup firebase user
-        firebase.auth().onAuthStateChanged((currUser) => {
-          if (currUser) {
-            setUser(currUser);
-            console.log("Auth state changed => " + currUser.email);
-          } else {
-            setUser(null);
-          }
-          setUserLoadingComplete(true);
-        });
       } catch (e) {
         console.warn(e);
       } finally {
@@ -110,7 +85,7 @@ export default function App(props) {
   }, []);
 
 
-  if ((!isLoadingComplete || !isUserLoadingComplete) && !props.skipLoadingScreen) {
+  if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
     return (
@@ -119,15 +94,11 @@ export default function App(props) {
           <DiseaseContext.Provider value={diseaseContextValue}>
             <FeedContext.Provider value={feedContextValue}>
               {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
-              {!user ? (
-                <LoginScreen />
-              ) : (
-                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                  <Stack.Navigator>
-                    <Stack.Screen name="Root" component={BottomTabNavigator} />
-                  </Stack.Navigator>
-                </NavigationContainer>
-              )}
+              <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                <Stack.Navigator>
+                  <Stack.Screen name="Root" component={BottomTabNavigator} />
+                </Stack.Navigator>
+              </NavigationContainer>
             </FeedContext.Provider>
           </DiseaseContext.Provider>
         </UserContext.Provider>

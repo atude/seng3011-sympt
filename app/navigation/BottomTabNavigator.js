@@ -2,18 +2,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 
-import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 import ActivityScreen from '../screens/DiseaseScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
 import { DiseaseContext, FeedContext } from '../context/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import DiseaseFilterMenu from '../components/DiseaseFilterMenu';
-import { getDiseaseImage } from '../utils/mapDiseaseImages';
+import StyledText from '../components/StyledText';
+import Layout from '../constants/Layout';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -35,14 +34,8 @@ export default function BottomTabNavigator({ navigation, route }) {
     switch (routeName) {
     case 'Activity':
       return diseasesContext.disease.nameFormatted || "Activity";
-    case 'Self Reported Cases':
-      return 'Self Reported Cases';
     case 'Feed':
       return 'Your Feed';
-    case 'Profile':
-      return 'Profile';
-    case 'Tags':
-      return'Tags';
     default:
       return diseasesContext.disease.nameFormatted;
     }
@@ -50,20 +43,7 @@ export default function BottomTabNavigator({ navigation, route }) {
 
   navigation.setOptions({ 
     headerTitle: getHeaderTitle(route),
-    headerLeft: () => (
-      currRoute === "Activity" ?
-        <Image
-          source={getDiseaseImage(diseasesContext.disease.name)} 
-          style={{ 
-            width: 36, 
-            height: 36, 
-            marginLeft: 20,
-            marginTop: 15,
-          }}
-        />
-        : 
-        null
-    ),
+    headerLeft: () => null,
     headerTitleStyle: {
       fontWeight: "bold",
       fontFamily: "main",
@@ -80,27 +60,14 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerRight: () => (
       <>
         <View style={styles.headerButtonContainer}>
-          {currRoute === "Feed" && 
-            <TouchableOpacity 
-              onPress={() => 
-                feedContext.setFiltersOpen(!feedContext.isFiltersOpen)
-              }
-              style={styles.headerButton}
-            >
-              <MaterialCommunityIcons 
-                name={feedContext.isFiltersOpen ? "close-circle-outline" : "filter-outline"}
-                color={Colors.dull} 
-                style={styles.headerIcon}
-              />
-            </TouchableOpacity>
-          }
           <TouchableOpacity 
             onPress={() => setDiseasesOpen(true)}
             style={styles.headerButton}
           >
+            <StyledText style={styles.headerText}>Change Disease</StyledText>
             <MaterialCommunityIcons 
               name="dna" 
-              color={Colors.dull} 
+              color="#fff"
               style={styles.headerIcon}
             />
           </TouchableOpacity>
@@ -127,68 +94,63 @@ export default function BottomTabNavigator({ navigation, route }) {
   });
 
   return (
-    <BottomTab.Navigator 
-      initialRouteName={defaultRouteName}
-      tabBarOptions={{ style: {
-        height: 50,
-        elevation: 0,
-        shadowOpacity: 0,
-        borderTopColor: "transparent",
-      }}}
-    >
-      <BottomTab.Screen
-        name="Activity"
-        component={ActivityScreen}
-        options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon 
-              focused={focused} 
-              name="chart-gantt" 
+    <>
+      {currRoute === "Feed" &&
+        <View style={styles.filtersButtonContainer}>
+          <TouchableOpacity 
+            onPress={() => 
+              feedContext.setFiltersOpen(!feedContext.isFiltersOpen)
+            }
+            style={styles.filtersButton}
+          >
+            <StyledText color="primary">Search Filters</StyledText>
+            <MaterialCommunityIcons 
+              name={feedContext.isFiltersOpen ? "close-circle-outline" : "filter-outline"}
+              color={Colors.primary} 
+              style={{ fontSize: 24, marginTop: 2, marginLeft: 3}}
             />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="Self Reported Cases"
-        component={SelfReportMapScreen}
-        options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon 
-              focused={focused} 
-              name="earth" 
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="Feed"
-        component={FeedScreen}
-        options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon 
-              focused={focused} 
-              name="card-bulleted-outline" 
-            />
-          )
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: () => null,
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon 
-              focused={focused} 
-              name="account-circle-outline" 
-            />
-          )
-        }}
-      />
-    </BottomTab.Navigator>
+          </TouchableOpacity>
+        </View> 
+      }
+      <BottomTab.Navigator 
+        initialRouteName={defaultRouteName}
+        tabBarOptions={{ style: {
+          height: 54,
+          elevation: 0,
+          shadowOpacity: 0,
+          borderTopColor: "transparent",
+        }}}
+      >
+        <BottomTab.Screen
+          name="Activity"
+          component={ActivityScreen}
+          options={{
+            tabBarLabel: () => null,
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon 
+                focused={focused} 
+                name="chart-gantt" 
+                tabName="Disease Activity"
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Feed"
+          component={FeedScreen}
+          options={{
+            tabBarLabel: () => null,
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon 
+                focused={focused} 
+                name="card-bulleted-outline" 
+                tabName="News Feed"
+              />
+            )
+          }}
+        />
+      </BottomTab.Navigator>
+    </>
   );
 }
 
@@ -208,9 +170,36 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   headerButton: {
-    paddingLeft: 12,
+    backgroundColor: Colors.primary,
+    borderRadius: 10,
+    marginTop: 2,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    flexDirection: "row",
+    alignItems: "center",
   },
+  headerText: {
+    fontSize: 14,
+    color: "#fff",
+    marginTop: -2,
+  },  
   headerIcon: {
-    fontSize: 30,
+    fontSize: 22,
+    marginLeft: 3,
   },
+  filtersButtonContainer: {
+    backgroundColor: "#fff",
+  },
+  filtersButton: {
+    width: "90%",
+    alignSelf: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },  
 });

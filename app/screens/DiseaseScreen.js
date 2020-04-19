@@ -283,7 +283,7 @@ const ActivityScreen = () => {
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
-            Cases within states in the past year
+            Cases within states this year
           </StyledText>
         </View>
         <View style={styles.auMapContainer}>
@@ -322,12 +322,8 @@ const ActivityScreen = () => {
           color="primary"
         >
           {cumulativeStateCases["NSW"].dates[cumulativeDateIndex]}
-          {console.log(cumulativeDateIndex)}
         </StyledText>
         <Slider
-          style={{
-            // marginHorizontal: 20,
-          }}
           step={1}
           maximumValue={cumulativeStateCases["NSW"].dates.length - 1}
           onSlidingComplete={(value) => setCumulativeDateIndex(value)}
@@ -374,7 +370,7 @@ const ActivityScreen = () => {
               endDate={todaysDateFallbacked}
               numDays={90}
               width={Layout.window.width - graphMarginOffset}
-              height={200}
+              height={200 + graphMarginOffset / 2}
               chartConfig={freqChartConfig}
               onDayPress={(currSquare) => currSquare.count && setSelectedYtd(currSquare)}
             />

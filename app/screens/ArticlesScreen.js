@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, RefreshControl, Text } from 'react-native';
+import { StyleSheet, View, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 import { UserContext, DiseaseContext, FeedContext } from '../context/context';
@@ -26,7 +26,7 @@ const ArticlesScreen = (props) => {
   const fetchFeedArticles = async (page) => {
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
-      userContext.user.uid, 
+      userContext.apiKey, 
       feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
@@ -46,7 +46,7 @@ const ArticlesScreen = (props) => {
     setPage(page + 1);
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(
-      userContext.user.uid, 
+      userContext.apiKey, 
       feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
       [diseaseContext.disease.name, ...feedContext.keyTerms], 
       page
