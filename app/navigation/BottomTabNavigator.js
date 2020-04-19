@@ -129,7 +129,7 @@ export default function BottomTabNavigator({ navigation, route }) {
             tabBarIcon: ({ focused }) => (
               <TabBarIcon 
                 focused={focused} 
-                name="chart-gantt" 
+                name="earth" 
                 tabName="Disease Activity"
               />
             ),
