@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { REACT_APP_API_KEY } from 'react-native-dotenv';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
@@ -32,6 +33,7 @@ export default function App(props) {
 
   // Context definers
   const userContextValue = {
+    apiKey: REACT_APP_API_KEY,
     userLocation, 
     setUserLocation: (location) => setUserLocation(location),
   };

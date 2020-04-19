@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { createContext } from "react";
-import { REACT_APP_API_KEY } from 'react-native-dotenv';
 
 export const UserContext = createContext({
-  apiKey: REACT_APP_API_KEY,
+  apiKey: "",
   userLocation: {},
   setUserLocation: (location) => {},
 });
