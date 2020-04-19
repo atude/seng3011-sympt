@@ -13,6 +13,7 @@ import Colors from '../constants/Colors';
 import DiseaseFilterMenu from '../components/DiseaseFilterMenu';
 import StyledText from '../components/StyledText';
 import Layout from '../constants/Layout';
+import SelfReportMapScreen from '../screens/SelfReportMapScreen';
 
 const BottomTab = createBottomTabNavigator();
 const defaultRouteName = 'Home';
@@ -131,6 +132,20 @@ export default function BottomTabNavigator({ navigation, route }) {
                 focused={focused} 
                 name="earth" 
                 tabName="Disease Activity"
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="delete this later"
+          component={SelfReportMapScreen}
+          options={{
+            tabBarLabel: () => null,
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon 
+                focused={focused} 
+                name="earth" 
+                tabName="dab"
               />
             ),
           }}

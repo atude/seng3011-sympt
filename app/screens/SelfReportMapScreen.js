@@ -2,37 +2,45 @@ import React from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
+import nswPostcodesCoords from '../constants/nswPostcodesCoords.json';
 
 const SelfReportMapScreen = (props) => {
 
-  const highSeverity = "#dd2c00";
-  const mediumSeverity = '#ff9800';
-  const lowSeverity = '#fdd835';
+  const nswPointsSet = nswPostcodesCoords.features
+    .map((region) => {
+      const pointsArray = region.geometry.coordinates[0];
+      return pointsArray.map((points) => {
+        return {
+          latitude: points[1],
+          longitude: points[0],
+        };
+      });
+    });
 
-  // Dummy data 
-  const infectedSpots = [
-    {latitude: -33.8688, longitude: 151.2093, severity: highSeverity}, 
-    {latitude: -33.8690, longitude: 151.2193, severity: lowSeverity},
-    {latitude: -33.8620, longitude: 151.2093, severity: mediumSeverity},
-    {latitude: -33.8640, longitude: 151.2193, severity: highSeverity},
-    {latitude: -33.8920, longitude: 151.2093, severity: lowSeverity},
-    {latitude: -33.9200, longitude: 151.2300, severity: highSeverity},
-    {latitude: -33.8915, longitude: 151.2767, severity: highSeverity},
-    {latitude: -33.8915, longitude: 151.2780, severity: highSeverity},
-  ];
-
-  const renderCircles = (infectedSpots) => {
-    return infectedSpots.map((spot) => (
-      <MapView.Circle
-        key = { (spot.longitude+spot.latitude).toString() }
-        center = { {latitude: spot.latitude, longitude: spot.longitude} }
-        radius = { 500 }
-        strokeWidth = { 2 }
-        strokeColor = { spot.severity }
-        fillColor = { spot.severity + "40" }
-      />
-    ));
+  const renderRegions = () => {
+    return (
+      nswPointsSet.map((regionPointsArray, i) => {
+        console.log(regionPointsArray);
+        if (
+          !regionPointsArray.length || 
+          !regionPointsArray[0] ||
+          !regionPointsArray[1]
+        ) {
+          return null;
+        }
+        return (
+          <MapView.Polygon
+            key={i}
+            coordinates={regionPointsArray}
+            tappable
+            strokeWidth={1}
+          />
+        );
+      })
+    );
   };
+
+  // console.log(nswPointsSet[0]);
 
   return (
     <View contentContainerStyle={styles.container}>
@@ -44,7 +52,7 @@ const SelfReportMapScreen = (props) => {
           longitudeDelta: 0.0421,
         }}
       >
-        {renderCircles(infectedSpots)}
+        {renderRegions()}
       </MapView>
     </View>
   );
