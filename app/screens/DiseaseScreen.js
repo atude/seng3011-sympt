@@ -65,12 +65,16 @@ const ActivityScreen = () => {
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
   const [todaysDateFallbacked, setTodaysDateFallbacked] = useState(new Date());
 
+  const [stateSliderLength, setStateSliderLength] = useState(0);
+
   useEffect(() => {
-    // Fetch on disease change
+    // Fetch on disease change:
     if (diseaseContext.disease.nameDb !== dbName) {
       fetchDiseases();
       setDbName(diseaseContext.disease.nameDb);
     }
+    // Fetch always
+    // fetchDiseases();
   }, [
     diseaseContext.disease.nameDb
   ]);
@@ -311,20 +315,22 @@ const ActivityScreen = () => {
         </View>
         <StyledText 
           style={{
-            marginLeft: cumulativeDateIndex * 28.5,
-            width: "100%",
+            width: 50,
+            textAlign: "center",
+            left: (cumulativeDateIndex / 12 * 100) * (Layout.window.width - 105) / 100 - 15,
           }}
           color="primary"
         >
           {cumulativeStateCases["NSW"].dates[cumulativeDateIndex]}
+          {console.log(cumulativeDateIndex)}
         </StyledText>
         <Slider
           style={{
-            marginHorizontal: 20,
+            // marginHorizontal: 20,
           }}
           step={1}
           maximumValue={cumulativeStateCases["NSW"].dates.length - 1}
-          onValueChange={(value) => setCumulativeDateIndex(value)}
+          onSlidingComplete={(value) => setCumulativeDateIndex(value)}
           thumbTintColor={Colors.primary}
         />
         <View 
@@ -334,7 +340,7 @@ const ActivityScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          {/* Use NSW as random date section */}
+          {/* Use NSW as date section reference */}
           <StyledText>{cumulativeStateCases["NSW"].dates[0]}</StyledText>
           <StyledText>{cumulativeStateCases["NSW"].dates[cumulativeStateCases["NSW"].dates.length - 1]}</StyledText>
         </View>
