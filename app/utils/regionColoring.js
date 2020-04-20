@@ -4,10 +4,12 @@ export const getRegionColorByCases = (cases) => {
   let gValue = 255;
   if (cases < 1000) gValue = 0;
   if (cases < 100) gValue = 40;
-  if (cases < 50) gValue = 90;
-  if (cases < 20) gValue = 140;
-  if (cases < 10) gValue = 180;
-  if (cases < 5) gValue = 230;
+  if (cases < 50) gValue = 80;
+  if (cases < 40) gValue = 100;
+  if (cases < 30) gValue = 130;
+  if (cases < 20) gValue = 160;
+  if (cases < 10) gValue = 200;
+  if (cases < 5) gValue = 240;
   if (cases == 0) return [`rgba(0, 190, 0, 0.4)`, `rgba(0, 230, 0, 1)`];
 
 
