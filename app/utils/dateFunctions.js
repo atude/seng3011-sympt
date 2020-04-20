@@ -15,6 +15,8 @@ export const formatDateToMonthDay = (date) => moment.utc(date).format("MMM DD");
 export const formatDateToMonth = (date) => moment.utc(date).format("MMM YYYY");
 export const formatDateToYear = (date) => moment.utc(date).format("YYYY");
 
+export const formatDateToDayMonthMap = (date) => moment.utc(date).subtract(1, 'day').format("DD MMM");
+
 export const getLastWeekArray = (date) => {
   let dates = [];
 

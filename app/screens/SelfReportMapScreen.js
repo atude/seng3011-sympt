@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
+import { Keyboard } from 'react-native';
+
 import nswPostcodesCoords from '../constants/nswPostcodesCoords.json';
 import nswPopulation from '../constants/nswPopulation.json';
 import nswSuburbs from '../constants/nswSuburbs.json';
@@ -12,6 +14,8 @@ import { formatArrayToCommaString } from '../utils/textFunctions';
 import { Slider, Input } from 'react-native-elements';
 import { getRegionColorByCases } from '../utils/regionColoring';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import findCoords from '../functions/locationFunctions';
+import { formatDateToDayMonthMap } from '../utils/dateFunctions';
 
 const SelfReportMapScreen = (props) => {
   const [loading, setLoading] = useState(true);
@@ -25,14 +29,15 @@ const SelfReportMapScreen = (props) => {
   const handleSetRegion = (regionData) => {
     setRegion(regionData);
     setSearch("");
+    Keyboard.dismiss();
     mapRef.current.fitToCoordinates(
       regionData.mapBoundaries,
       {
         edgePadding: {
-          top: 100,
-          bottom: 100,
-          left: 100,
-          right: 100,
+          top: 300,
+          bottom: 300,
+          left: 300,
+          right: 300,
         },
         animated: true,
       }
@@ -80,10 +85,15 @@ const SelfReportMapScreen = (props) => {
       .filter((dataSet) => dataSet);
     
     setNswData(nswCombinedSet);
+
+    const todaysDateFormatted = formatDateToDayMonthMap(new Date());
+    setDate(todaysDateFormatted);
+
     const datesArray = nswCombinedSet[0].cases.map((regionCases) => {
       return regionCases.Date.replace("-", " ");
     });
     setAllDates(datesArray);
+
   };
 
   const getCasesForSetDate = () => {
@@ -107,6 +117,7 @@ const SelfReportMapScreen = (props) => {
 
   useEffect(() => {
     console.log("--> Fetching...");
+    console.log(findCoords());
     setLoading(true);
     fetchData();
     setLoading(false);
@@ -154,7 +165,9 @@ const SelfReportMapScreen = (props) => {
     );
   };
 
-  if (loading) return null;
+  if (loading) {
+    return <ActivityIndicator/>;
+  }
 
   return (
     <View contentContainerStyle={styles.container}>
@@ -168,7 +181,6 @@ const SelfReportMapScreen = (props) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        onLayout={() => console.log(mapRef)}
       >
         {renderRegions()}
       </MapView>
