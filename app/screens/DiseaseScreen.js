@@ -33,6 +33,7 @@ import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath,
   getStateCoordX, getStateCoordY, getStateTextColor 
 } from '../constants/AuMapFunctions';
 import { Slider } from 'react-native-elements';
+import DiseaseInfoCard from '../components/DiseaseInfoCard';
 
 const moment = require('moment');
 
@@ -214,6 +215,10 @@ const ActivityScreen = () => {
     setLoading(false);
   };
 
+  const diseaseInfoCard = () => {
+    return <DiseaseInfoCard disease={diseaseContext.disease}></DiseaseInfoCard>;
+  };
+
   if (loading) return (
     <ActivityIndicator 
       size={60}
@@ -224,6 +229,7 @@ const ActivityScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {diseaseInfoCard()}
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
