@@ -7,7 +7,6 @@ import { getFeedArticles } from '../functions/articleFunctions';
 import ArticleCard from '../components/ArticleCard';
 import StyledText from '../components/StyledText';
 import { ActivityIndicator } from 'react-native';
-import DiseaseInfoCard from '../components/DiseaseInfoCard';
 
 const ArticlesScreen = (props) => {
   const [articles, setArticles] = useState(null);
@@ -70,10 +69,6 @@ const ArticlesScreen = (props) => {
     ));
   };
 
-  const articleCard = () => {
-    return <DiseaseInfoCard disease={diseaseContext.disease}></DiseaseInfoCard>;
-  };
-
   return (
     <View>
       <ScrollView 
@@ -95,7 +90,6 @@ const ArticlesScreen = (props) => {
         }}
       >
         {/* <StyledText nofound>Showing articles for {diseaseContext.disease.name} in {feedContext.feedLocation}</StyledText> */}
-        {articleCard()}
         {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
       </ScrollView>
     </View>

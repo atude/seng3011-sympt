@@ -1,55 +1,82 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import StyledText from './StyledText';
 import { DiseaseContext } from '../context/context';
 import { getDiseaseImage } from '../utils/mapDiseaseImages';
 import Colors from '../constants/Colors';
 import StyledCard from './StyledCard';
-import { Ionicons } from '@expo/vector-icons';
 import TabBarIcon from '../components/TabBarIcon';
 
 const DiseaseInfoCard = (props) => {
   const diseaseContext = useContext(DiseaseContext);
   const {disease} = props;
 
+
+  const [collapsed, setCollapsed] = useState(false);
+
   const handleClick = () => {
-    console.log("Closing");
+    setCollapsed(!collapsed);
   };
 
-
-  return (
-    <StyledCard style={[styles.container, {
-      borderColor: diseaseContext.disease.name === disease.name ? 
-        Colors.primary : 
-        'transparent' 
-    }]}>
-      <View style={styles.contentContainer}>
-        <TouchableOpacity onPress={() => handleClick()}>
-          <TabBarIcon 
-            name="arrow-down-drop-circle-outline" 
-          />
-        </TouchableOpacity>
-        <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImage}/>
-        <View style={styles.headerContainer}>
-          <StyledText style={styles.heading}>
-            {disease.nameFormatted}
-          </StyledText>
-          <StyledText style={styles.body}>
-            {disease.description}
+  const infoCard = () => {
+    return (
+      <StyledCard style={[styles.container, {
+        borderColor: diseaseContext.disease.name === disease.name ? 
+          Colors.primary : 
+          'transparent' 
+      }]}>
+        <View style={styles.collapseIcon}>
+          <TouchableOpacity onPress={() => handleClick()}>
+            <TabBarIcon name="arrow-down-drop-circle-outline" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentContainer}>
+          <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImage}/>
+          <View style={styles.headerContainer}>
+            <StyledText style={styles.heading}>
+              {disease.nameFormatted}
+            </StyledText>
+            <StyledText style={styles.body}>
+              {disease.description}
+            </StyledText>
+          </View>
+          <StyledText link={disease.link}>
+            Find out more
           </StyledText>
         </View>
-        <StyledText link={disease.link}>
-          Find out more
-        </StyledText>
-      </View>
-    </StyledCard>
+      </StyledCard>
+    );
+  };
+
+  const collapsedInfoCard = () => {
+    return (
+      <StyledCard style={[styles.container, {
+        borderColor: diseaseContext.disease.name === disease.name ? 
+          Colors.primary : 
+          'transparent' 
+      }]}>
+        <View style={styles.collapseIcon}>
+          <TouchableOpacity onPress={() => handleClick()}>
+            <TabBarIcon name="arrow-down-drop-circle-outline" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentContainerCollapsed}>
+          <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImageCollapsed}/>
+        </View>
+      </StyledCard>
+    );
+  };
+
+  return (
+    <View >
+      {(collapsed) ? collapsedInfoCard(): infoCard()}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 350,
     backgroundColor: "#fff",
     borderWidth: 3,
     padding: 25,
@@ -67,7 +94,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     
     elevation: 8,
-  }, 
+  },
   headerContainer: {
     alignItems: "center",
   },  
@@ -77,6 +104,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: "100%",
     width: "100%",
+  },
+  contentContainerCollapsed :{
+    flexDirection: "row",
   },
   heading: {
     fontWeight: "bold",
@@ -93,8 +123,14 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
+  diseaseImageCollapsed: {
+    width: 50,
+    height: 50,
+  },
   collapseIcon: {
-
+    position: 'absolute',
+    right: 5,
+    top: 5,
   }
 });
 
