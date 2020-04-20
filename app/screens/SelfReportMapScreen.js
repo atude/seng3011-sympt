@@ -117,16 +117,31 @@ const SelfReportMapScreen = (props) => {
           regionDataCases = regionDataCases.Number;
         }
         
-        const colorIntensity = getRegionColorByCases(regionDataCases);
+        let colorIntensity = getRegionColorByCases(regionDataCases);
+
 
         return (
           <MapView.Polygon
             key={i}
             coordinates={regionPointsArray}
             tappable={true}
-            onPress={() => setRegion(regionData)}
+            onPress={() => {
+              setRegion(regionData);
+              setTimeout(() => mapRef.current.fitToCoordinates(
+                regionData.mapBoundaries,
+                {
+                  edgePadding: {
+                    top: 5,
+                    bottom: 5,
+                    left: 5,
+                    right: 5,
+                  },
+                  animated: true,
+                }
+              ), 100);
+            }}
             fillColor={colorIntensity[0]}
-            strokeWidth={2}
+            strokeWidth={regionData === currRegion ? 5 : 2}
             strokeColor={colorIntensity[1]}
           />
         );
@@ -140,7 +155,7 @@ const SelfReportMapScreen = (props) => {
     <View contentContainerStyle={styles.container}>
       <MapView 
         style={styles.map} 
-        ref={(refer) => mapRef.current = refer}
+        ref={mapRef}
         showsUserLocation={true}
         initialRegion={{
           latitude: -33.8688,
@@ -148,7 +163,7 @@ const SelfReportMapScreen = (props) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        // onLayout={() => mapRef.fitToCoordinates
+        onLayout={() => console.log(mapRef)}
       >
         {renderRegions()}
       </MapView>
@@ -161,7 +176,6 @@ const SelfReportMapScreen = (props) => {
             onSlidingComplete={(value) => setDate(allDates[value])}
             thumbTintColor={Colors.primary}
           />
-          {console.log(allDates)}
           <StyledText>{currDate}</StyledText>
         </View>
       }
