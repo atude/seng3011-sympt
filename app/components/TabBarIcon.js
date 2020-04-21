@@ -10,9 +10,9 @@ const TabBarIcon = (props) => {
       <MaterialCommunityIcons
         name={props.name}
         color={props.focused ? Colors.primary : Colors.dull}
-        style={{
-          fontSize: 26,
-        }}
+        style={[props.style, {
+          fontSize: props.style ? props.style.fontSize : 26,
+        }]}
       />
       <StyledText style={styles.tabBarText} color={props.focused ? "primary" : "grey"}> 
         {props.tabName}

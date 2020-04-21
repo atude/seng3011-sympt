@@ -55,7 +55,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
-      height: 130,
+      height: Layout.window.height / 7,
       backgroundColor: "#fff",
     },
     headerRight: () => (
@@ -116,7 +116,7 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Navigator 
         initialRouteName={defaultRouteName}
         tabBarOptions={{ style: {
-          height: 54,
+          height: Layout.window.height / 14,
           elevation: 0,
           shadowOpacity: 0,
           borderTopColor: "transparent",

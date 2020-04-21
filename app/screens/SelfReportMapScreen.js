@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
 import { Keyboard } from 'react-native';
@@ -11,11 +11,13 @@ import nswSuburbs from '../constants/nswSuburbs.json';
 import { getAllCasesNswRegions } from '../functions/nswDataFunctions';
 import StyledText from '../components/StyledText';
 import { formatArrayToCommaString } from '../utils/textFunctions';
-import { Slider, Input } from 'react-native-elements';
+import { Slider, Input, Button, Overlay } from 'react-native-elements';
 import { getRegionColorByCases } from '../utils/regionColoring';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import findCoords from '../functions/locationFunctions';
 import { formatDateToDayMonthMap } from '../utils/dateFunctions';
+import Layout from '../constants/Layout';
+import StyledButton from '../components/StyledButton';
 
 const SelfReportMapScreen = (props) => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +27,8 @@ const SelfReportMapScreen = (props) => {
   const [allDates, setAllDates] = useState([]);
   const [search, setSearch] = useState("");
   const mapRef = useRef(null);
+  const [isHiding, setHiding] = useState(false);
+  const [showInfoPage, setShowInfoPage] = useState(false);
 
   const handleSetRegion = (regionData) => {
     setRegion(regionData);
@@ -34,10 +38,10 @@ const SelfReportMapScreen = (props) => {
       regionData.mapBoundaries,
       {
         edgePadding: {
-          top: 300,
+          top: 50,
           bottom: 300,
-          left: 300,
-          right: 300,
+          left: 200,
+          right: 200,
         },
         animated: true,
       }
@@ -45,6 +49,8 @@ const SelfReportMapScreen = (props) => {
   };
 
   const fetchData = async () => {
+    setLoading(true);
+
     const allCases = await getAllCasesNswRegions();
 
     const nswCombinedSet = nswPostcodesCoords.features
@@ -93,7 +99,7 @@ const SelfReportMapScreen = (props) => {
       return regionCases.Date.replace("-", " ");
     });
     setAllDates(datesArray);
-
+    setLoading(false);
   };
 
   const getCasesForSetDate = () => {
@@ -116,11 +122,10 @@ const SelfReportMapScreen = (props) => {
   };
 
   useEffect(() => {
-    console.log("--> Fetching...");
-    console.log(findCoords());
-    setLoading(true);
-    fetchData();
-    setLoading(false);
+    if (!nswData.length) {
+      console.log("--> Fetching...");
+      fetchData();
+    }
   }, []);
 
   const renderRegions = () => {
@@ -148,7 +153,7 @@ const SelfReportMapScreen = (props) => {
           regionDataCases = regionDataCases.Number;
         }
         
-        let colorIntensity = getRegionColorByCases(regionDataCases);
+        const colorIntensity = getRegionColorByCases(regionDataCases);
 
         return (
           <MapView.Polygon
@@ -166,11 +171,15 @@ const SelfReportMapScreen = (props) => {
   };
 
   if (loading) {
-    return <ActivityIndicator/>;
+    return <ActivityIndicator 
+      size={60}
+      style={styles.loading} 
+      colors={[Colors.primary, Colors.secondary]}
+    />;
   }
 
   return (
-    <View contentContainerStyle={styles.container}>
+    <View pointerEvents="box-none">
       <MapView 
         style={styles.map} 
         ref={mapRef}
@@ -184,98 +193,152 @@ const SelfReportMapScreen = (props) => {
       >
         {renderRegions()}
       </MapView>
-      <View style={styles.timelineContainer}>
-        <Input
-          placeholder="Search by suburb, city"
-          onChangeText={(value) => setSearch(value)}
-          value={search}
-          leftIcon={
-            <MaterialCommunityIcons
-              name="magnify"
-              style={styles.inputSearchIcon}
-            />
-          }
-        />
-      </View>
-      {search.length > 0 && 
-        <View style={styles.timelineContainer}>
-          {nswSuburbs.data.filter((area) => 
-            area.suburb.toLowerCase().includes(search.toLowerCase())
-          ).splice(0, 5).map((area, i) => (
-            <TouchableOpacity 
-              key={i} 
-              style={styles.searchSuburbResultContainer}
-              onPress={() => {
-                const foundSuburb = nswData.find((data) => data.postcode == area.postcode);
-                handleSetRegion(foundSuburb);
-              }}
-            >
-              <MaterialIcons 
-                name="location-on"
-                style={styles.searchSuburbResultIcon}
+      <View style={styles.container} pointerEvents="box-none">
+        {!isHiding && 
+          <View style={styles.topSection} pointerEvents="box-none">
+            <View style={styles.timelineContainer}>
+              <Input
+                placeholder="Search by suburb, city"
+                onChangeText={(value) => setSearch(value)}
+                value={search}
+                leftIcon={
+                  <MaterialCommunityIcons
+                    name="magnify"
+                    style={styles.inputSearchIcon}
+                  />
+                }
               />
-              <StyledText 
-                style={styles.searchSuburbResult}
-              >
-                {area.suburb}, {area.postcode}
+            </View>
+            {search.length > 0 && 
+              <View style={styles.timelineContainer}>
+                {nswSuburbs.data.filter((area) => 
+                  area.suburb.toLowerCase().includes(search.toLowerCase())
+                ).splice(0, 5).map((area, i) => (
+                  <TouchableOpacity 
+                    key={i} 
+                    style={styles.searchSuburbResultContainer}
+                    onPress={() => {
+                      const foundSuburb = nswData.find((data) => data.postcode == area.postcode);
+                      handleSetRegion(foundSuburb);
+                    }}
+                  >
+                    <MaterialIcons 
+                      name="location-on"
+                      style={styles.searchSuburbResultIcon}
+                    />
+                    <StyledText 
+                      style={styles.searchSuburbResult}
+                    >
+                      {area.suburb}, {area.postcode}
+                    </StyledText>
+                  </TouchableOpacity>
+                ))
+                }
+              </View>
+            }
+          </View>
+        }
+
+        <View style={styles.botSection} pointerEvents="box-none">
+          <StyledButton
+            title={isHiding ? "Show Details" : "Hide Details"}
+            buttonStyle={styles.hideToggle}
+            onPress={() => setHiding(!isHiding)}
+            type="solid"
+          />
+          {currRegion && !isHiding && 
+            <View style={styles.timelineContainer}>
+              <View style={styles.timelineTextContainer}>
+                <StyledText>Postcode{" "}
+                  <StyledText style={{fontWeight: "bold"}}>
+                    {currRegion.postcode}
+                  </StyledText>
+                </StyledText>
+                <TouchableOpacity onPress={() => setShowInfoPage(true)}>
+                  <MaterialIcons
+                    name="info"
+                    style={styles.infoIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.regionDetailsContainer}>
+                <View style={styles.regionDetailsStatContainer}>
+                  <StyledText style={styles.statsBoldText}>{getCasesForSetDate()}</StyledText>
+                  <StyledText>Cases</StyledText>
+                </View>
+                <View style={styles.regionDetailsStatContainer}>
+                  <StyledText style={styles.statsBoldText}>
+                    {Math.round(getCasesForSetDate() / getPopulation() * 10000) / 100}%
+                  </StyledText>
+                  <StyledText>of population in area infected</StyledText>
+                </View>            
+              </View>
+              <StyledText>
+                Area includes{" "}
+                <StyledText style={{ fontWeight: "bold" }}>
+                  {formatArrayToCommaString(currRegion.includedAreas)}
+                </StyledText>
               </StyledText>
-            </TouchableOpacity>
-          ))
+            </View>
+          }
+          {allDates.length > 0 && 
+            <View style={styles.timelineContainer}>
+              <View style={styles.timelineTextContainer}>
+                <StyledText style={styles.timelineHeading}>Timeline</StyledText>
+                <StyledText>{currDate}</StyledText>
+              </View>
+              <Slider
+                step={1}
+                maximumValue={allDates.length - 1}
+                value={allDates.findIndex((date) => date === currDate)}
+                onSlidingComplete={(value) => setDate(allDates[value])}
+                thumbTintColor={Colors.primary}
+              />
+            </View>
           }
         </View>
-      }
-      {allDates.length > 0 && 
-        <View style={styles.timelineContainer}>
-          <StyledText style={styles.timelineHeading}>Timeline</StyledText>
-          <Slider
-            step={1}
-            maximumValue={allDates.length - 1}
-            onSlidingComplete={(value) => setDate(allDates[value])}
-            thumbTintColor={Colors.primary}
-          />
-          <StyledText>{currDate}</StyledText>
-        </View>
-      }
-      {currRegion && 
-        <View style={styles.timelineContainer}>
-          <StyledText>Postcode {currRegion.postcode}</StyledText>
-          {/* <StyledText>{formatArrayToCommaString(currRegion.includedAreas)} Region</StyledText> */}
-          <View style={styles.regionDetailsContainer}>
-            <View style={styles.regionDetailsStatContainer}>
-              <StyledText style={styles.statsBoldText}>{getCasesForSetDate()}</StyledText>
-              <StyledText>Cases</StyledText>
-            </View>
-            <View style={styles.regionDetailsStatContainer}>
-              <StyledText style={styles.statsBoldText}>
-                {Math.round(getCasesForSetDate() / getPopulation() * 10000) / 100}%
-              </StyledText>
-              <StyledText>of population infected</StyledText>
-            </View>            
-          </View>
-        </View>
-      }
+      </View>
+      <Overlay 
+        isVisible={showInfoPage}
+        overlayStyle={styles.infoContainerStyle}
+        onBackdropPress={() => setShowInfoPage(false)}
+        animationType="fade"
+      >
+        <StyledText>
+          color guide and sources go here
+        </StyledText>
+
+      </Overlay>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.bg,
-    padding: 24,
+    width: "100%",
+    flexDirection: "column",
+    position: "absolute",
+    height: Layout.window.height - 180,
   },
+  topSection: {
+    flex: 0.5,
+  },  
+  botSection: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },  
   map: {
-    ...StyleSheet.absoluteFillObject,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Layout.window.width,
+    height: Layout.window.height,
   },
   timelineContainer: {
+    marginTop: 8,
     width: "90%",
     opacity: 0.9,
     backgroundColor: "#fff",
-    bottom: 0,
     borderRadius: 20,
-    marginTop: 8,
     alignSelf: "center",
+    
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -292,7 +355,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     width: "100%",
-    marginVertical: 8,
+    marginVertical: 10,
   },  
   regionDetailsStatContainer: {
     flexDirection: "column",
@@ -306,6 +369,11 @@ const styles = StyleSheet.create({
   timelineHeading: {
     fontWeight: "bold",
     fontSize: 20,
+  },
+  timelineTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   inputSearchIcon: {
     marginLeft: -15,
@@ -325,7 +393,23 @@ const styles = StyleSheet.create({
   searchSuburbResultIcon: {
     fontSize: 22,
     marginRight: 8,
-  }
+  },
+  infoIcon: {
+    fontSize: 22,
+  },
+  hideToggle: {
+    flex: 1,
+    alignSelf: "center",
+    padding: 20,
+    opacity: 0.9
+  },
+  loading: {
+    alignSelf: "center",
+    height: "100%",
+  },
+  infoContainerStyle: {
+    borderRadius: 10,
+  },
 });
 
 export default SelfReportMapScreen;

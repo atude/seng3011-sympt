@@ -1,35 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import StyledText from './StyledText';
-import { DiseaseContext } from '../context/context';
 import { getDiseaseImage } from '../utils/mapDiseaseImages';
-import Colors from '../constants/Colors';
 import StyledCard from './StyledCard';
 import TabBarIcon from '../components/TabBarIcon';
 
 const DiseaseInfoCard = (props) => {
-  const diseaseContext = useContext(DiseaseContext);
-  const {disease} = props;
-
+  const { disease } = props;
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const handleClick = () => {
-    setCollapsed(!collapsed);
-  };
-
   const infoCard = () => {
     return (
-      <StyledCard style={[styles.container, {
-        borderColor: diseaseContext.disease.name === disease.name ? 
-          Colors.primary : 
-          'transparent' 
-      }]}>
-        <View style={styles.collapseIcon}>
-          <TouchableOpacity onPress={() => handleClick()}>
-            <TabBarIcon name="arrow-down-drop-circle-outline" />
-          </TouchableOpacity>
-        </View>
+      <StyledCard>
         <View style={styles.contentContainer}>
           <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImage}/>
           <View style={styles.headerContainer}>
@@ -44,25 +27,29 @@ const DiseaseInfoCard = (props) => {
             Find out more
           </StyledText>
         </View>
+        <TouchableOpacity 
+          style={styles.collapseTouchable} 
+          onPress={() => setCollapsed(!collapsed)}
+        >
+          <TabBarIcon 
+            style={styles.collapseIcon} 
+            name="arrow-up-drop-circle-outline" 
+          />
+        </TouchableOpacity>
       </StyledCard>
     );
   };
 
   const collapsedInfoCard = () => {
     return (
-      <StyledCard style={[styles.container, {
-        borderColor: diseaseContext.disease.name === disease.name ? 
-          Colors.primary : 
-          'transparent' 
-      }]}>
-        <View style={styles.collapseIcon}>
-          <TouchableOpacity onPress={() => handleClick()}>
-            <TabBarIcon name="arrow-down-drop-circle-outline" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.contentContainerCollapsed}>
-          <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImageCollapsed}/>
-        </View>
+      <StyledCard>
+        <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImageCollapsed}/>
+        <TouchableOpacity style={styles.collapseTouchable} onPress={() => setCollapsed(!collapsed)}>
+          <TabBarIcon 
+            style={styles.collapseIcon} 
+            name={"arrow-down-drop-circle-outline"} 
+          />
+        </TouchableOpacity>
       </StyledCard>
     );
   };
@@ -75,26 +62,6 @@ const DiseaseInfoCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderWidth: 3,
-    padding: 25,
-    borderRadius: 16,
-    marginLeft: 8,
-    marginRight: 8,
-    marginBottom: 20,
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.30,
-    shadowRadius: 4.65,
-    
-    elevation: 8,
-  },
   headerContainer: {
     alignItems: "center",
   },  
@@ -102,11 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-    height: "100%",
     width: "100%",
-  },
-  contentContainerCollapsed :{
-    flexDirection: "row",
   },
   heading: {
     fontWeight: "bold",
@@ -124,14 +87,17 @@ const styles = StyleSheet.create({
     height: 100,
   },
   diseaseImageCollapsed: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
+  }, 
+  collapseTouchable: {
+    position: "absolute", 
+    top: 22, 
+    right: 20,
   },
   collapseIcon: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
-  }
+    fontSize: 30,
+  },
 });
 
 export default DiseaseInfoCard;
