@@ -307,7 +307,6 @@ const SelfReportMapScreen = (props) => {
         <StyledText>
           color guide and sources go here
         </StyledText>
-
       </Overlay>
     </View>
   );
