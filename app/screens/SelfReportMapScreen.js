@@ -1,15 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
+import { Keyboard } from 'react-native';
+
 import nswPostcodesCoords from '../constants/nswPostcodesCoords.json';
 import nswPopulation from '../constants/nswPopulation.json';
+import nswSuburbs from '../constants/nswSuburbs.json';
+
 import { getAllCasesNswRegions } from '../functions/nswDataFunctions';
-import Layout from '../constants/Layout';
 import StyledText from '../components/StyledText';
 import { formatArrayToCommaString } from '../utils/textFunctions';
-import { Slider } from 'react-native-elements';
+import { Slider, Input } from 'react-native-elements';
 import { getRegionColorByCases } from '../utils/regionColoring';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import findCoords from '../functions/locationFunctions';
+import { formatDateToDayMonthMap } from '../utils/dateFunctions';
 
 const SelfReportMapScreen = (props) => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +23,26 @@ const SelfReportMapScreen = (props) => {
   const [currRegion, setRegion] = useState(null);
   const [currDate, setDate] = useState();
   const [allDates, setAllDates] = useState([]);
+  const [search, setSearch] = useState("");
   const mapRef = useRef(null);
+
+  const handleSetRegion = (regionData) => {
+    setRegion(regionData);
+    setSearch("");
+    Keyboard.dismiss();
+    mapRef.current.fitToCoordinates(
+      regionData.mapBoundaries,
+      {
+        edgePadding: {
+          top: 300,
+          bottom: 300,
+          left: 300,
+          right: 300,
+        },
+        animated: true,
+      }
+    );
+  };
 
   const fetchData = async () => {
     const allCases = await getAllCasesNswRegions();
@@ -60,10 +85,15 @@ const SelfReportMapScreen = (props) => {
       .filter((dataSet) => dataSet);
     
     setNswData(nswCombinedSet);
+
+    const todaysDateFormatted = formatDateToDayMonthMap(new Date());
+    setDate(todaysDateFormatted);
+
     const datesArray = nswCombinedSet[0].cases.map((regionCases) => {
       return regionCases.Date.replace("-", " ");
     });
     setAllDates(datesArray);
+
   };
 
   const getCasesForSetDate = () => {
@@ -87,6 +117,7 @@ const SelfReportMapScreen = (props) => {
 
   useEffect(() => {
     console.log("--> Fetching...");
+    console.log(findCoords());
     setLoading(true);
     fetchData();
     setLoading(false);
@@ -119,27 +150,12 @@ const SelfReportMapScreen = (props) => {
         
         let colorIntensity = getRegionColorByCases(regionDataCases);
 
-
         return (
           <MapView.Polygon
             key={i}
             coordinates={regionPointsArray}
             tappable={true}
-            onPress={() => {
-              setRegion(regionData);
-              setTimeout(() => mapRef.current.fitToCoordinates(
-                regionData.mapBoundaries,
-                {
-                  edgePadding: {
-                    top: 5,
-                    bottom: 5,
-                    left: 5,
-                    right: 5,
-                  },
-                  animated: true,
-                }
-              ), 100);
-            }}
+            onPress={() => handleSetRegion(regionData)}
             fillColor={colorIntensity[0]}
             strokeWidth={regionData === currRegion ? 5 : 2}
             strokeColor={colorIntensity[1]}
@@ -149,7 +165,9 @@ const SelfReportMapScreen = (props) => {
     );
   };
 
-  if (loading) return null;
+  if (loading) {
+    return <ActivityIndicator/>;
+  }
 
   return (
     <View contentContainerStyle={styles.container}>
@@ -163,10 +181,49 @@ const SelfReportMapScreen = (props) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        onLayout={() => console.log(mapRef)}
       >
         {renderRegions()}
       </MapView>
+      <View style={styles.timelineContainer}>
+        <Input
+          placeholder="Search by suburb, city"
+          onChangeText={(value) => setSearch(value)}
+          value={search}
+          leftIcon={
+            <MaterialCommunityIcons
+              name="magnify"
+              style={styles.inputSearchIcon}
+            />
+          }
+        />
+      </View>
+      {search.length > 0 && 
+        <View style={styles.timelineContainer}>
+          {nswSuburbs.data.filter((area) => 
+            area.suburb.toLowerCase().includes(search.toLowerCase())
+          ).splice(0, 5).map((area, i) => (
+            <TouchableOpacity 
+              key={i} 
+              style={styles.searchSuburbResultContainer}
+              onPress={() => {
+                const foundSuburb = nswData.find((data) => data.postcode == area.postcode);
+                handleSetRegion(foundSuburb);
+              }}
+            >
+              <MaterialIcons 
+                name="location-on"
+                style={styles.searchSuburbResultIcon}
+              />
+              <StyledText 
+                style={styles.searchSuburbResult}
+              >
+                {area.suburb}, {area.postcode}
+              </StyledText>
+            </TouchableOpacity>
+          ))
+          }
+        </View>
+      }
       {allDates.length > 0 && 
         <View style={styles.timelineContainer}>
           <StyledText style={styles.timelineHeading}>Timeline</StyledText>
@@ -217,7 +274,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     bottom: 0,
     borderRadius: 20,
-    marginTop: 10,
+    marginTop: 8,
     alignSelf: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -227,13 +284,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
     elevation: 10,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
   },
   regionDetailsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
     width: "100%",
+    marginVertical: 8,
   },  
   regionDetailsStatContainer: {
     flexDirection: "column",
@@ -247,6 +306,25 @@ const styles = StyleSheet.create({
   timelineHeading: {
     fontWeight: "bold",
     fontSize: 20,
+  },
+  inputSearchIcon: {
+    marginLeft: -15,
+    marginRight: 5,
+    fontSize: 26,
+    color: Colors.dull
+  },
+  searchSuburbResultContainer: {
+    padding: 3,
+    marginVertical: 3,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  searchSuburbResult: {
+    fontSize: 18,
+  },
+  searchSuburbResultIcon: {
+    fontSize: 22,
+    marginRight: 8,
   }
 });
 
