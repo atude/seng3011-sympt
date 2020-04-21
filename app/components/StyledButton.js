@@ -7,10 +7,13 @@ const StyledButton = (props) => {
   return (
     <Button 
       {...props} 
-      buttonStyle={[{
-        backgroundColor: mapColors(props.color || "")
-      }, 
-      styles.button]} 
+      buttonStyle={[
+        {
+          backgroundColor: mapColors(props.color || "")
+        }, 
+        styles.button,
+        props.buttonStyle
+      ]} 
       titleStyle={[props.titleStyle, styles.title]}
     />
   );
