@@ -5,18 +5,43 @@ import Colors from '../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Input, Divider, ButtonGroup } from 'react-native-elements';
 
-import { FeedContext, DiseaseContext } from '../context/context';
+import { PromedFeedContext, DiseaseContext } from '../context/context';
 import Layout from '../constants/Layout';
-import DatePicker from 'react-native-datepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+import { formatTime } from '../utils/fetchTools';
 
 const defYPos = -600;
 
 const ProMedFiltersSection = () => {
-  const feedContext = useContext(FeedContext);
+  const feedContext = useContext(PromedFeedContext);
   const diseaseContext = useContext(DiseaseContext);
 
   const [yPosAnim] = useState(new Animated.Value(defYPos));
   const [animDone, setAnimDone] = useState(true);
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+ 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+ 
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+ 
+  const handleStartConfirm = date => {
+    hideDatePicker();
+    const stringTime = formatTime(date);
+    feedContext.setFeedStartDate(stringTime);
+  };
+
+  const handleEndConfirm = date => {
+    hideDatePicker();
+    const stringTime = formatTime(date);
+    feedContext.setFeedEndDate(stringTime);
+    hideDatePicker();
+  };
 
   useEffect(() => {
     Animated.timing(yPosAnim).stop();
@@ -39,36 +64,6 @@ const ProMedFiltersSection = () => {
     }
   }, [feedContext.isFiltersOpen]);
 
-  const renderKeyTermPill = (keyTerm) => {
-    const isSelected = feedContext.keyTerms.includes(keyTerm);
-
-    return (
-      <TouchableOpacity 
-        key={keyTerm} 
-        onPress={() => 
-          isSelected ?
-            feedContext.removeKeyTerm(keyTerm) :
-            feedContext.addKeyTerm(keyTerm)
-        }
-      >
-        <View 
-          style={[
-            styles.keyTermPill, 
-            isSelected ? 
-              styles.keyTermPillSelected : 
-              styles.keyTermPillUnselected
-          ]}
-        >
-          <StyledText color={isSelected ? "white" : "primary"}>{keyTerm}</StyledText>
-          <MaterialCommunityIcons 
-            style={[styles.crossIcon, { color: isSelected ? "#fff" : Colors.primary }]} 
-            name={isSelected ? "minus-circle" : "plus-circle"}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   const renderBasePill = (diseaseName) => (
     <View style={[styles.keyTermPillBase, styles.keyTermPill]}>
       <StyledText color="white">{diseaseName}</StyledText>
@@ -82,7 +77,7 @@ const ProMedFiltersSection = () => {
     <Animated.View style={[styles.container, { transform: [{ translateY: yPosAnim }] }]}>
       <StyledText style={styles.heading}>Location</StyledText>
       <View style={styles.keyTermsContainer}>
-        {renderBasePill("AUSTRALIA")}
+        {renderBasePill("Australia")}
       </View>
       <Divider style={styles.keyTermsDivider} />
       <StyledText style={styles.heading}>Search Terms</StyledText>
@@ -90,6 +85,31 @@ const ProMedFiltersSection = () => {
         {renderBasePill(diseaseContext.disease.nameFormatted)}
       </View>
       <Divider style={styles.keyTermsDivider} />
+      <StyledText style={styles.heading}>Start Date</StyledText>
+      <View style={styles.keyTermsContainer}>
+        <TouchableOpacity onPress={showDatePicker}>
+          <StyledText>Set start range</StyledText>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleStartConfirm}
+            onCancel={hideDatePicker}
+          />
+        </TouchableOpacity>
+      </View>
+      <Divider style={styles.keyTermsDivider} />
+      <StyledText style={styles.heading}>End Date</StyledText>
+      <View style={styles.keyTermsContainer}>
+        <TouchableOpacity onPress={showDatePicker}>
+          <StyledText>Set end range</StyledText>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleEndConfirm}
+            onCancel={hideDatePicker}
+          />
+        </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 };
@@ -122,12 +142,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
-  termInput: {
-    marginBottom: 10,
-  },  
-  keyTermsParentContainer: {
-    maxHeight: 240,
-  },  
   keyTermsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -144,26 +158,6 @@ const styles = StyleSheet.create({
   },
   keyTermPillBase: {
     backgroundColor: Colors.dull,
-  },
-  keyTermPillSelected: {
-    backgroundColor: Colors.primary,
-  },
-  keyTermPillUnselected: {
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: Colors.primary,
-  },
-  crossIcon: {
-    marginLeft: 6,
-    marginTop: 1.5,
-    fontSize: 20,
-  },
-  locationButtonContainer: {  
-    borderRadius: 20,
-    marginBottom: 24,
-  },
-  locationButtonText: {
-    fontFamily: "main",
   },
 });
 

@@ -10,8 +10,10 @@ import { REACT_APP_API_KEY } from 'react-native-dotenv';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
-import { UserContext, DiseaseContext, FeedContext } from './context/context';
+import { UserContext, DiseaseContext, FeedContext, PromedFeedContext } from './context/context';
 import diseases from './constants/diseases.json';
+
+import { getCurrentTime } from './utils/fetchTools';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,8 @@ export default function App(props) {
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const [feedLocation, setFeedLocation] = useState("Australia");
+  const [feedStartDate, setFeedStartDate] = useState("2000-01-01T00:00:00");
+  const [feedEndDate, setFeedEndDate] = useState(getCurrentTime());
 
   //TODO: add initial load from async storage for persistence
 
@@ -53,6 +57,15 @@ export default function App(props) {
     isFiltersOpen,
     feedLocation,
     setFeedLocation: (location) => setFeedLocation(location),
+  };
+
+  const promedFeedContextValue = {
+    setFiltersOpen: (openState) => setFiltersOpen(openState),
+    isFiltersOpen,
+    feedStartDate,
+    setFeedStartDate: (startDate) => setFeedStartDate(startDate),
+    feedEndDate,
+    setFeedEndDate: (endDate) => setFeedEndDate(endDate),
   };
 
   // Load any resources or data that we need prior to rendering the app
@@ -95,12 +108,14 @@ export default function App(props) {
         <UserContext.Provider value={userContextValue}>
           <DiseaseContext.Provider value={diseaseContextValue}>
             <FeedContext.Provider value={feedContextValue}>
-              {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
-              <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                <Stack.Navigator>
-                  <Stack.Screen name="Root" component={BottomTabNavigator} />
-                </Stack.Navigator>
-              </NavigationContainer>
+              <PromedFeedContext.Provider value = {promedFeedContextValue}>
+                {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
+                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                  <Stack.Navigator>
+                    <Stack.Screen name="Root" component={BottomTabNavigator} />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </PromedFeedContext.Provider>
             </FeedContext.Provider>
           </DiseaseContext.Provider>
         </UserContext.Provider>
