@@ -30,8 +30,9 @@ export default function App(props) {
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const [feedLocation, setFeedLocation] = useState("Australia");
-  const [feedStartDate, setFeedStartDate] = useState("2000-01-01T00:00:00");
-  const [feedEndDate, setFeedEndDate] = useState(getCurrentTime());
+  const [feedStartDate, setFeedStartDate] = useState("2020-01-01");
+  const [feedEndDate, setFeedEndDate] = useState(getCurrentTime().split("T")[0]);
+
 
   //TODO: add initial load from async storage for persistence
 

@@ -32,7 +32,7 @@ export const FeedContext = createContext({
 export const PromedFeedContext = createContext({
   setFiltersOpen: (openState) => {},
   isFiltersOpen: false,
-  feedStartDate: "",
+  feedStartDate: "2000-01-01",
   setFeedStartDate: (startDate) => {},
   feedEndDate: "",
   setFeedEndDate: (endDate) => {},

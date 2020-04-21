@@ -1,9 +1,7 @@
-import { getCurrentTime, parseKeyTerms, getFetchMeta } from "../utils/fetchTools";
+import { parseKeyTerms, getFetchMeta } from "../utils/fetchTools";
   
 // location: string, keyterms: array
-export const getFeedArticles = async (key, location, keyterms, page) => {
-  const startDate = "2015-01-01T00:00:00";
-  const endDate = getCurrentTime();
+export const getFeedArticles = async (key, startDate, endDate, keyterms, location, page) => {
   const searchTerms = parseKeyTerms(keyterms); // Turns key terms array into comma seperated string
 
   try {

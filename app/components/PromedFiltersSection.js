@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Animated } from 'react-native';
 import StyledText from './StyledText';
 import Colors from '../constants/Colors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Input, Divider, ButtonGroup } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 
 import { PromedFeedContext, DiseaseContext } from '../context/context';
 import Layout from '../constants/Layout';
@@ -20,27 +19,27 @@ const ProMedFiltersSection = () => {
   const [yPosAnim] = useState(new Animated.Value(defYPos));
   const [animDone, setAnimDone] = useState(true);
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] = useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
  
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
+  const showDatePicker = (picker) => {
+    picker == "start" ? setStartDatePickerVisibility(true) : setEndDatePickerVisibility(true);
   };
  
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
+  const hideDatePicker = (picker) => {
+    picker == "start" ? setStartDatePickerVisibility(false) : setEndDatePickerVisibility(false);
   };
  
   const handleStartConfirm = date => {
-    hideDatePicker();
+    hideDatePicker("start");
     const stringTime = formatTime(date);
-    feedContext.setFeedStartDate(stringTime);
+    feedContext.setFeedStartDate(stringTime.split("T")[0]);
   };
 
   const handleEndConfirm = date => {
-    hideDatePicker();
+    hideDatePicker("end");
     const stringTime = formatTime(date);
-    feedContext.setFeedEndDate(stringTime);
-    hideDatePicker();
+    feedContext.setFeedEndDate(stringTime.split("T")[0]);
   };
 
   useEffect(() => {
@@ -87,26 +86,30 @@ const ProMedFiltersSection = () => {
       <Divider style={styles.keyTermsDivider} />
       <StyledText style={styles.heading}>Start Date</StyledText>
       <View style={styles.keyTermsContainer}>
-        <TouchableOpacity onPress={showDatePicker}>
-          <StyledText>Set start range</StyledText>
+        <TouchableOpacity onPress={() => showDatePicker("start")}>
+          <View style={styles.keyTermsContainer}>
+            {renderBasePill(feedContext.feedStartDate)}
+          </View>
           <DateTimePickerModal
-            isVisible={isDatePickerVisible}
+            isVisible={isStartDatePickerVisible}
             mode="date"
             onConfirm={handleStartConfirm}
-            onCancel={hideDatePicker}
+            onCancel={() => hideDatePicker("start")}
           />
         </TouchableOpacity>
       </View>
       <Divider style={styles.keyTermsDivider} />
       <StyledText style={styles.heading}>End Date</StyledText>
       <View style={styles.keyTermsContainer}>
-        <TouchableOpacity onPress={showDatePicker}>
-          <StyledText>Set end range</StyledText>
+        <TouchableOpacity onPress={() => showDatePicker("end")}>
+          <View style={styles.keyTermsContainer}>
+            {renderBasePill(feedContext.feedEndDate)}
+          </View>
           <DateTimePickerModal
-            isVisible={isDatePickerVisible}
+            isVisible={isEndDatePickerVisible}
             mode="date"
             onConfirm={handleEndConfirm}
-            onCancel={hideDatePicker}
+            onCancel={() => hideDatePicker("end")}
           />
         </TouchableOpacity>
       </View>
