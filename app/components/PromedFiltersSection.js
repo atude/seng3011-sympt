@@ -74,16 +74,6 @@ const ProMedFiltersSection = () => {
 
   return (
     <Animated.View style={[styles.container, { transform: [{ translateY: yPosAnim }] }]}>
-      <StyledText style={styles.heading}>Location</StyledText>
-      <View style={styles.keyTermsContainer}>
-        {renderBasePill("Australia")}
-      </View>
-      <Divider style={styles.keyTermsDivider} />
-      <StyledText style={styles.heading}>Search Terms</StyledText>
-      <View style={styles.keyTermsContainer}>
-        {renderBasePill(diseaseContext.disease.nameFormatted)}
-      </View>
-      <Divider style={styles.keyTermsDivider} />
       <StyledText style={styles.heading}>Start Date</StyledText>
       <View style={styles.keyTermsContainer}>
         <TouchableOpacity onPress={() => showDatePicker("start")}>
@@ -141,7 +131,6 @@ const styles = StyleSheet.create({
   },  
   heading: {
     paddingHorizontal: 10,
-    paddingBottom: 12,
     fontWeight: "bold",
     fontSize: 18,
   },
