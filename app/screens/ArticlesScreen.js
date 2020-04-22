@@ -31,6 +31,7 @@ const ArticlesScreen = (props) => {
     );
     setArticles(articlesResponse.articles ? articlesResponse.articles : []);
     setLoadingArticles(false);
+    setPage(page + 1);
   };  
 
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
