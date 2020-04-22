@@ -10,11 +10,12 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { formatTime } from '../utils/fetchTools';
 
+// import { findCoords, getPostcodeFromCoords } from '../functions/locationFunctions';
+
 const defYPos = -600;
 
 const ProMedFiltersSection = () => {
   const feedContext = useContext(PromedFeedContext);
-  const diseaseContext = useContext(DiseaseContext);
 
   const [yPosAnim] = useState(new Animated.Value(defYPos));
   const [animDone, setAnimDone] = useState(true);
@@ -22,6 +23,12 @@ const ProMedFiltersSection = () => {
   const [isStartDatePickerVisible, setStartDatePickerVisibility] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
  
+  // const getPostcode = async () => {
+  //   const postcode = await getPostcodeFromCoords();
+  //   console.log(postcode);
+  // };
+
+
   const showDatePicker = (picker) => {
     picker == "start" ? setStartDatePickerVisibility(true) : setEndDatePickerVisibility(true);
   };
@@ -34,6 +41,7 @@ const ProMedFiltersSection = () => {
     hideDatePicker("start");
     const stringTime = formatTime(date);
     feedContext.setFeedStartDate(stringTime.split("T")[0]);
+    // getPostcode();
   };
 
   const handleEndConfirm = date => {
