@@ -28,3 +28,12 @@ export const FeedContext = createContext({
   feedLocation: "",
   setFeedLocation: (location) => {},
 });
+
+export const PromedFeedContext = createContext({
+  setFiltersOpen: (openState) => {},
+  isFiltersOpen: false,
+  feedStartDate: "2000-01-01",
+  setFeedStartDate: (startDate) => {},
+  feedEndDate: "",
+  setFeedEndDate: (endDate) => {},
+});

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
-import { UserContext, DiseaseContext, FeedContext } from '../context/context';
+import { UserContext, DiseaseContext, PromedFeedContext } from '../context/context';
 import { getFeedArticles } from '../functions/articleFunctions';
 import ArticleCard from '../components/ArticleCard';
 import StyledText from '../components/StyledText';
@@ -13,7 +13,7 @@ const ArticlesScreen = (props) => {
   const [isLoadingArticles, setLoadingArticles] = useState(false);
   const userContext = useContext(UserContext);
   const diseaseContext = useContext(DiseaseContext);
-  const feedContext = useContext(FeedContext);
+  const feedContext = useContext(PromedFeedContext);
 
   let [page, setPage] = useState(0);
 
@@ -25,14 +25,13 @@ const ArticlesScreen = (props) => {
 
   const fetchFeedArticles = async (page) => {
     setLoadingArticles(true);
-    const articlesResponse = await getFeedArticles(
-      userContext.apiKey, 
-      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
-      [diseaseContext.disease.name, ...feedContext.keyTerms], 
-      page
+    const articlesResponse = await getFeedArticles(userContext.apiKey, 
+      feedContext.feedStartDate, feedContext.feedEndDate, 
+      [diseaseContext.disease.name], "Australia", page
     );
     setArticles(articlesResponse.articles ? articlesResponse.articles : []);
     setLoadingArticles(false);
+    setPage(page + 1);
   };  
 
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -45,11 +44,9 @@ const ArticlesScreen = (props) => {
     }
     setPage(page + 1);
     setLoadingArticles(true);
-    const articlesResponse = await getFeedArticles(
-      userContext.apiKey, 
-      feedContext.feedLocation === "Worldwide" ? "" : feedContext.feedLocation.toLowerCase(),
-      [diseaseContext.disease.name, ...feedContext.keyTerms], 
-      page
+    const articlesResponse = await getFeedArticles(userContext.apiKey, 
+      feedContext.feedStartDate, feedContext.feedEndDate, 
+      [diseaseContext.disease.name], "Australia", page
     );
     if (!articlesResponse.articles) {
       setLoadingArticles(false);
@@ -89,7 +86,7 @@ const ArticlesScreen = (props) => {
           }
         }}
       >
-        {/* <StyledText nofound>Showing articles for {diseaseContext.disease.name} in {feedContext.feedLocation}</StyledText> */}
+        <StyledText nofound>Showing articles for {diseaseContext.disease.name} in Australia</StyledText>
         {(articles) ? formatArticles(articles) : <ActivityIndicator size='large' color={Colors.primary}/>}
       </ScrollView>
     </View>

@@ -4,14 +4,16 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ArticleFeedScreen from '../screens/ArticlesScreen';
 import TrendingScreen from '../screens/TrendingScreen';
 import Colors from '../constants/Colors';
-import FiltersSection from '../components/FiltersSection';
+import PromedFiltersSection from '../components/PromedFiltersSection';
+// import FiltersSection from '../components/FiltersSection';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function TopTabFeedNavigator() {
   return (
     <>  
-      <FiltersSection/>
+      {/* <FiltersSection/> */}
+      <PromedFiltersSection/>
       <Tab.Navigator 
         initialRouteName="Trending"
         tabBarOptions={{
