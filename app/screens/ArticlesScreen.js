@@ -31,7 +31,6 @@ const ArticlesScreen = (props) => {
     );
     setArticles(articlesResponse.articles ? articlesResponse.articles : []);
     setLoadingArticles(false);
-    setPage(page + 1);
   };  
 
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -42,16 +41,16 @@ const ArticlesScreen = (props) => {
     if (isLoadingArticles) {
       return;
     }
-    setPage(page + 1);
     setLoadingArticles(true);
     const articlesResponse = await getFeedArticles(userContext.apiKey, 
       feedContext.feedStartDate, feedContext.feedEndDate, 
-      [diseaseContext.disease.name], "Australia", page
+      [diseaseContext.disease.name], "Australia", page+1
     );
     if (!articlesResponse.articles) {
       setLoadingArticles(false);
     }
     setArticles([...articles].concat(articlesResponse.articles || []));
+    setPage(page + 1);
     setLoadingArticles(false);
   };
 
