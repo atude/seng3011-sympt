@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
 import { Keyboard } from 'react-native';
@@ -178,6 +178,18 @@ const SelfReportMapScreen = (props) => {
     />;
   }
 
+  const renderLegend = (numCases) => {
+    if (numCases == 0) {
+      return <StyledText style={{backgroundColor:getRegionColorByCases(numCases), textAlign: 'center'}}>
+        There are {numCases} cases
+      </StyledText>;
+    } else {
+      return <StyledText style={{backgroundColor:getRegionColorByCases(numCases-1), textAlign: 'center'}}>
+        Less than {numCases} cases
+      </StyledText>;
+    }
+  };
+
   return (
     <View pointerEvents="box-none">
       <MapView 
@@ -304,9 +316,27 @@ const SelfReportMapScreen = (props) => {
         onBackdropPress={() => setShowInfoPage(false)}
         animationType="fade"
       >
-        <StyledText>
-          color guide and sources go here
-        </StyledText>
+        <View style={styles.legend}>
+          <StyledText style={styles.infoTitle}>
+            Legend
+          </StyledText>
+          {renderLegend(0)}
+          {renderLegend(5)}
+          {renderLegend(10)}
+          {renderLegend(20)}
+          {renderLegend(30)}
+          {renderLegend(40)}
+          {renderLegend(50)}
+          {renderLegend(100)}
+          {renderLegend(1000)}
+          <StyledText style={styles.infoTitle}>
+            Data Sources
+          </StyledText>
+          <View style={styles.sourceContainer}>
+            <Image style={styles.sourceImgs} source={require('../assets/images/sources/nsw-health.png')}/>
+            <Image style={styles.sourceImgs} source={require('../assets/images/sources/nndss.png')}/>
+          </View>
+        </View>
       </Overlay>
     </View>
   );
@@ -408,6 +438,23 @@ const styles = StyleSheet.create({
   },
   infoContainerStyle: {
     borderRadius: 10,
+  },
+  sourceContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sourceImgs: {
+    height: 75,
+    resizeMode: 'contain',
+    padding: 20,
+  },
+  legend: {
+    padding: 15,
+  },
+  infoTitle: {
+    paddingVertical: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
