@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import StyledText from './StyledText';
 import Colors from '../constants/Colors';
 import {DiseaseContext } from '../context/context';
@@ -9,9 +9,15 @@ const ListDiseaseSelectCard = (props) => {
   const {disease, setDiseaseOpen, setSearchTerm} = props;
   const diseaseContext = useContext(DiseaseContext);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     diseaseContext.setDisease(disease.name);
     setSearchTerm('');
+    try {
+      await AsyncStorage.setItem('disease', disease.name);
+      console.log(`--> successfully set disease storage for ${disease.name}`);
+    } catch (error) {
+      console.log('--> could not set storage for disease');
+    }
     setDiseaseOpen(false);
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {Platform, StatusBar, StyleSheet, View } from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,7 +34,17 @@ export default function App(props) {
   const [feedEndDate, setFeedEndDate] = useState(getCurrentTime().split("T")[0]);
 
 
-  //TODO: add initial load from async storage for persistence
+  // initial load from async storage for persistence
+  const loadSavedStorage = async () => {
+    // Either fetch saved disease or set the initial disease
+    try {
+      const savedDisease = await AsyncStorage.getItem('disease');
+      console.log(`--> retrieved saved disease from storage ${savedDisease}`);
+      setDisease(diseases.find((thisDiseases) => thisDiseases.name === savedDisease));
+    } catch (error) {
+      console.log(`--> no saved disease, defaulting to first disease in diseases list`);
+    }
+  };
 
   // Context definers
   const userContextValue = {
@@ -89,6 +99,7 @@ export default function App(props) {
           'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
           'main': require('./assets/fonts/SFPro-Regular.ttf'),
         });
+
       } catch (e) {
         console.warn(e);
       } finally {
@@ -98,6 +109,7 @@ export default function App(props) {
     }
 
     loadResourcesAndDataAsync();
+    loadSavedStorage();
   }, []);
 
 

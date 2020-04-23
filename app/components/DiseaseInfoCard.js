@@ -43,7 +43,10 @@ const DiseaseInfoCard = (props) => {
   const collapsedInfoCard = () => {
     return (
       <StyledCard>
-        <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImageCollapsed}/>
+        <View style={styles.collapseContainer}>
+          <Image source={getDiseaseImage(disease.name)} style={styles.diseaseImageCollapsed}/>
+          <StyledText style={styles.collapsedText}>{`More about ${disease.nameFormatted}`}</StyledText>
+        </View>
         <TouchableOpacity style={styles.collapseTouchable} onPress={() => setCollapsed(!collapsed)}>
           <TabBarIcon 
             style={styles.collapseIcon} 
@@ -98,6 +101,17 @@ const styles = StyleSheet.create({
   collapseIcon: {
     fontSize: 30,
   },
+  collapseContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  collapsedText: {
+    fontStyle: 'italic',
+    fontSize: 17,
+    fontWeight: 'bold',
+    paddingTop: 8,
+    paddingLeft: 20
+  }
 });
 
 export default DiseaseInfoCard;
