@@ -51,63 +51,63 @@ const recovery = 1 / 21;
 // })();
 
 export const computePrediction = (day, currCases, recovered, population, socialDistancing) => {
-    let it0 = currCases / population;
-    let rt0 = recovered / population;
-    let st0 = (population - (currCases + recovered)) / population;
+  let it0 = currCases / population;
+  let rt0 = recovered / population;
+  let st0 = (population - (currCases + recovered)) / population;
 
-    let contacts = dailyContacts;    
-    if (socialDistancing) {
-        contacts = dailyContactsDistancing;
-    }
+  let contacts = dailyContacts;    
+  if (socialDistancing) {
+    contacts = dailyContactsDistancing;
+  }
 
-    const nCases = new Array(day);
-    let currSt;
-    let currIt;
-    let currRt;
+  const nCases = new Array(day);
+  let currSt;
+  let currIt;
+  let currRt;
 
-    for (let i = 0; i <= day; i++) {
-        currSt = -contacts * st0 * it0;
-        currIt = -currSt - recovery * it0;
-        currRt = recovery * it0;
+  for (let i = 0; i <= day; i++) {
+    currSt = -contacts * st0 * it0;
+    currIt = -currSt - recovery * it0;
+    currRt = recovery * it0;
 
-        st0 += currSt;
-        it0 += currIt;
-        rt0 += currRt;
+    st0 += currSt;
+    it0 += currIt;
+    rt0 += currRt;
 
-        nCases.push([st0 * population, it0 * population, rt0 * population]);
-    }
+    nCases.push([st0 * population, it0 * population, rt0 * population]);
+  }
     
-    return nCases;
+  return nCases;
 };
 
 // This is the less reliable function of the two
 // Prefferred to use the function considering the recovered population
 export const computePredictionNoRecovery = (day, currCases, population, socialDistancing) => {
-    let it0 = currCases / population;
-    let rt0 = 0;        // This is the difference between the two functions
-    let st0 = (population - (currCases + 1)) / population;
+  let it0 = currCases / population;
+  let rt0 = 0;        // This is the difference between the two functions
+  let st0 = (population - (currCases + 1)) / population;
 
-    let contacts = dailyContacts;
-    if (socialDistancing) {
-        contacts = dailyContactsDistancing;
-    }
+  let contacts = dailyContacts;
+  if (socialDistancing) {
+    contacts = dailyContactsDistancing;
+  }
 
-    let nCases = new Array(day);
-    let currSt;
-    let currIt;
-    let currRt;
+  let nCases = new Array(day);
+  let currSt;
+  let currIt;
+  let currRt;
 
-    for (let i = 0; i <= day; i++) {
-        currSt = -contacts * st0 * it0;
-        currIt = -currSt - recovery * it0;
-        currRt = recovery * it0;
+  for (let i = 0; i <= day; i++) {
+    currSt = -contacts * st0 * it0;
+    currIt = -currSt - recovery * it0;
+    currRt = recovery * it0;
 
-        st0 += currSt;
-        it0 += currIt;
-        rt0 += currRt;
+    st0 += currSt;
+    it0 += currIt;
+    rt0 += currRt;
 
-        nCases.push([st0 * population, it0 * population, rt0 * population]);
-    }
+    nCases.push([st0 * population, it0 * population, rt0 * population]);
+  }
     
-    return nCases;
-}
+  return nCases;
+};
