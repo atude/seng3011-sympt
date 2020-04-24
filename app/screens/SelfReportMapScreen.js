@@ -180,12 +180,12 @@ const SelfReportMapScreen = (props) => {
 
   const renderLegend = (numCases) => {
     if (numCases == 0) {
-      return <StyledText style={{backgroundColor:getRegionColorByCases(numCases), textAlign: 'center'}}>
-        There are {numCases} cases
+      return <StyledText style={{ backgroundColor: getRegionColorByCases(numCases), textAlign: 'center'}}>
+        {numCases} cases
       </StyledText>;
     } else {
-      return <StyledText style={{backgroundColor:getRegionColorByCases(numCases-1), textAlign: 'center'}}>
-        Less than {numCases} cases
+      return <StyledText style={{backgroundColor: getRegionColorByCases(numCases - 1), textAlign: 'center'}}>
+        {"<"} {numCases} cases
       </StyledText>;
     }
   };
@@ -444,17 +444,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sourceImgs: {
-    height: 75,
+    height: 80,
+    marginBottom: 20,
     resizeMode: 'contain',
-    padding: 20,
   },
   legend: {
     padding: 15,
   },
   infoTitle: {
-    paddingVertical: 10,
+    paddingVertical: 15,
     fontSize: 20,
     fontWeight: 'bold',
+
   },
 });
 

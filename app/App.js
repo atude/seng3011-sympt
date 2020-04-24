@@ -39,8 +39,10 @@ export default function App(props) {
     // Either fetch saved disease or set the initial disease
     try {
       const savedDisease = await AsyncStorage.getItem('disease');
-      console.log(`--> retrieved saved disease from storage ${savedDisease}`);
-      setDisease(diseases.find((thisDiseases) => thisDiseases.name === savedDisease));
+      if (savedDisease) {
+        console.log(`--> retrieved saved disease from storage ${savedDisease}`);
+        setDisease(diseases.find((thisDiseases) => thisDiseases.name === savedDisease));
+      }
     } catch (error) {
       console.log(`--> no saved disease, defaulting to first disease in diseases list`);
     }
