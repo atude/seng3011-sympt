@@ -14,7 +14,6 @@ import { formatArrayToCommaString } from '../utils/textFunctions';
 import { Slider, Input, Button, Overlay } from 'react-native-elements';
 import { getRegionColorByCases } from '../utils/regionColoring';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import findCoords from '../functions/locationFunctions';
 import { formatDateToDayMonthMap } from '../utils/dateFunctions';
 import Layout from '../constants/Layout';
 import StyledButton from '../components/StyledButton';
@@ -440,13 +439,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   sourceContainer: {
+    width: "100%",
+    height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
   },
   sourceImgs: {
-    height: 80,
     marginBottom: 20,
-    resizeMode: 'contain',
+    resizeMode: "contain"
   },
   legend: {
     padding: 15,

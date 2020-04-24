@@ -3,7 +3,7 @@ import { createContext } from "react";
 
 export const UserContext = createContext({
   apiKey: "",
-  userLocation: {},
+  userLocation: -1,
   setUserLocation: (location) => {},
 });
 

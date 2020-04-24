@@ -25,14 +25,14 @@ export default function App(props) {
 
   const { getInitialState } = useLinking(containerRef);
 
-  const [userLocation, setUserLocation] = useState({});
+  // User location is postcode
+  const [userLocation, setUserLocation] = useState(-1);
   const [disease, setDisease] = useState(diseases[0]);
   const [keyTerms, setKeyTerms] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const [feedLocation, setFeedLocation] = useState("Australia");
   const [feedStartDate, setFeedStartDate] = useState("2020-01-01");
   const [feedEndDate, setFeedEndDate] = useState(getCurrentTime().split("T")[0]);
-
 
   // initial load from async storage for persistence
   const loadSavedStorage = async () => {
@@ -52,7 +52,7 @@ export default function App(props) {
   const userContextValue = {
     apiKey: REACT_APP_API_KEY,
     userLocation, 
-    setUserLocation: (location) => setUserLocation(location),
+    setUserLocation: (postcode) => setUserLocation(postcode),
   };
 
   const diseaseContextValue = {

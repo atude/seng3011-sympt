@@ -1,13 +1,12 @@
 import { GOOGLE_API_KEY } from 'react-native-dotenv';
 
-function getCoordinates() {
+export const getCoordinates = () => {
   return new Promise(function(resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
-}
+};
 
 export const getPostcodeFromCoords = async () => {
-
   const position = await getCoordinates();
   const coords = position.coords.latitude + "," + position.coords.longitude;
   console.log(coords);
