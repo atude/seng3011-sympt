@@ -360,6 +360,7 @@ const SelfReportMapScreen = (props) => {
           {renderLegend(50)}
           {renderLegend(100)}
           {renderLegend(1000)}
+          {renderLegend(10000)}
           <StyledText style={styles.infoTitle}>
             Data Sources
           </StyledText>
