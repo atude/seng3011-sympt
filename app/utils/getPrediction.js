@@ -1,5 +1,3 @@
-"use strict";
-exports.__esModule = true;
 // * Inspired by SIR model for spread of Disease - The Differential Equation Model 
 // * https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease-the-differential-equation-model
 /* Differential equations
@@ -7,20 +5,19 @@ exports.__esModule = true;
  * di/dt = b*s(t)*i(t) - k*i(t)
  * dr/dt = k*i(t)
  */
-var puppeteer = require('puppeteer');
 // Some constants and assumptions
 // const population = 24600000;
 // const population = 1421000;
 
 // * Final Daily Contacts constant, most severe rate of transmission in Australia
-var dailyContacts = 1 / 6;
+const dailyContacts = 1 / 6;
 
 // The 'b' variable is reduced when the public is practicing social distancing
 // * Final Daily Contacts constant with social distancing
-var dailyContactsDistancing = 1 / 25;
+const dailyContactsDistancing = 1 / 25;
 // Average recovery period 'k' is 2 weeks for mild cases, and 3-6 weeks for sever cases
 // One recovery every 21 days
-var recovery = 1 / 21;
+const recovery = 1 / 21;
 
 // Will return an array of nCases, with t (days) as the index
 // t will be from current time, e.g. t=0 is current day, t=1 is tomorrow
@@ -53,22 +50,22 @@ var recovery = 1 / 21;
 
 // })();
 
-exports.computePrediction = function (day, currCases, recovered, population, socialDistancing) {
-    var it0 = currCases / population;
-    var rt0 = recovered / population;
-    var st0 = (population - (currCases + recovered)) / population;
+export const computePrediction = (day, currCases, recovered, population, socialDistancing) => {
+    let it0 = currCases / population;
+    let rt0 = recovered / population;
+    let st0 = (population - (currCases + recovered)) / population;
 
     let contacts = dailyContacts;    
     if (socialDistancing) {
         contacts = dailyContactsDistancing;
     }
 
-    var nCases = new Array(day);
-    var currSt;
-    var currIt;
-    var currRt;
+    const nCases = new Array(day);
+    let currSt;
+    let currIt;
+    let currRt;
 
-    for (var i = 0; i <= day; i++) {
+    for (let i = 0; i <= day; i++) {
         currSt = -contacts * st0 * it0;
         currIt = -currSt - recovery * it0;
         currRt = recovery * it0;
@@ -79,27 +76,28 @@ exports.computePrediction = function (day, currCases, recovered, population, soc
 
         nCases.push([st0 * population, it0 * population, rt0 * population]);
     }
+    
     return nCases;
 };
 
 // This is the less reliable function of the two
 // Prefferred to use the function considering the recovered population
-exports.computePredictionNoRecovery = function (day, currCases, population, socialDistancing) {
-    var it0 = currCases / population;
-    var rt0 = 0;        // This is the difference between the two functions
-    var st0 = (population - (currCases + 1)) / population;
+export const computePredictionNoRecovery = (day, currCases, population, socialDistancing) => {
+    let it0 = currCases / population;
+    let rt0 = 0;        // This is the difference between the two functions
+    let st0 = (population - (currCases + 1)) / population;
 
     let contacts = dailyContacts;
     if (socialDistancing) {
         contacts = dailyContactsDistancing;
     }
 
-    var nCases = new Array(day);
-    var currSt;
-    var currIt;
-    var currRt;
+    let nCases = new Array(day);
+    let currSt;
+    let currIt;
+    let currRt;
 
-    for (var i = 0; i <= day; i++) {
+    for (let i = 0; i <= day; i++) {
         currSt = -contacts * st0 * it0;
         currIt = -currSt - recovery * it0;
         currRt = recovery * it0;
@@ -110,6 +108,6 @@ exports.computePredictionNoRecovery = function (day, currCases, population, soci
 
         nCases.push([st0 * population, it0 * population, rt0 * population]);
     }
+    
     return nCases;
-
 }
