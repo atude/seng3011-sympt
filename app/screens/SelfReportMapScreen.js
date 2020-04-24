@@ -439,12 +439,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   sourceContainer: {
-    width: "100%",
-    height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
   },
   sourceImgs: {
+    height: 75,
     marginBottom: 20,
     resizeMode: "contain"
   },
@@ -455,7 +454,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     fontSize: 20,
     fontWeight: 'bold',
-
   },
 });
 
