@@ -9,6 +9,8 @@
 // const population = 24600000;
 // const population = 1421000;
 
+import { getDaysFromSimpleDate } from "./dateFunctions";
+
 // * Final Daily Contacts constant, most severe rate of transmission in Australia
 const dailyContacts = 1 / 6;
 
@@ -92,7 +94,7 @@ export const computePredictionNoRecovery = (day, currCases, population, socialDi
     contacts = dailyContactsDistancing;
   }
 
-  let nCases = new Array(day);
+  let nCases = [];
   let currSt;
   let currIt;
   let currRt;
@@ -110,4 +112,35 @@ export const computePredictionNoRecovery = (day, currCases, population, socialDi
   }
     
   return nCases;
+};
+
+export const generatePredictions = (days, casesArray, population) => {
+  const latestDataObject = casesArray[casesArray.length - 1];
+  const latestCases = latestDataObject.Number;
+  const latestDate = latestDataObject.Date;
+  const postcode = latestDataObject.POA_NAME16;
+
+  const rawPredictionsDistancing = computePredictionNoRecovery(days - 1, latestCases, population, true);
+  const rawPredictions = computePredictionNoRecovery(days - 1, latestCases, population, false);
+
+  const predictionsTotal = rawPredictions.map((predictionSet) => {
+    return Math.round(population - predictionSet[0]);
+  });
+
+  const predictionsDistancingTotal = rawPredictionsDistancing.map((predictionSet) => {
+    return Math.round(population - predictionSet[0]);
+  });
+
+  const compiledPredictions = predictionsTotal.map((prediction, i) => {
+    const predictionDistancing = predictionsDistancingTotal[i];
+
+    return {
+      Date: getDaysFromSimpleDate(latestDate, i + 1),
+      Number: prediction,
+      NumberDistancing: predictionDistancing,
+      POA_NAME16: postcode,
+    };
+  });
+
+  return [...casesArray, ...compiledPredictions];
 };

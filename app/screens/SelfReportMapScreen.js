@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image, Switch } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
 import { Keyboard } from 'react-native';
@@ -11,17 +11,22 @@ import nswSuburbs from '../constants/nswSuburbs.json';
 import { getAllCasesNswRegions } from '../functions/nswDataFunctions';
 import StyledText from '../components/StyledText';
 import { formatArrayToCommaString } from '../utils/textFunctions';
-import { Slider, Input, Button, Overlay } from 'react-native-elements';
+import { Slider, Input, Overlay } from 'react-native-elements';
 import { getRegionColorByCases } from '../utils/regionColoring';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { formatDateToDayMonthMap } from '../utils/dateFunctions';
 import Layout from '../constants/Layout';
 import StyledButton from '../components/StyledButton';
+import { generatePredictions } from '../utils/getPrediction';
+
+const predictionsDays = 30;
 
 const SelfReportMapScreen = (props) => {
   const [loading, setLoading] = useState(true);
   const [nswData, setNswData] = useState([]);
   const [currRegion, setRegion] = useState(null);
+  const [initialDateIndex, setInitialDateIndex] = useState();
+  const [isSocialDistancing, setSocialDistancing] = useState(false);
   const [currDate, setDate] = useState();
   const [allDates, setAllDates] = useState([]);
   const [search, setSearch] = useState("");
@@ -79,9 +84,12 @@ const SelfReportMapScreen = (props) => {
           regionInfo.Combined.toLowerCase().split(",")
         ) ?? [];
 
+        // console.log(casesArray);
+        const casesCompiled = generatePredictions(predictionsDays, casesArray, population);
+
         return {
           postcode: region.properties.POA_NAME16,
-          cases: casesArray,
+          cases: casesCompiled,
           mapBoundaries: pointsArray,
           population,
           includedAreas,
@@ -97,6 +105,7 @@ const SelfReportMapScreen = (props) => {
     const datesArray = nswCombinedSet[0].cases.map((regionCases) => {
       return regionCases.Date.replace("-", " ");
     });
+    setInitialDateIndex(datesArray.findIndex((date) => date === todaysDateFormatted));
     setAllDates(datesArray);
     setLoading(false);
   };
@@ -112,6 +121,9 @@ const SelfReportMapScreen = (props) => {
     if (!regionDataCases) {
       return 0;
     } else {
+      if (isSocialDistancing && regionDataCases.NumberDistancing) {
+        return regionDataCases.NumberDistancing;
+      }
       return regionDataCases.Number;
     }
   };
@@ -149,7 +161,11 @@ const SelfReportMapScreen = (props) => {
         if (!regionDataCases) {
           regionDataCases = 0;
         } else {
-          regionDataCases = regionDataCases.Number;
+          if (isSocialDistancing && regionDataCases.NumberDistancing) {
+            regionDataCases = regionDataCases.NumberDistancing;
+          } else {
+            regionDataCases = regionDataCases.Number;
+          }
         }
         
         const colorIntensity = getRegionColorByCases(regionDataCases);
@@ -296,7 +312,15 @@ const SelfReportMapScreen = (props) => {
             <View style={styles.timelineContainer}>
               <View style={styles.timelineTextContainer}>
                 <StyledText style={styles.timelineHeading}>Timeline</StyledText>
-                <StyledText>{currDate}</StyledText>
+                <StyledText>
+                  {initialDateIndex >= allDates.findIndex((date) => date === currDate) ?
+                    currDate : (
+                      <StyledText color="primary" style={{fontWeight: "bold"}}>
+                        Predictions for <StyledText style={{fontWeight: "normal"}}>{currDate}</StyledText>
+                      </StyledText>
+                    )
+                  } 
+                </StyledText>
               </View>
               <Slider
                 step={1}
@@ -305,6 +329,14 @@ const SelfReportMapScreen = (props) => {
                 onSlidingComplete={(value) => setDate(allDates[value])}
                 thumbTintColor={Colors.primary}
               />
+              <View style={styles.distancingSwitchContainer}>
+                <StyledText>Enable Social Distancing for Predictions</StyledText>
+                <Switch
+                  value={isSocialDistancing}
+                  onValueChange={() => setSocialDistancing(!isSocialDistancing)}
+                  thumbColor={isSocialDistancing ? Colors.secondary : Colors.dull}
+                />
+              </View>
             </View>
           }
         </View>
@@ -454,6 +486,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  distancingSwitchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
 

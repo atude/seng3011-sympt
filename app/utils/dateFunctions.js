@@ -17,6 +17,12 @@ export const formatDateToYear = (date) => moment.utc(date).format("YYYY");
 
 export const formatDateToDayMonthMap = (date) => moment.utc(date).subtract(1, 'day').format("DD MMM");
 
+export const getDaysFromSimpleDate = (date, days) => {
+  const dateFormatted = date.replace("-", " ") + " 2020";
+  const nextDay = moment.utc(dateFormatted).add(days, 'day');
+  return nextDay.format("DD-MMM");
+};
+
 export const getLastWeekArray = (date) => {
   let dates = [];
 
