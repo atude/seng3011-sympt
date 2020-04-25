@@ -341,8 +341,7 @@ const SelfReportMapScreen = (props) => {
           }
         </View>
       </View>
-      <View style={styles.overlay}>
-      <Overlay 
+      <Overlay
         isVisible={showInfoPage}
         overlayStyle={styles.infoContainerStyle}
         onBackdropPress={() => setShowInfoPage(false)}
@@ -379,7 +378,6 @@ const SelfReportMapScreen = (props) => {
           </View>
         </ScrollView>
       </Overlay>
-      </View>
     </View>
   );
 };
