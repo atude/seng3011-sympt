@@ -130,7 +130,7 @@ export default function BottomTabNavigator({ navigation, route }) {
             tabBarIcon: ({ focused }) => (
               <TabBarIcon 
                 focused={focused} 
-                name="earth" 
+                name="chart-arc" 
                 tabName="Disease Activity"
               />
             ),
@@ -145,7 +145,7 @@ export default function BottomTabNavigator({ navigation, route }) {
               <TabBarIcon 
                 focused={focused} 
                 name="earth" 
-                tabName="dab"
+                tabName="NSW Cases Map"
               />
             ),
           }}
@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
   },
   filtersButtonContainer: {
     backgroundColor: "#fff",
+    paddingBottom: 5,
   },
   filtersButton: {
     width: "90%",

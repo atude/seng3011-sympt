@@ -2,9 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Animated } from 'react-native';
 import StyledText from './StyledText';
 import Colors from '../constants/Colors';
-import { Divider } from 'react-native-elements';
 
-import { PromedFeedContext, DiseaseContext } from '../context/context';
+import { PromedFeedContext } from '../context/context';
 import Layout from '../constants/Layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -27,7 +26,6 @@ const ProMedFiltersSection = () => {
   //   const postcode = await getPostcodeFromCoords();
   //   console.log(postcode);
   // };
-
 
   const showDatePicker = (picker) => {
     picker == "start" ? setStartDatePickerVisibility(true) : setEndDatePickerVisibility(true);
@@ -71,10 +69,21 @@ const ProMedFiltersSection = () => {
     }
   }, [feedContext.isFiltersOpen]);
 
-  const renderBasePill = (diseaseName) => (
-    <View style={[styles.keyTermPillBase, styles.keyTermPill]}>
-      <StyledText color="white">{diseaseName}</StyledText>
+  const renderPill = (text) => (
+    <View style={styles.keyTermPill}>
+      <StyledText color="white">{text}</StyledText>
     </View>
+  );
+
+  const renderDateModal = (type) => (
+    <DateTimePickerModal
+      isVisible={type == "start" ? isStartDatePickerVisible : isEndDatePickerVisible}
+      mode="date"
+      onConfirm={type == "start" ? handleStartConfirm: handleEndConfirm}
+      onCancel={() => hideDatePicker(type)}
+      display="calendar"
+      maximumDate={type == "start" ? new Date() : new Date()}
+    />
   );
 
   // Save rendering if not shown
@@ -82,33 +91,18 @@ const ProMedFiltersSection = () => {
 
   return (
     <Animated.View style={[styles.container, { transform: [{ translateY: yPosAnim }] }]}>
-      <StyledText style={styles.heading}>Start Date</StyledText>
       <View style={styles.keyTermsContainer}>
+        <StyledText style={styles.heading}>Start Date</StyledText>
         <TouchableOpacity onPress={() => showDatePicker("start")}>
-          <View style={styles.keyTermsContainer}>
-            {renderBasePill(feedContext.feedStartDate)}
-          </View>
-          <DateTimePickerModal
-            isVisible={isStartDatePickerVisible}
-            mode="date"
-            onConfirm={handleStartConfirm}
-            onCancel={() => hideDatePicker("start")}
-          />
+          {renderPill(feedContext.feedStartDate)}
+          {renderDateModal("start")}
         </TouchableOpacity>
       </View>
-      <Divider style={styles.keyTermsDivider} />
-      <StyledText style={styles.heading}>End Date</StyledText>
       <View style={styles.keyTermsContainer}>
+        <StyledText style={styles.heading}>End Date</StyledText>
         <TouchableOpacity onPress={() => showDatePicker("end")}>
-          <View style={styles.keyTermsContainer}>
-            {renderBasePill(feedContext.feedEndDate)}
-          </View>
-          <DateTimePickerModal
-            isVisible={isEndDatePickerVisible}
-            mode="date"
-            onConfirm={handleEndConfirm}
-            onCancel={() => hideDatePicker("end")}
-          />
+          {renderPill(feedContext.feedEndDate)}
+          {renderDateModal("end")}
         </TouchableOpacity>
       </View>
     </Animated.View>
@@ -136,16 +130,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 8,
-  },  
+  }, 
   heading: {
     paddingHorizontal: 10,
     fontWeight: "bold",
     fontSize: 18,
   },
   keyTermsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
     width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   keyTermPill: {
     flexDirection: "row",
@@ -155,9 +150,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 3,
     marginHorizontal: 3,
-  },
-  keyTermPillBase: {
-    backgroundColor: Colors.dull,
+
+    backgroundColor: Colors.primary,
   },
 });
 

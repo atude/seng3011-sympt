@@ -41,10 +41,10 @@ export const formatDataWeek = ({ data, dates }) => {
   };
 };
 
-export const getStateColor = (stateData, countryTotal) => {
-  const colOffset = (stateData.data.reduce((a, b) => a + b, 0) 
+export const getStateColor = (stateData, countryTotal, cumulativeDateIndex) => {
+  const colOffset = (stateData.data.reduce((a, b, i) => a + (i <= cumulativeDateIndex ? b : 0), 0, 0) 
     / countryTotal * 200).toFixed(0);
 
-  if (colOffset < 1) return Colors.secondary;
+  if (colOffset === 0) return Colors.secondary;
   return `rgba(255, ${200 - colOffset}, 100, 1)`;
 };
