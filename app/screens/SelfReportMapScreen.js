@@ -205,6 +205,10 @@ const SelfReportMapScreen = (props) => {
     }
   };
 
+  const cancelRegionSelection = () => {
+    setRegion(null);
+  };
+
   return (
     <View pointerEvents="box-none">
       <MapView 
@@ -281,12 +285,20 @@ const SelfReportMapScreen = (props) => {
                     {currRegion.postcode}
                   </StyledText>
                 </StyledText>
-                <TouchableOpacity onPress={() => setShowInfoPage(true)}>
-                  <MaterialIcons
-                    name="info"
-                    style={styles.infoIcon}
-                  />
-                </TouchableOpacity>
+                <View style={{flexDirection: "row"}}>
+                  <TouchableOpacity onPress={() => setShowInfoPage(true)}>
+                    <MaterialIcons
+                      name="info"
+                      style={styles.infoIcon}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => cancelRegionSelection()}>
+                    <MaterialIcons
+                      name="cancel"
+                      style={styles.infoIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.regionDetailsContainer}>
                 <View style={styles.regionDetailsStatContainer}>
