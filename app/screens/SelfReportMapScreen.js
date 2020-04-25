@@ -132,6 +132,11 @@ const SelfReportMapScreen = (props) => {
     return nswPopulation.find((area) => area.POA_NAME16 == currRegion.postcode).Tot_p_p;
   };
 
+  const cancelRegionSelection = () => {
+    setRegion(null);
+    setSearch("");
+  };
+
   useEffect(() => {
     if (!nswData.length) {
       console.log("--> Fetching...");
@@ -205,10 +210,6 @@ const SelfReportMapScreen = (props) => {
     }
   };
 
-  const cancelRegionSelection = () => {
-    setRegion(null);
-  };
-
   return (
     <View pointerEvents="box-none">
       <MapView 
@@ -237,6 +238,14 @@ const SelfReportMapScreen = (props) => {
                     name="magnify"
                     style={styles.inputSearchIcon}
                   />
+                }
+                rightIcon={
+                  <TouchableOpacity onPress={() => cancelRegionSelection()}>
+                    <MaterialIcons
+                      name="cancel"
+                      style={styles.inputSearchIcon}
+                    />
+                  </TouchableOpacity>
                 }
               />
             </View>
@@ -289,12 +298,6 @@ const SelfReportMapScreen = (props) => {
                   <TouchableOpacity onPress={() => setShowInfoPage(true)}>
                     <MaterialIcons
                       name="info"
-                      style={styles.infoIcon}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => cancelRegionSelection()}>
-                    <MaterialIcons
-                      name="cancel"
                       style={styles.infoIcon}
                     />
                   </TouchableOpacity>
