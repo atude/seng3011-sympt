@@ -375,7 +375,7 @@ const ActivityScreen = () => {
           step={1}
           maximumValue={11}
           value={cumulativeDateIndex}
-          onSlidingComplete={(value) => setCumulativeDateIndex(value)}
+          onValueChange={(value) => setCumulativeDateIndex(value)}
           thumbTintColor={Colors.primary}
         />
         <View 

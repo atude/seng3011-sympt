@@ -341,7 +341,7 @@ const SelfReportMapScreen = (props) => {
                 step={1}
                 maximumValue={allDates.length - 1}
                 value={allDates.findIndex((date) => date === currDate)}
-                onSlidingComplete={(value) => setDate(allDates[value])}
+                onValueChange={(value) => setDate(allDates[value])}
                 thumbTintColor={Colors.primary}
               />
               <View style={styles.distancingSwitchContainer}>
