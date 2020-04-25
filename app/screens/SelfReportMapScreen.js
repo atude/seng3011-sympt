@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image, Switch } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image, Switch, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
 import { Keyboard } from 'react-native';
@@ -341,7 +341,7 @@ const SelfReportMapScreen = (props) => {
                 step={1}
                 maximumValue={allDates.length - 1}
                 value={allDates.findIndex((date) => date === currDate)}
-                onSlidingComplete={(value) => setDate(allDates[value])}
+                onValueChange={(value) => setDate(allDates[value])}
                 thumbTintColor={Colors.primary}
               />
               <View style={styles.distancingSwitchContainer}>
@@ -365,34 +365,42 @@ const SelfReportMapScreen = (props) => {
           }
         </View>
       </View>
-      <Overlay 
+      <Overlay
         isVisible={showInfoPage}
         overlayStyle={styles.infoContainerStyle}
         onBackdropPress={() => setShowInfoPage(false)}
         animationType="fade"
       >
-        <View style={styles.legend}>
-          <StyledText style={styles.infoTitle}>
-            Legend
-          </StyledText>
-          {renderLegend(0)}
-          {renderLegend(5)}
-          {renderLegend(10)}
-          {renderLegend(20)}
-          {renderLegend(30)}
-          {renderLegend(40)}
-          {renderLegend(50)}
-          {renderLegend(100)}
-          {renderLegend(1000)}
-          {renderLegend(10000)}
-          <StyledText style={styles.infoTitle}>
-            Data Sources
-          </StyledText>
-          <View style={styles.sourceContainer}>
-            <Image style={styles.sourceImgs} source={require('../assets/images/sources/nsw-health.png')}/>
-            <Image style={styles.sourceImgs} source={require('../assets/images/sources/nndss.png')}/>
+        <ScrollView>
+          <View style={styles.legend}>
+            <StyledText style={styles.infoTitle}>
+              Legend
+            </StyledText>
+            {renderLegend(0)}
+            {renderLegend(5)}
+            {renderLegend(10)}
+            {renderLegend(20)}
+            {renderLegend(30)}
+            {renderLegend(40)}
+            {renderLegend(50)}
+            {renderLegend(100)}
+            {renderLegend(1000)}
+            {renderLegend(10000)}
+            <StyledText style={styles.infoTitle}>
+              Data Sources
+            </StyledText>
+            <View style={styles.sourceContainer}>
+              <Image style={styles.sourceImgs} source={require('../assets/images/sources/nsw-health.png')}/>
+              <Image style={styles.sourceImgs} source={require('../assets/images/sources/nndss.png')}/>
+            </View>
+            <StyledText style={styles.infoTitle}>
+              About Predictions
+            </StyledText>
+            <StyledText>
+              Put explanation about how the predictions work here...
+            </StyledText>
           </View>
-        </View>
+        </ScrollView>
       </Overlay>
     </View>
   );
@@ -501,11 +509,13 @@ const styles = StyleSheet.create({
   },
   sourceImgs: {
     height: 75,
-    marginBottom: 20,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   legend: {
     padding: 15,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   infoTitle: {
     paddingVertical: 15,
