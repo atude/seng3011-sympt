@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
   },
   filtersButtonContainer: {
     backgroundColor: "#fff",
+    paddingBottom: 5,
   },
   filtersButton: {
     width: "90%",

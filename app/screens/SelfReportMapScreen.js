@@ -345,7 +345,16 @@ const SelfReportMapScreen = (props) => {
                 thumbTintColor={Colors.primary}
               />
               <View style={styles.distancingSwitchContainer}>
-                <StyledText>Enable Social Distancing for Predictions</StyledText>
+                <View style={styles.distancingSwitchContainer}>
+                  <MaterialIcons
+                    name="people"
+                    style={{
+                      fontSize: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                  <StyledText>Enable Social Distancing for Predictions</StyledText>
+                </View>
                 <Switch
                   value={isSocialDistancing}
                   onValueChange={() => setSocialDistancing(!isSocialDistancing)}
@@ -505,7 +514,6 @@ const styles = StyleSheet.create({
   },
   distancingSwitchContainer: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
   },
 });
