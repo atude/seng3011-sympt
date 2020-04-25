@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   collapsedText: {
-    fontStyle: 'italic',
     fontSize: 17,
     fontWeight: 'bold',
     paddingTop: 8,
