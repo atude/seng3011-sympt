@@ -138,7 +138,6 @@ const ActivityScreen = () => {
         dates: stateLastYearArray.map((date) => formatDateToMonth(date)),
       };
     });
-
     setCumulativeStateCases(diseasesByState);
     setCumulativeStateTotal(Object.values(diseasesByState).reduce((a, b) => 
       a + b.data.reduce((c, d) => c + d, 0), 0
