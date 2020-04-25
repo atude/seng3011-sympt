@@ -37,3 +37,8 @@ export const PromedFeedContext = createContext({
   feedEndDate: "",
   setFeedEndDate: (endDate) => {},
 });
+
+export const UserPostcodeContext = createContext({
+  userPostcode: 2052,
+  setUserPostcode: (postcode) => {},
+});
