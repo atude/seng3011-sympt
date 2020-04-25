@@ -75,7 +75,7 @@ const ArticlesScreen = (props) => {
             refreshing={isLoadingArticles} 
             onRefresh={() => {
               setPage(0);
-              fetchFeedArticles(page);
+              fetchFeedArticles(0);
             }}
           />
         }
