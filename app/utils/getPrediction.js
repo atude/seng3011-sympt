@@ -12,7 +12,7 @@
 import { getDaysFromSimpleDate } from "./dateFunctions";
 
 // * Final Daily Contacts constant, most severe rate of transmission in Australia
-const dailyContacts = 1 / 6;
+const dailyContacts = 1 / 8;
 
 // The 'b' variable is reduced when the public is practicing social distancing
 // * Final Daily Contacts constant with social distancing
