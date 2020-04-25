@@ -91,6 +91,7 @@ const ActivityScreen = () => {
   };
 
   const fetchDiseases = async () => {
+    console.log(`seaching for disease: ${diseaseContext.disease.name}`);
     setLoading(true);
 
     const diseaseYtd = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
@@ -104,6 +105,7 @@ const ActivityScreen = () => {
     const diseaseNt = await getDiseaseCases(diseaseContext.disease.nameDb, "NT");
     const diseaseTas = await getDiseaseCases(diseaseContext.disease.nameDb, "TAS");
     const diseaseQld = await getDiseaseCases(diseaseContext.disease.nameDb, "QLD");
+    console.log(`nsw disease --> ${diseaseNsw}`);
 
     let diseasesByState = {
       "NSW": diseaseNsw, 
