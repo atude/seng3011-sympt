@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
-import { DiseaseContext } from '../context/context';
+import { DiseaseContext, UserPostcodeContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import { LineChart, ContributionGraph } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
@@ -93,7 +93,6 @@ const ActivityScreen = () => {
   };
 
   const fetchDiseases = async () => {
-    console.log(`seaching for disease: ${diseaseContext.disease.name}`);
     setLoading(true);
 
     const diseaseYtd = await getDiseaseCases(diseaseContext.disease.nameDb, "AUSYTD");
@@ -107,7 +106,6 @@ const ActivityScreen = () => {
     const diseaseNt = await getDiseaseCases(diseaseContext.disease.nameDb, "NT");
     const diseaseTas = await getDiseaseCases(diseaseContext.disease.nameDb, "TAS");
     const diseaseQld = await getDiseaseCases(diseaseContext.disease.nameDb, "QLD");
-    console.log(`nsw disease --> ${diseaseNsw}`);
 
     let diseasesByState = {
       "NSW": diseaseNsw, 
@@ -159,7 +157,6 @@ const ActivityScreen = () => {
         return data;
       });
     });
-
     setCumulativeStateCases(diseasesByState);
     setCumulativeDateIndex(thisMonthIndex);
     setDefaultDateIndex(thisMonthIndex);
