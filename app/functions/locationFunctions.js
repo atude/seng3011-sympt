@@ -9,7 +9,7 @@ export const getCoordinates = () => {
 export const getPostcodeFromCoords = async () => {
   const position = await getCoordinates();
   const coords = position.coords.latitude + "," + position.coords.longitude;
-  console.log(coords);
+  // console.log(coords);
   try {
     let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords}&key=${GOOGLE_API_KEY}&result_type=postal_code`);
     response = await response.json();
