@@ -20,6 +20,7 @@ import {
   formatToString,
   getYesterday,
   getLastWeek,
+  getThisYearArray,
 } from '../utils/dateFunctions';
 import { 
   formatDataWeek, 
@@ -34,6 +35,8 @@ import { nswPath, actPath, vicPath, saPath, ntPath, qldPath, tasPath, waPath,
 } from '../constants/AuMapFunctions';
 import { Slider } from 'react-native-elements';
 import DiseaseInfoCard from '../components/DiseaseInfoCard';
+import { generatePredictionsState } from '../utils/getPrediction';
+import statePopulation from '../constants/statePopulation.json';
 
 const moment = require('moment');
 
@@ -59,14 +62,13 @@ const ActivityScreen = () => {
   const [cumulativeStateCases, setCumulativeStateCases] = useState();
   const [cumulativeStateTotal, setCumulativeStateTotal] = useState(0);
   const [cumulativeDateIndex, setCumulativeDateIndex] = useState(0);
+  const [defaultDateIndex, setDefaultDateIndex] = useState(0);
  
   const [selectedYtd, setSelectedYtd] = useState({ date: "", count: 0 });
   const [frequencyYtd, setFrequencyYtd] = useState([]);
 
   const [timeRangeIndex, setTimeRangeIndex] = useState(0);
   const [todaysDateFallbacked, setTodaysDateFallbacked] = useState(new Date());
-
-  const [stateSliderLength, setStateSliderLength] = useState(0);
 
   useEffect(() => {
     // Fetch on disease change:
@@ -129,16 +131,37 @@ const ActivityScreen = () => {
       setTodaysDateFallbacked(currDate);
     }
 
+    const thisMonthIndex = new Date(currDate).getUTCMonth();
 
     Object.keys(diseasesByState).forEach((key) => {
-      const stateLastYearArray = getLastYearArray(diseasesByState[key], currDate);
+      const stateThisYearArray = getThisYearArray(diseasesByState[key], currDate, thisMonthIndex);
 
       diseasesByState[key] = {
-        data: stateLastYearArray.map((thisDate) => diseasesByState[key][thisDate] ?? 0),
-        dates: stateLastYearArray.map((date) => formatDateToMonth(date)),
+        data: stateThisYearArray.map((thisDate) => diseasesByState[key][thisDate] ?? -1),
+        // i.e. dates for this year only
+        datesNormalised: stateThisYearArray.map((date) => formatDateToMonth(date)),
       };
     });
+
+    Object.keys(diseasesByState).forEach((key) => {
+      const latestCumulativeCase = diseasesByState[key].data.reduce((a, b) => a + b, 0);
+      const predictions = generatePredictionsState(12, latestCumulativeCase, statePopulation[key]);
+      let dataIndex = -1;
+
+      diseasesByState[key].data = diseasesByState[key].data.map((data) => {
+        if (data === -1) {
+          dataIndex++;
+          return predictions[dataIndex];
+        }
+
+        return data;
+      });
+    });
+
     setCumulativeStateCases(diseasesByState);
+    setCumulativeDateIndex(thisMonthIndex);
+    setDefaultDateIndex(thisMonthIndex);
+
     setCumulativeStateTotal(Object.values(diseasesByState).reduce((a, b) => 
       a + b.data.reduce((c, d) => c + d, 0), 0
     ));
@@ -288,7 +311,7 @@ const ActivityScreen = () => {
       <StyledCard>
         <View style={styles.detailsContainer}>
           <StyledText color="secondary" style={styles.casesHeading}>
-            Cases within states this year
+            Total cases within states this year
           </StyledText>
         </View>
         <View style={styles.auMapContainer}>
@@ -299,20 +322,22 @@ const ActivityScreen = () => {
             preserveAspectRatio="xMinYMin slice" 
           >
             <G stroke="#fff" strokeWidth="2.5">
-              <Path d={nswPath} fill={getStateColor(cumulativeStateCases["NSW"], cumulativeStateTotal)}/>
+              <Path d={nswPath} fill={getStateColor(cumulativeStateCases["NSW"], cumulativeStateTotal, cumulativeDateIndex)}/>
               <Path d={actPath} />
-              <Path d={vicPath} fill={getStateColor(cumulativeStateCases["VIC"], cumulativeStateTotal)}/>
-              <Path d={saPath} fill={getStateColor(cumulativeStateCases["SA"], cumulativeStateTotal)}/>
-              <Path d={ntPath} fill={getStateColor(cumulativeStateCases["NT"], cumulativeStateTotal)}/>
-              <Path d={qldPath} fill={getStateColor(cumulativeStateCases["QLD"], cumulativeStateTotal)}/>
-              <Path d={tasPath} fill={getStateColor(cumulativeStateCases["TAS"], cumulativeStateTotal)}/>
-              <Path d={waPath} fill={getStateColor(cumulativeStateCases["WA"], cumulativeStateTotal)}/>
+              <Path d={vicPath} fill={getStateColor(cumulativeStateCases["VIC"], cumulativeStateTotal, cumulativeDateIndex)}/>
+              <Path d={saPath} fill={getStateColor(cumulativeStateCases["SA"], cumulativeStateTotal, cumulativeDateIndex)}/>
+              <Path d={ntPath} fill={getStateColor(cumulativeStateCases["NT"], cumulativeStateTotal, cumulativeDateIndex)}/>
+              <Path d={qldPath} fill={getStateColor(cumulativeStateCases["QLD"], cumulativeStateTotal, cumulativeDateIndex)}/>
+              <Path d={tasPath} fill={getStateColor(cumulativeStateCases["TAS"], cumulativeStateTotal, cumulativeDateIndex)}/>
+              <Path d={waPath} fill={getStateColor(cumulativeStateCases["WA"], cumulativeStateTotal, cumulativeDateIndex)}/>
               {Object.keys(cumulativeStateCases).map((state) => (
                 <SvgText zIndex={100} fill={getStateTextColor[state]} key={state}
-                  strokeWidth="0" textAnchor="middle" fontSize="13"
+                  strokeWidth="0" textAnchor="middle" fontSize="10"
                   x={getStateCoordX[state]} y={getStateCoordY[state]}
                 >
-                  {cumulativeStateCases[state].data.reduce((a, b) => a + b, 0)}
+                  {cumulativeStateCases[state].data.reduce((a, b, i) => 
+                    a + (i <= cumulativeDateIndex ? b : 0), 0
+                  )}
                 </SvgText>
               ))}
             </G>
@@ -320,17 +345,36 @@ const ActivityScreen = () => {
         </View>
         <StyledText 
           style={{
-            width: 50,
+            width: 100,
             textAlign: "center",
-            left: (cumulativeDateIndex / 12 * 100) * (Layout.window.width - 105) / 100 - 15,
+            left: (cumulativeDateIndex / 11 * 100) * (Layout.window.width - 105) / 100 - 40,
+            // fontWeight: cumulativeDateIndex > defaultDateIndex ? "bold" : "normal",
+            backgroundColor: "#fff",
+            borderRadius: 10,
+            paddingHorizontal: 2,
+            paddingVertical: 4,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+
+            elevation: 5,
           }}
           color="primary"
         >
-          {cumulativeStateCases["NSW"].dates[cumulativeDateIndex]}
+          {cumulativeStateCases["NSW"].datesNormalised[cumulativeDateIndex]}
+          {cumulativeDateIndex > defaultDateIndex ? 
+            <StyledText style={{fontStyle: "italic"}}>{"\n"}(Predictions)</StyledText> : 
+            ""
+          }
         </StyledText>
         <Slider
           step={1}
-          maximumValue={cumulativeStateCases["NSW"].dates.length - 1}
+          maximumValue={11}
+          value={cumulativeDateIndex}
           onSlidingComplete={(value) => setCumulativeDateIndex(value)}
           thumbTintColor={Colors.primary}
         />
@@ -342,8 +386,8 @@ const ActivityScreen = () => {
           }}
         >
           {/* Use NSW as date section reference */}
-          <StyledText>{cumulativeStateCases["NSW"].dates[0]}</StyledText>
-          <StyledText>{cumulativeStateCases["NSW"].dates[cumulativeStateCases["NSW"].dates.length - 1]}</StyledText>
+          <StyledText>{cumulativeStateCases["NSW"].datesNormalised[0]}</StyledText>
+          <StyledText>{cumulativeStateCases["NSW"].datesNormalised[cumulativeStateCases["NSW"].datesNormalised.length - 1]}</StyledText>
         </View>
       </StyledCard>
       

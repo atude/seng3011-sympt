@@ -132,6 +132,11 @@ const SelfReportMapScreen = (props) => {
     return nswPopulation.find((area) => area.POA_NAME16 == currRegion.postcode).Tot_p_p;
   };
 
+  const cancelRegionSelection = () => {
+    setRegion(null);
+    setSearch("");
+  };
+
   useEffect(() => {
     if (!nswData.length) {
       console.log("--> Fetching...");
@@ -234,6 +239,14 @@ const SelfReportMapScreen = (props) => {
                     style={styles.inputSearchIcon}
                   />
                 }
+                rightIcon={
+                  <TouchableOpacity onPress={() => cancelRegionSelection()}>
+                    <MaterialIcons
+                      name="cancel"
+                      style={styles.inputSearchIcon}
+                    />
+                  </TouchableOpacity>
+                }
               />
             </View>
             {search.length > 0 && 
@@ -281,12 +294,14 @@ const SelfReportMapScreen = (props) => {
                     {currRegion.postcode}
                   </StyledText>
                 </StyledText>
-                <TouchableOpacity onPress={() => setShowInfoPage(true)}>
-                  <MaterialIcons
-                    name="info"
-                    style={styles.infoIcon}
-                  />
-                </TouchableOpacity>
+                <View style={{flexDirection: "row"}}>
+                  <TouchableOpacity onPress={() => setShowInfoPage(true)}>
+                    <MaterialIcons
+                      name="info"
+                      style={styles.infoIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.regionDetailsContainer}>
                 <View style={styles.regionDetailsStatContainer}>
@@ -330,7 +345,16 @@ const SelfReportMapScreen = (props) => {
                 thumbTintColor={Colors.primary}
               />
               <View style={styles.distancingSwitchContainer}>
-                <StyledText>Enable Social Distancing for Predictions</StyledText>
+                <View style={styles.distancingSwitchContainer}>
+                  <MaterialIcons
+                    name="people"
+                    style={{
+                      fontSize: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                  <StyledText>Enable Social Distancing for Predictions</StyledText>
+                </View>
                 <Switch
                   value={isSocialDistancing}
                   onValueChange={() => setSocialDistancing(!isSocialDistancing)}
@@ -490,7 +514,6 @@ const styles = StyleSheet.create({
   },
   distancingSwitchContainer: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
   },
 });

@@ -92,14 +92,14 @@ const ProMedFiltersSection = () => {
   return (
     <Animated.View style={[styles.container, { transform: [{ translateY: yPosAnim }] }]}>
       <View style={styles.keyTermsContainer}>
-        <StyledText style={styles.heading}>Start Date   </StyledText>
-        <StyledText style={styles.heading}>End Date</StyledText>
-      </View>
-      <View style={styles.keyTermsContainer}>
+        <StyledText style={styles.heading}>Start Date</StyledText>
         <TouchableOpacity onPress={() => showDatePicker("start")}>
           {renderPill(feedContext.feedStartDate)}
           {renderDateModal("start")}
         </TouchableOpacity>
+      </View>
+      <View style={styles.keyTermsContainer}>
+        <StyledText style={styles.heading}>End Date</StyledText>
         <TouchableOpacity onPress={() => showDatePicker("end")}>
           {renderPill(feedContext.feedEndDate)}
           {renderDateModal("end")}
@@ -137,9 +137,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   keyTermsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
     width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   keyTermPill: {
     flexDirection: "row",

@@ -43,6 +43,30 @@ export const getLastMonthQuarterSplitArray = (date) => {
   return dates.reverse();
 };
 
+export const getThisYearArray = (diseaseMonthly, date, thisMonthIndex) => {
+  let dates = [];
+
+  const startOfYearDate = new Date(new Date().getFullYear(), 0, 2);
+
+  [...Array(12).keys()].map((i) => {
+    if (i === thisMonthIndex) {
+      dates.push(formatToString(moment.utc(date)));
+      return;
+    }
+    // Fallback to start of month if end of month data not available
+    const startOfMonthDate = formatToString(moment.utc(startOfYearDate).add(i, 'months').startOf('month'));
+    const endOfMonthDate = formatToString(moment.utc(startOfYearDate).add(i, 'months').endOf('month'));
+
+    if (!diseaseMonthly[endOfMonthDate]) {
+      dates.push(startOfMonthDate);
+      return;
+    }
+    dates.push(endOfMonthDate);
+  });
+
+  return dates;
+};
+
 export const getLastYearArray = (diseaseMonthly, date) => {
   let dates = [];
 

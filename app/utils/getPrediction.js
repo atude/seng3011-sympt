@@ -12,7 +12,7 @@
 import { getDaysFromSimpleDate } from "./dateFunctions";
 
 // * Final Daily Contacts constant, most severe rate of transmission in Australia
-const dailyContacts = 1 / 6;
+const dailyContacts = 1 / 8;
 
 // The 'b' variable is reduced when the public is practicing social distancing
 // * Final Daily Contacts constant with social distancing
@@ -143,4 +143,20 @@ export const generatePredictions = (days, casesArray, population) => {
   });
 
   return [...casesArray, ...compiledPredictions];
+};
+
+export const generatePredictionsState = (months, latestCases, statePopulation) => {
+  const assumeDaysInMonth = 20;
+  const rawPredictionsDistancing = computePredictionNoRecovery(months * assumeDaysInMonth, latestCases, statePopulation, true);
+  
+  let lastCase = latestCases;
+  const predictionsDistancingTotal = rawPredictionsDistancing.map((predictionSet) => {
+    const prediction = Math.round(statePopulation - predictionSet[0]) - lastCase;
+    lastCase = prediction;
+    return prediction;
+  }).filter((prediction, i) => i % assumeDaysInMonth === 0);
+
+  console.log(predictionsDistancingTotal);
+
+  return predictionsDistancingTotal;
 };
