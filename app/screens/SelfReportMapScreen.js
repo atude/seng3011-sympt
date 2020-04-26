@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Image, Switch, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
 import MapView from 'react-native-maps';
@@ -18,6 +18,7 @@ import { formatDateToDayMonthMap } from '../utils/dateFunctions';
 import Layout from '../constants/Layout';
 import StyledButton from '../components/StyledButton';
 import { generatePredictions } from '../utils/getPrediction';
+import { UserPostcodeContext } from '../context/context';
 
 const predictionsDays = 30;
 
@@ -33,6 +34,7 @@ const SelfReportMapScreen = (props) => {
   const mapRef = useRef(null);
   const [isHiding, setHiding] = useState(false);
   const [showInfoPage, setShowInfoPage] = useState(false);
+  const userPostcodeContext = useContext(UserPostcodeContext);
 
   const handleSetRegion = (regionData) => {
     setRegion(regionData);
@@ -107,6 +109,7 @@ const SelfReportMapScreen = (props) => {
     });
     setInitialDateIndex(datesArray.findIndex((date) => date === todaysDateFormatted));
     setAllDates(datesArray);
+    setTimeout(() => handleSetRegion(nswCombinedSet.find((dataSet) => dataSet.postcode == userPostcodeContext.userPostcode)), 3000);
     setLoading(false);
   };
 
@@ -280,12 +283,46 @@ const SelfReportMapScreen = (props) => {
         }
 
         <View style={styles.botSection} pointerEvents="box-none">
-          <StyledButton
-            title={isHiding ? "Show Details" : "Hide Details"}
-            buttonStyle={styles.hideToggle}
-            onPress={() => setHiding(!isHiding)}
-            type="solid"
-          />
+          <View style={{
+            flexDirection: "row",
+            padding: 4,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}>
+            <StyledButton
+              title={isHiding ? "Show Details" : "Hide Details"}
+              buttonStyle={styles.hideToggle}
+              onPress={() => setHiding(!isHiding)}
+              type="solid"
+            />
+            <TouchableOpacity
+              onPress={() => handleSetRegion(nswData.find((dataSet) => dataSet.postcode == userPostcodeContext.userPostcode))}
+              style={{
+                position: "absolute",
+                right: 30,
+              }}
+            >
+              <MaterialIcons
+                name="my-location"
+                style={{
+                  fontSize: 28,
+                  color: Colors.primary,
+                  backgroundColor: "#fff",
+                  padding: 10,
+                  borderRadius: 100,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 5,
+                  },
+                  shadowOpacity: 0.34,
+                  shadowRadius: 6.27,
+                  elevation: 10,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           {currRegion && !isHiding && 
             <View style={styles.timelineContainer}>
               <View style={styles.timelineTextContainer}>
@@ -394,10 +431,15 @@ const SelfReportMapScreen = (props) => {
               <Image style={styles.sourceImgs} source={require('../assets/images/sources/nndss.png')}/>
             </View>
             <StyledText style={styles.infoTitle}>
-              About Predictions
+              Predictions 
             </StyledText>
             <StyledText>
-              Put explanation about how the predictions work here...
+              {"Sympt's"} data is collected from Australian government sources, 
+              including the NNDSS, NSW Gov Health, ABS and Data.NSW
+              {"\n\n"}
+              Statistics and future predictions are projected using the SIR equation 
+              model using current information for NSW regions and analysis on the
+              growth of COVID-19 across Australia.
             </StyledText>
           </View>
         </ScrollView>

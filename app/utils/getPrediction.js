@@ -154,7 +154,5 @@ export const generatePredictionsState = (months, latestCases, statePopulation) =
     return prediction;
   }).filter((prediction, i) => i % assumeDaysInMonth === 0);
 
-  console.log(predictionsDistancingTotal);
-
   return predictionsDistancingTotal;
 };
