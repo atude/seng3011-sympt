@@ -10,10 +10,11 @@ import { REACT_APP_API_KEY } from 'react-native-dotenv';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
-import { UserContext, DiseaseContext, FeedContext, PromedFeedContext } from './context/context';
+import { UserContext, DiseaseContext, FeedContext, PromedFeedContext, UserPostcodeContext } from './context/context';
 import diseases from './constants/diseases.json';
 
 import { getCurrentTime } from './utils/fetchTools';
+import { getPostcodeFromCoords } from './functions/locationFunctions';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App(props) {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const [feedLocation, setFeedLocation] = useState("Australia");
   const [feedStartDate, setFeedStartDate] = useState("2020-01-01");
+  const [userPostcode, setUserPostcode] = useState(2052);
   const [feedEndDate, setFeedEndDate] = useState(getCurrentTime().split("T")[0]);
 
   // initial load from async storage for persistence
@@ -45,6 +47,19 @@ export default function App(props) {
       }
     } catch (error) {
       console.log(`--> no saved disease, defaulting to first disease in diseases list`);
+    }
+  };
+
+  // set the users postcode from positions
+  const loadUserPostcode = async () => {
+    try {
+      let postcode = await getPostcodeFromCoords();
+      postcode = parseInt(postcode.results[0].address_components[0].long_name);
+      console.log(`--> setting postcode to ${postcode}`);
+      setUserPostcode(postcode);
+    } catch (error) {
+      console.log('--> an error occured while trying to set the postcode');
+      console.log('--> defaulting to uni post code');
     }
   };
 
@@ -81,6 +96,11 @@ export default function App(props) {
     setFeedEndDate: (endDate) => setFeedEndDate(endDate),
   };
 
+  const postcodeContext = {
+    userPostcode,
+    setUserPostcode: (newPostcode) => setUserPostcode(newPostcode),
+  };
+
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -112,6 +132,7 @@ export default function App(props) {
 
     loadResourcesAndDataAsync();
     loadSavedStorage();
+    loadUserPostcode();
   }, []);
 
 
@@ -124,12 +145,14 @@ export default function App(props) {
           <DiseaseContext.Provider value={diseaseContextValue}>
             <FeedContext.Provider value={feedContextValue}>
               <PromedFeedContext.Provider value = {promedFeedContextValue}>
-                {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
-                <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-                  <Stack.Navigator>
-                    <Stack.Screen name="Root" component={BottomTabNavigator} />
-                  </Stack.Navigator>
-                </NavigationContainer>
+                <UserPostcodeContext.Provider value = {postcodeContext}>
+                  {Platform.OS === "ios" && <StatusBar barStyle="light-content" />}
+                  <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                    <Stack.Navigator>
+                      <Stack.Screen name="Root" component={BottomTabNavigator} />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </UserPostcodeContext.Provider>
               </PromedFeedContext.Provider>
             </FeedContext.Provider>
           </DiseaseContext.Provider>

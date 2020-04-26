@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import StyledCard from '../components/StyledCard';
-import { DiseaseContext } from '../context/context';
+import { DiseaseContext, UserPostcodeContext } from '../context/context';
 import StyledText from '../components/StyledText';
 import { LineChart, ContributionGraph } from "react-native-chart-kit";
 import Layout from '../constants/Layout';
@@ -157,7 +157,6 @@ const ActivityScreen = () => {
         return data;
       });
     });
-
     setCumulativeStateCases(diseasesByState);
     setCumulativeDateIndex(thisMonthIndex);
     setDefaultDateIndex(thisMonthIndex);

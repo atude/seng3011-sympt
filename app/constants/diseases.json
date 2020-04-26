@@ -20,12 +20,6 @@
     "description": "Measles is a highly contagious infectious disease that causes red rashes on the body, as well as fever, cough, runny nose and inflamed eyes.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/measles"
   },
-  // {
-  //   "nameFormatted": "Rabies",
-  //   "name": "rabies",
-  //   "description": "Transmitted through exposure to infected mammals, causes inflammation of the brain in humands and other mammals, followed by uncontrolled excitement and an inabillity to move parts of the body.",
-  //   "link": "https://www.who.int/news-room/fact-sheets/detail/rabies"
-  // },
   {
     "nameFormatted": "Influenza",
     "nameDb": "influenza-(laboratory-confirmed)",
@@ -83,9 +77,9 @@
     "link": "https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue"
   },
   {
-    "nameFormatted": "Diphteria",
-    "nameDb": "diphteria",
-    "name": "diphteria",
+    "nameFormatted": "Diphtheria",
+    "nameDb": "diphtheria",
+    "name": "diphtheria",
     "description": "A serious infection of the nose and throat that's easily preventable by a vaccine. A sheet of thick, grey matter covers the back of the throat, making breathing hard. Symptoms include sore throat, fever, swollen lymph nodes and weakness.",
     "link": "https://www.who.int/immunization/diseases/diphtheria/en/"
   },
@@ -179,5 +173,5 @@
     "name": "rubella",
     "description": "An acute, contagious viral infection. While rubella usually causes a mild fever and rash, infection during pregnancy, especially during the first trimester, can result in miscarriage, fetal death, stillbirth, or infants with malformations.",
     "link": "https://www.who.int/news-room/fact-sheets/detail/rubella"
-  },
+  }
 ]
