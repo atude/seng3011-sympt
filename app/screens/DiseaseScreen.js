@@ -72,12 +72,12 @@ const ActivityScreen = () => {
 
   useEffect(() => {
     // Fetch on disease change:
-    if (diseaseContext.disease.nameDb !== dbName) {
-      fetchDiseases();
-      setDbName(diseaseContext.disease.nameDb);
-    }
+    // if (diseaseContext.disease.nameDb !== dbName) {
+    //   fetchDiseases();
+    //   setDbName(diseaseContext.disease.nameDb);
+    // }
     // Fetch always
-    // fetchDiseases();
+    fetchDiseases();
   }, [
     diseaseContext.disease.nameDb
   ]);

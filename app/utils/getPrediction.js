@@ -149,10 +149,8 @@ export const generatePredictionsState = (months, latestCases, statePopulation) =
   const assumeDaysInMonth = 20;
   const rawPredictionsDistancing = computePredictionNoRecovery(months * assumeDaysInMonth, latestCases, statePopulation, true);
   
-  let lastCase = latestCases;
   const predictionsDistancingTotal = rawPredictionsDistancing.map((predictionSet) => {
-    const prediction = Math.round(statePopulation - predictionSet[0]) - lastCase;
-    lastCase = prediction;
+    const prediction = latestCases - Math.round(predictionSet[1]);
     return prediction;
   }).filter((prediction, i) => i % assumeDaysInMonth === 0);
 
