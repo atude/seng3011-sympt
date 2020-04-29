@@ -1,9 +1,6 @@
-# Sympt
+> Sympt comprises of an Android application and an API, detailed below.
 
-Sympt comprises of an Android application and an API, detailed below.
-
-[API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
-
+> [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
 ## Our Team
 
@@ -12,6 +9,8 @@ Sympt comprises of an Android application and an API, detailed below.
 - [Matthew Freeman](https://github.com/matthewdfreeman): Fullstack Developer
 - [Annabel Zhou](https://github.com/annabelzh): Frontend Developer, Designer
 - [Paul Grace](https://github.com/PaulGrace1200): Feature Developer
+
+## Sympt
 
 ### Sympt App
 
