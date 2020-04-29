@@ -1,6 +1,7 @@
 # Sympt
 
-Sympt comprises of an API and mobile application, detailed below.
+Sympt comprises of an Android application and an API, detailed below.
+
 [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
 
@@ -12,8 +13,19 @@ Sympt is a centralised platform to provide up-to-date analytics and information 
 
 The Sympt developer dashboard allows users to sign up for an account and gain access to a portion of our API. 
 Using the dashboard, you can track your API call log with details about queries and errors, as well as visually analyse your usage overtime.
-The API exposes users with our articles report endpoints to retrieve a list of disease reports according to search criteria found from [promedmail.org/](http://promedmail.org/). [Visit the documentation](http://symptdev.netlify.com) for more information about using the API endpoints.
+The API exposes users with our articles report endpoints to retrieve a list of disease reports according to search criteria found from [promedmail.org](http://promedmail.org). [Visit the documentation](http://symptdev.netlify.com) for more information about using the API endpoints.
 
+### Sources and further information
+
+Our data is sourced from various official outlets, including:
+
+- [NNDSS (National Notifiable Diseases Surveillance System)](http://www9.health.gov.au/cda/source/cda-index.cfm)
+- [data.NSW](https://data.nsw.gov.au/)
+- [NSW Goverment Health](https://www.health.nsw.gov.au/)
+- [ABS (Australian Bureau of Statistics)](https://www.abs.gov.au/)
+- [ProMed Mail](http://promedmail.org)
+
+Our predictions are derived using the [SIR (Susceptible/Infectious/Recovered)](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) disease transmission model.
 
 ## Local Setup
 ### Requirements
