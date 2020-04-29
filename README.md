@@ -27,6 +27,8 @@ Our data is sourced from various official outlets, including:
 
 Our predictions are derived using the [SIR (Susceptible/Infectious/Recovered)](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) disease transmission model.
 
+For more information about our design, test and build process, view our detailed documentation reports [here](https://github.com/atude/seng3011-sympt/tree/master/_docs/reports).
+
 ## Local Setup
 ### Requirements
 
