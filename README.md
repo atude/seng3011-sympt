@@ -29,6 +29,14 @@ Our predictions are derived using the [SIR (Susceptible/Infectious/Recovered)](h
 
 For more information about our design, test and build process, view our detailed documentation reports [here](https://github.com/atude/seng3011-sympt/tree/master/_docs/reports).
 
+## Our Team
+
+- Mozamel Anwary (Me): Technical Lead
+- Mariya Shmalko: Team Lead
+- Matthew Freeman: Fullstack Developer
+- Annabel Zhou: Frontend Developer, Designer
+- Paul Grace: Feature Developer
+
 ## Local Setup
 ### Requirements
 
