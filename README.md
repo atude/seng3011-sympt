@@ -1,24 +1,18 @@
 # Sympt
 
+Sympt comprises of an API and mobile application, detailed below.
 [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
-
-## About
-
-[WIP]
 
 
 ### Sympt App
 
-[WIP]
+Sympt is a centralised platform to provide up-to-date analytics and information about diseases in Australia, and focused on the COVID-19 pandemic. We provide users with data for diseases cases across Australian states, the rate of new cases, and the ability to use a timeline to see the growth and future predictions of diseases. Additionally, users can view an interactive map for a heatmap of COVID-19 cases across NSW where they can search (or use their location) to get information about the current number of total cases as well as the amount of predicted cases in the future. Our prediction algorithms use past trends of COVID-19 and region-specific population data to estimate the growth of the disease up to 30 days into the future, with the ability to examine different trends based on whether social distancing rules are enforced or not. This is packaged in an intuitive, beautiful and dynamic interface with visual graphs and coloured maps to make identifying trends and shifts in the disease climate easily digestable.
 
-### [API Documentation](http://sympt-swagger.herokuapp.com/docs/)
+### [Sympt Developer Dashboard](http://symptdev.netlify.com)
 
-This API enables users to retrieve a list of disease reports according to search criteria found from [promedmail.org/](http://promedmail.org/).
-
-### [Developer Dashboard](http://symptdev.netlify.com)
-
-The developer dashboard allows API users to sign up for a sympt API account and gain access to our API. 
-From the dashboard, you can refresh your API token, track your API call log and visually analyse your API usage.
+The Sympt developer dashboard allows users to sign up for an account and gain access to a portion of our API. 
+Using the dashboard, you can track your API call log with details about queries and errors, as well as visually analyse your usage overtime.
+The API exposes users with our articles report endpoints to retrieve a list of disease reports according to search criteria found from [promedmail.org/](http://promedmail.org/). [Visit the documentation](http://symptdev.netlify.com) for more information about using the API endpoints.
 
 
 ## Local Setup
@@ -56,6 +50,8 @@ From the dashboard, you can refresh your API token, track your API call log and 
 | --------------------------- | --------------------------------------------------------------------------- |
 | `expo install`              | Install necessary dependencies using npm (with expo compatible packages if available). |
 | `expo start`                | Start the development server.                                               |
+
+[See here for further details on building a standalone app using Expo.](https://docs.expo.io/distribution/building-standalone-apps/)
 
 ### Root (For server and webapp)
 | Script                      | Description                                                                 |
