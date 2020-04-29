@@ -5,6 +5,14 @@ Sympt comprises of an Android application and an API, detailed below.
 [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
 
+## Our Team
+
+- **Mozamel Anwary (Me)**: Technical Lead
+- [Mariya Shmalko](https://github.com/et-cetra): Team Lead
+- [Matthew Freeman](https://github.com/matthewdfreeman): Fullstack Developer
+- [Annabel Zhou](https://github.com/annabelzh): Frontend Developer, Designer
+- [Paul Grace](https://github.com/PaulGrace1200): Feature Developer
+
 ### Sympt App
 
 Sympt is a centralised platform to provide up-to-date analytics and information about diseases in Australia, and focused on the COVID-19 pandemic. We provide users with data for diseases cases across Australian states, the rate of new cases, and the ability to use a timeline to see the growth and future predictions of diseases. Additionally, users can view an interactive map for a heatmap of COVID-19 cases across NSW where they can search (or use their location) to get information about the current number of total cases as well as the amount of predicted cases in the future. Our prediction algorithms use past trends of COVID-19 and region-specific population data to estimate the growth of the disease up to 30 days into the future, with the ability to examine different trends based on whether social distancing rules are enforced or not. This is packaged in an intuitive, beautiful and dynamic interface with visual graphs and coloured maps to make identifying trends and shifts in the disease climate easily digestable.
@@ -28,14 +36,6 @@ Our data is sourced from various official outlets, including:
 Our predictions are derived using the [SIR (Susceptible/Infectious/Recovered)](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) disease transmission model.
 
 For more information about our design, test and build process, view our detailed documentation reports [here](https://github.com/atude/seng3011-sympt/tree/master/_docs/reports).
-
-## Our Team
-
-- Mozamel Anwary (Me): Technical Lead
-- Mariya Shmalko: Team Lead
-- Matthew Freeman: Fullstack Developer
-- Annabel Zhou: Frontend Developer, Designer
-- Paul Grace: Feature Developer
 
 ## Local Setup
 ### Requirements
