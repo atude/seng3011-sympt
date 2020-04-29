@@ -32,8 +32,8 @@ For more information about our design, test and build process, view our detailed
 ## Local Setup
 ### Requirements
 
-- Node v12.X.X
-- Expo & Expo CLI
+- Node 12
+- Expo + Expo CLI
 
 ### Setting up
 
