@@ -7,7 +7,7 @@ Sympt comprises of an Android application and an API, detailed below.
 
 ## Our Team
 
-- **Mozamel Anwary (Me)**: Technical Lead
+- [Mozamel Anwary](https://github.com/atude): Technical Lead
 - [Mariya Shmalko](https://github.com/et-cetra): Team Lead
 - [Matthew Freeman](https://github.com/matthewdfreeman): Fullstack Developer
 - [Annabel Zhou](https://github.com/annabelzh): Frontend Developer, Designer
