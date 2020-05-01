@@ -2,14 +2,6 @@
 
 > [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
-## Our Team
-
-- [Mozamel Anwary](https://github.com/atude): Technical Lead
-- [Mariya Shmalko](https://github.com/et-cetra): Team Lead
-- [Matthew Freeman](https://github.com/matthewdfreeman): Fullstack Developer
-- [Annabel Zhou](https://github.com/annabelzh): Frontend Developer, Designer
-- [Paul Grace](https://github.com/PaulGrace1200): Feature Developer
-
 ## Sympt
 
 ### Sympt App
@@ -35,6 +27,14 @@ Our data is sourced from various official outlets, including:
 Our predictions are derived using the [SIR (Susceptible/Infectious/Recovered)](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology) disease transmission model.
 
 For more information about our design, test and build process, view our detailed documentation reports [here](https://github.com/atude/seng3011-sympt/tree/master/_docs/reports).
+
+## Our Team
+
+- [Mozamel Anwary](https://github.com/atude): Technical Lead
+- [Mariya Shmalko](https://github.com/et-cetra): Team Lead
+- [Matthew Freeman](https://github.com/matthewdfreeman): Fullstack Developer
+- [Annabel Zhou](https://github.com/annabelzh): Frontend Developer, Designer
+- [Paul Grace](https://github.com/PaulGrace1200): Feature Developer
 
 ## Local Setup
 ### Requirements
