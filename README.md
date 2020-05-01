@@ -12,7 +12,7 @@ Sympt is a centralised platform to provide up-to-date analytics and information 
 
 The Sympt developer dashboard allows users to sign up for an account and gain access to a portion of our API. 
 Using the dashboard, you can track your API call log with details about queries and errors, as well as visually analyse your usage overtime.
-The API exposes users with our articles report endpoints to retrieve a list of disease reports according to search criteria found from [promedmail.org](http://promedmail.org). [Visit the documentation](http://symptdev.netlify.com) for more information about using the API endpoints.
+The API exposes users with our articles report endpoints to retrieve a list of disease reports according to search criteria found from [promedmail.org](http://promedmail.org). [Visit the documentation](https://github.com/atude/seng3011-sympt/tree/master/_docs/reports) for more information about using the API endpoints.
 
 ### Sources and further information
 
