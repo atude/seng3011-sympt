@@ -1,3 +1,5 @@
+![banner](https://raw.githubusercontent.com/atude/atude-ghp/master/src/assets/projects/Sympt/0.png)
+
 > Sympt comprises of an Android application and an API, detailed below.
 
 > [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
