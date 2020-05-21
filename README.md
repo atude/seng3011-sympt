@@ -2,6 +2,8 @@
 
 > Sympt comprises of an Android application and an API, detailed below.
 
+> [Video Demonstration](https://www.youtube.com/watch?v=1E9If8qvBP4)
+
 > [API Documentation](http://sympt-swagger.herokuapp.com/docs/) | [Developer Dashboard](http://symptdev.netlify.com)
 
 ## Sympt
