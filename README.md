@@ -1,4 +1,4 @@
-![banner](https://raw.githubusercontent.com/atude/atude-ghp/master/src/assets/projects/Sympt/0.png)
+![banner](https://raw.githubusercontent.com/atude/atude-ghp/master/src/assets/projects/Sympt/banner.png)
 
 > Sympt comprises of an Android application and an API, detailed below.
 
